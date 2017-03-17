@@ -18,6 +18,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import itesm.mx.carpoolingtec.R;
 import itesm.mx.carpoolingtec.contacts.ContactsFragment;
+import itesm.mx.carpoolingtec.rides.RidesFragment;
+import itesm.mx.carpoolingtec.schedule.ScheduleFragment;
 
 /**
  * {@li}
@@ -86,9 +88,9 @@ public class MainActivity extends AppCompatActivity {
                 case 0:
                     return ContactsFragment.newInstance();
                 case 1:
-                    return ContactsFragment.newInstance();
+                    return RidesFragment.newInstance();
                 case 2:
-                    return ContactsFragment.newInstance();
+                    return ScheduleFragment.newInstance();
             }
             return null;
         }

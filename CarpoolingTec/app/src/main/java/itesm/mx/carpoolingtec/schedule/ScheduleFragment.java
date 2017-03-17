@@ -1,4 +1,4 @@
-package itesm.mx.carpoolingtec.rides;
+package itesm.mx.carpoolingtec.schedule;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -8,14 +8,14 @@ import android.view.ViewGroup;
 
 import itesm.mx.carpoolingtec.R;
 
-public class RidesFragment extends Fragment {
+public class ScheduleFragment extends Fragment {
 
-    public RidesFragment() {
+    public ScheduleFragment() {
         // Required empty public constructor
     }
 
-    public static RidesFragment newInstance() {
-        return new RidesFragment();
+    public static ScheduleFragment newInstance() {
+        return new ScheduleFragment();
     }
 
     @Override
@@ -27,6 +27,7 @@ public class RidesFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_rides, container, false);
+        return inflater.inflate(R.layout.fragment_schedule, container, false);
     }
+
 }
