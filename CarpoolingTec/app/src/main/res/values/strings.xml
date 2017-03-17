@@ -6,6 +6,8 @@
     <string name="contacts">Contacts</string>
     <string name="schedule">Schedule</string>
 
+    <string name="sort">Sort</string>
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

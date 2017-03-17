@@ -3,8 +3,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="itesm.mx.carpoolingtec.main.MainActivity">
     <item
-        android:id="@+id/action_settings"
+        android:id="@+id/action_sort"
+        android:title="@string/sort"
         android:orderInCategory="100"
+        app:showAsAction="ifRoom"
+        
+        android:icon="@drawable/ic_sort_black_24dp"
+        android:visible="false"/>
+
+    <item
+        android:id="@+id/action_settings"
         android:title="@string/action_settings"
         app:showAsAction="never" />
 </menu>
