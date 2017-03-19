@@ -3,16 +3,20 @@ package itesm.mx.carpoolingtec.rides;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import itesm.mx.carpoolingtec.R;
+import itesm.mx.carpoolingtec.model.Ride;
 
 public class RidesFragment extends Fragment implements RidesView,
         SwipeRefreshLayout.OnRefreshListener{
@@ -20,6 +24,7 @@ public class RidesFragment extends Fragment implements RidesView,
     @BindView(R.id.swipeRefreshLayout) SwipeRefreshLayout swipeRefreshLayout;
     @BindView(R.id.rv_rides) RecyclerView recyclerView;
 
+    private RidesAdapter ridesAdapter;
     private Unbinder unbinder;
 
     public RidesFragment() {
@@ -50,6 +55,10 @@ public class RidesFragment extends Fragment implements RidesView,
 
         swipeRefreshLayout.setOnRefreshListener(this);
 
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        ridesAdapter = new RidesAdapter(getDummyRides());
+        recyclerView.setAdapter(ridesAdapter);
+
         return view;
     }
 
@@ -65,7 +74,7 @@ public class RidesFragment extends Fragment implements RidesView,
     }
 
     @Override
-    public void showRides() {
+    public void showRides(List<Ride> rides) {
 
     }
 
@@ -87,5 +96,9 @@ public class RidesFragment extends Fragment implements RidesView,
     @Override
     public void onRefresh() {
 
+    }
+
+    private List<Ride> getDummyRides() {
+        return null;
     }
 }
