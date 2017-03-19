@@ -10,6 +10,7 @@ import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.Arrays;
 import java.util.List;
 
 import butterknife.BindView;
@@ -56,7 +57,7 @@ public class RidesFragment extends Fragment implements RidesView,
         swipeRefreshLayout.setOnRefreshListener(this);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        ridesAdapter = new RidesAdapter(getDummyRides());
+        ridesAdapter = new RidesAdapter(getActivity(), getDummyRides());
         recyclerView.setAdapter(ridesAdapter);
 
         return view;
@@ -99,6 +100,7 @@ public class RidesFragment extends Fragment implements RidesView,
     }
 
     private List<Ride> getDummyRides() {
-        return null;
+        return Arrays.asList(new Ride(), new Ride(), new Ride(), new Ride(), new Ride(), new Ride(),
+                new Ride());
     }
 }
