@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 
 import itesm.mx.carpoolingtec.R;
 
-public class RidesFragment extends Fragment {
+public class RidesFragment extends Fragment implements RidesView{
 
     public RidesFragment() {
         // Required empty public constructor
@@ -36,5 +36,30 @@ public class RidesFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_rides, container, false);
+    }
+
+    @Override
+    public void setLoadingIndicator(boolean active) {
+
+    }
+
+    @Override
+    public void showRides() {
+
+    }
+
+    @Override
+    public void hideRides() {
+
+    }
+
+    @Override
+    public void showNoRidesAvailableToast() {
+
+    }
+
+    @Override
+    public void showErrorLoadingRidesToast() {
+
     }
 }
