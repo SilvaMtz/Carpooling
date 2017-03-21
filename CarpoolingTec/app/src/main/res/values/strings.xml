@@ -21,4 +21,27 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!-- Drive item layout -->
+    <string name="Action_pickup">Pick up </string>
+    <string name="Action_pickup2">will pick you up</string>
+    <string name="Person">David</string>
+    <string name="Word">Arrival at</string>
+    <string name="Time">12:00</string>
+    <string name="street">Corintio 3112, Valle Primavera</string>
+
+    <!-- Strings related to login -->
+    <string name="ErrorMessage">Please Insert Student ID and Password</string>
+    <string name="prompt_email">Student ID</string>
+    <string name="prompt_password">Password</string>
+    <string name="action_sign_in_short">Sign in</string>
+
+    <!-- ridecard -->
+    <string name="Driver">Driver:</string>
+    <string name="Passangers">Passangers:</string>
+    <string name="Description">Description:</string>
+    <string name="Gender">Gender:</string>
+    <string name="Gendertext">Both</string>
+    <string name="Smoking">Smoking:</string>
+    <string name="Smokingtext">No</string>
 </resources>
