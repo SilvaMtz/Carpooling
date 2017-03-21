@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_post"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="itesm.mx.carpoolingtec.Post.PostActivity">
+
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@android:drawable/ic_menu_mylocation"
+        android:id="@+id/dest_icon"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:text="Tec de Monterrey"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:id="@+id/textView7"
+        android:layout_alignParentTop="true"
+        android:layout_toEndOf="@+id/start_icon"
+        android:textAlignment="textStart"
+        android:textSize="20sp"
+        android:paddingTop="4dp"
+        android:paddingLeft="8dp"
+        android:layout_alignBottom="@+id/dest_icon"
+        android:textColor="@android:color/black"
+        android:layout_marginLeft="4dp" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@android:drawable/ic_menu_mylocation"
+        android:id="@+id/start_icon"
+        android:layout_below="@+id/dest_icon"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="21dp" />
+
+    <TextView
+        android:text="Corintio"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/inicio_tv"
+        android:textAlignment="textStart"
+        android:textSize="20sp"
+        android:paddingTop="4dp"
+        android:paddingLeft="8dp"
+        android:layout_alignTop="@+id/start_icon"
+        android:layout_alignBottom="@+id/start_icon"
+        android:layout_alignParentEnd="true"
+        android:layout_toEndOf="@+id/start_icon"
+        android:textColor="@android:color/black"
+        android:layout_marginLeft="4dp" />
+
+    <TextClock
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/dias_et"
+        android:layout_alignParentEnd="true"
+        android:id="@+id/txtClock"
+        android:layout_alignBottom="@+id/clock_icon"
+        android:paddingTop="4dp" />
+
+    <ImageView
+        android:layout_width="match_parent"
+        app:srcCompat="@android:drawable/ic_lock_idle_alarm"
+        android:id="@+id/clock_icon"
+        android:layout_marginTop="21dp"
+        android:layout_below="@+id/start_icon"
+        android:layout_alignParentStart="true"
+        android:layout_toStartOf="@+id/inicio_tv"
+        android:layout_height="35dp" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@mipmap/ic_launcher"
+        android:id="@+id/person_icon"
+        android:layout_marginTop="21dp"
+        android:layout_below="@+id/clock_icon"
+        android:layout_alignParentStart="true"
+        android:layout_toStartOf="@+id/dias_et" />
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/male_cb"
+        android:paddingLeft="10dp"
+        android:layout_alignTop="@+id/person_icon"
+        android:layout_alignStart="@+id/txtClock" />
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/fem_cb"
+        android:paddingLeft="10dp"
+        android:layout_below="@+id/male_cb"
+        android:layout_alignStart="@+id/male_cb" />
+
+    <TextView
+        android:text="Hombres"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/person_icon"
+        android:id="@+id/hombrescb_tv"
+        android:layout_above="@+id/fem_cb"
+        android:layout_toEndOf="@+id/person_icon"
+        android:layout_marginLeft="15dp"
+        android:textColor="@android:color/black"
+        android:paddingTop="6dp"
+        android:textSize="18sp" />
+
+    <TextView
+        android:text="Mujeres"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/mujerescb_tv"
+        android:layout_below="@+id/hombrescb_tv"
+        android:layout_alignBottom="@+id/fem_cb"
+        android:layout_toEndOf="@+id/person_icon"
+        android:layout_marginLeft="15dp"
+        android:textColor="@android:color/black"
+        android:paddingTop="6dp"
+        android:textSize="18sp" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:text=""
+        android:textSize="18sp"
+        android:id="@+id/dias_et"
+        android:paddingTop="5dp"
+        android:paddingLeft="9dp"
+        android:hint="Añadir dias"
+        android:layout_alignTop="@+id/clock_icon"
+        android:layout_toEndOf="@+id/clock_icon"
+        android:layout_marginLeft="4dp" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@mipmap/ic_launcher"
+        android:id="@+id/seat_icon"
+        android:layout_alignTop="@+id/asientos_et"
+        android:layout_alignParentStart="true"
+        android:layout_alignBottom="@+id/asientos_et"
+        android:layout_alignEnd="@+id/person_icon" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:layout_marginTop="21dp"
+        android:id="@+id/asientos_et"
+        android:hint="Asientos"
+        android:textSize="18sp"
+        android:layout_marginLeft="4dp"
+        android:paddingLeft="9dp"
+        android:paddingTop="6dp"
+        android:layout_below="@+id/mujerescb_tv"
+        android:layout_alignEnd="@+id/hombrescb_tv" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/ic_sort_black_24dp"
+        android:id="@+id/notas_icon"
+        android:layout_below="@+id/seat_icon"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="21dp"
+        android:layout_toStartOf="@+id/asientos_et" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textMultiLine"
+        android:ems="10"
+        android:id="@+id/notas_et"
+        android:layout_alignTop="@+id/notas_icon"
+        android:layout_toEndOf="@+id/notas_icon"
+        android:layout_marginLeft="4dp"
+        android:hint="Notas..."
+        android:paddingBottom="8dp" />
+
+</RelativeLayout>
