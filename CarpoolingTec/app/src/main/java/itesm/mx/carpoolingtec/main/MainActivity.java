@@ -22,6 +22,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import itesm.mx.carpoolingtec.R;
 import itesm.mx.carpoolingtec.contacts.ContactsFragment;
+import itesm.mx.carpoolingtec.model.Ride;
 import itesm.mx.carpoolingtec.rides.RidesFragment;
 import itesm.mx.carpoolingtec.schedule.ScheduleFragment;
 
@@ -44,6 +45,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         viewPager.setAdapter(new MyAdapter(getSupportFragmentManager()));
         tabLayout.setupWithViewPager(viewPager);
+        viewPager.setCurrentItem(1);
     }
 
     @Override
