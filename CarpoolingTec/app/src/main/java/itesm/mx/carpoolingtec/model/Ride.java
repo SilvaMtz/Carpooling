@@ -1,59 +1,61 @@
 package itesm.mx.carpoolingtec.model;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class Ride {
-    private String Driver_IdStudent;
-    private ArrayList<String> Passangers_IdStudent;
-    private Boolean Smoking;
-    private int Genders;
-    private String Description;
+
+    private String driverId;
+    private List<String> passengersIds;
+    private boolean smoking;
+    private int genders;
+    private String description;
 
     public Ride() {
     }
 
-    public Ride(String driver_IdStudent, ArrayList<String> passangers_IdStudent, Boolean smoking, int genders, String description) {
-        Driver_IdStudent = driver_IdStudent;
-        Passangers_IdStudent = passangers_IdStudent;
-        Smoking = smoking;
-        Genders = genders;
-        Description = description;
+    public Ride(String driverId, List<String> passengersIds, Boolean smoking, int genders,
+                String description) {
+        this.driverId = driverId;
+        this.passengersIds = passengersIds;
+        this.smoking = smoking;
+        this.genders = genders;
+        this.description = description;
     }
 
-    public String getDriver_IdStudent() {
-        return Driver_IdStudent;
+    public String getDriverId() {
+        return driverId;
     }
 
-    public void setDriver_IdStudent(String driver_IdStudent) {
-        Driver_IdStudent = driver_IdStudent;
+    public void setDriverId(String driverId) {
+        this.driverId = driverId;
     }
 
-    public ArrayList<String> getPassangers_List() {
-        return Passangers_IdStudent;
+    public List<String> getPassengersIds() {
+        return passengersIds;
     }
 
     public String getPassangers_IdStudent(int index) {
-        return Passangers_IdStudent.get(index);
+        return passengersIds.get(index);
     }
 
-    public void setPassangers_IdStudent(ArrayList<String> passangers_IdStudent) {
-        Passangers_IdStudent = passangers_IdStudent;
+    public void setPassengersIds(List<String> passengersIds) {
+        this.passengersIds = passengersIds;
     }
 
     public Boolean getSmoking() {
-        return Smoking;
+        return smoking;
     }
 
-    public void setSmoking(Boolean smoking) {
-        Smoking = smoking;
+    public void setSmoking(boolean smoking) {
+        this.smoking = smoking;
     }
 
-    public int getidGenders() {
-        return Genders;
+    public int getGenders() {
+        return genders;
     }
 
-    public String getGenders() {
-        switch (Genders){
+    public String getGendersString() {
+        switch (genders){
             case 1:
                 return "Male";
             case 2:
@@ -65,14 +67,14 @@ public class Ride {
     }
 
     public void setGenders(int genders) {
-        Genders = genders;
+        this.genders = genders;
     }
 
     public String getDescription() {
-        return Description;
+        return description;
     }
 
     public void setDescription(String description) {
-        Description = description;
+        this.description = description;
     }
 }

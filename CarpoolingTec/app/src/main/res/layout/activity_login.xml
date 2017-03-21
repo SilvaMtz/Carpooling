@@ -4,75 +4,80 @@
     android:id="@+id/activity_login"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="itesm.mx.carpoolingtec.Login.Login">
+    tools:context="itesm.mx.carpoolingtec.login.LoginActivity">
 
-    <ImageView
-        android:id="@+id/carpooling_id"
-        android:layout_width="180dp"
-        android:layout_height="60dp"
-        android:src="@drawable/protocarpooling2"
-        android:layout_centerHorizontal="true"/>
-
-    <LinearLayout
-        android:layout_below="@+id/carpooling_id"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:padding="50dp"
+            android:layout_gravity="center">
 
+            <ProgressBar
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:layout_centerInParent="true"
+                android:visibility="gone"/>
 
-            <ImageView
-                android:id="@+id/image_mono"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:src="@drawable/personicon"
-                />
-
-            <EditText
-                android:id="@+id/email"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/prompt_email"
-                android:inputType="textEmailAddress"
-                android:maxLines="1"/>
+                android:layout_height="fill_parent"
+                android:orientation="vertical"
+                android:layout_centerInParent="true">
 
-        </LinearLayout>
+                <ImageView
+                    android:id="@+id/image_logo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/protocarpooling2"
+                    android:layout_gravity="center_horizontal"/>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="50dp">
 
-            <ImageView
-                android:id="@+id/image_key"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:src="@drawable/key"/>
+                    <EditText
+                        android:id="@+id/edit_student_id"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/prompt_student_id"
+                        android:maxLines="1"/>
 
-            <EditText
-                android:id="@+id/password"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/prompt_password"/>
-        </LinearLayout>
+                </android.support.design.widget.TextInputLayout>
 
-        <Button
-            android:id="@+id/email_sign_in_button"
-            style="?android:textAppearanceSmall"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="@string/action_sign_in_short"
-            android:textStyle="bold" />
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
 
-    </LinearLayout>
+                    <EditText
+                        android:id="@+id/edit_password"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="textPassword"
+                        android:hint="@string/prompt_password"/>
+
+                </android.support.design.widget.TextInputLayout>
+
+                <Button
+                    android:id="@+id/button_login"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/action_sign_in_short"
+                    android:textSize="20sp"
+                    android:padding="15dp"
+                    android:textColor="@color/white"
+                    android:background="@color/colorPrimary" />
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
+    </ScrollView>
 
 </RelativeLayout>
