@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.List;
@@ -24,10 +25,12 @@ public class RidesAdapter extends RecyclerView.Adapter<RidesAdapter.ViewHolder> 
 
     private Context context;
     private List<Ride> rides;
+    private RideItemListener listener;
 
-    public RidesAdapter(Context context, List<Ride> rides) {
+    public RidesAdapter(Context context, List<Ride> rides, RideItemListener listener) {
         this.context = context;
         this.rides = rides;
+        this.listener = listener;
     }
 
     @Override
@@ -40,7 +43,7 @@ public class RidesAdapter extends RecyclerView.Adapter<RidesAdapter.ViewHolder> 
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        Ride ride = rides.get(position);
+        final Ride ride = rides.get(position);
 
         //TODO: set view data.
 
@@ -50,6 +53,13 @@ public class RidesAdapter extends RecyclerView.Adapter<RidesAdapter.ViewHolder> 
                 .create(context.getResources(), bitmap);
         drawable.setCornerRadius(1000f);
         holder.ivPicture.setImageDrawable(drawable);
+
+        holder.rlContainer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listener.onRideClick(ride);
+            }
+        });
     }
 
     @Override
@@ -65,6 +75,7 @@ public class RidesAdapter extends RecyclerView.Adapter<RidesAdapter.ViewHolder> 
 
     static class ViewHolder extends RecyclerView.ViewHolder {
 
+        @BindView(R.id.container) RelativeLayout rlContainer;
         @BindView(R.id.image_user) ImageView ivPicture;
         @BindView(R.id.text_neighborhood) TextView tvNeighborhood;
         @BindView(R.id.text_monday) TextView tvMonday;

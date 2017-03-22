@@ -1,5 +1,6 @@
 package itesm.mx.carpoolingtec.rides;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -20,7 +21,7 @@ import itesm.mx.carpoolingtec.R;
 import itesm.mx.carpoolingtec.model.Ride;
 
 public class RidesFragment extends Fragment implements RidesView,
-        SwipeRefreshLayout.OnRefreshListener{
+        SwipeRefreshLayout.OnRefreshListener, RideItemListener {
 
     @BindView(R.id.swipeRefreshLayout) SwipeRefreshLayout swipeRefreshLayout;
     @BindView(R.id.rv_rides) RecyclerView recyclerView;
@@ -57,7 +58,7 @@ public class RidesFragment extends Fragment implements RidesView,
         swipeRefreshLayout.setOnRefreshListener(this);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        ridesAdapter = new RidesAdapter(getActivity(), getDummyRides());
+        ridesAdapter = new RidesAdapter(getActivity(), getDummyRides(), this);
         recyclerView.setAdapter(ridesAdapter);
 
         return view;
@@ -102,5 +103,10 @@ public class RidesFragment extends Fragment implements RidesView,
     private List<Ride> getDummyRides() {
         return Arrays.asList(new Ride(), new Ride(), new Ride(), new Ride(), new Ride(), new Ride(),
                 new Ride());
+    }
+
+    @Override
+    public void onRideClick(Ride ride) {
+
     }
 }
