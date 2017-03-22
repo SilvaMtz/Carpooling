@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/title_Driver"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:text="Driver"
+        android:textSize="30sp"
+        android:layout_marginTop="10dp"
+        />
+
+    <ListView
+        android:id="@+id/text_Driver"
+        android:layout_width="300dp"
+        android:layout_height="80dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp"/>
+
+    <TextView
+        android:id="@+id/title_Passangers"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/Passangers"
+        android:textSize="30sp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"/>
+
+    <ListView
+        android:id="@+id/text_Passangers"
+        android:layout_width="300dp"
+        android:layout_height="100dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp"/>
+
+    <LinearLayout
+        android:id="@+id/tags"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:orientation="horizontal"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp">
+        <TextView
+            android:id="@+id/title_Genders"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/Gender"
+            android:textSize="20sp"/>
+        <TextView
+            android:id="@+id/text_Genders"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/Gendertext"
+            android:textSize="20sp"
+            android:layout_marginStart="10dp"/>
+        <TextView
+
+            android:id="@+id/title_Smoking"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/Smoking"
+            android:textSize="20sp"
+            android:layout_marginStart="70dp"/>
+        <TextView
+            android:id="@+id/text_Smoking"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/Smokingtext"
+            android:textSize="20sp"
+            android:layout_marginStart="10dp"/>
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/Title_Description"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="30sp"
+        android:text="@string/Description"
+        android:layout_marginStart="10dp"/>
+
+    <TextView
+        android:id="@+id/text_Description"
+        android:layout_width="300dp"
+        android:layout_height="match_parent"
+        android:layout_marginStart="40dp" />
+
+</LinearLayout>
