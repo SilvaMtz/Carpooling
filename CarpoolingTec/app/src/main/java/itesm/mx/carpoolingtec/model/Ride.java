@@ -9,17 +9,20 @@ public class Ride {
     private boolean smoking;
     private int genders;
     private String description;
+    private boolean[] weekdays;
+    private String time;
 
     public Ride() {
     }
 
-    public Ride(String driverId, List<String> passengersIds, Boolean smoking, int genders,
-                String description) {
+    public Ride(String driverId, List<String> passengersIds, boolean smoking, int genders, String description, boolean[] weekdays, String time) {
         this.driverId = driverId;
         this.passengersIds = passengersIds;
         this.smoking = smoking;
         this.genders = genders;
         this.description = description;
+        this.weekdays = weekdays;
+        this.time = time;
     }
 
     public String getDriverId() {
@@ -40,14 +43,6 @@ public class Ride {
 
     public void setPassengersIds(List<String> passengersIds) {
         this.passengersIds = passengersIds;
-    }
-
-    public Boolean getSmoking() {
-        return smoking;
-    }
-
-    public void setSmoking(boolean smoking) {
-        this.smoking = smoking;
     }
 
     public int getGenders() {
@@ -76,5 +71,29 @@ public class Ride {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public boolean[] getWeekdays() {
+        return weekdays;
+    }
+
+    public void setWeekdays(boolean[] weekdays) {
+        this.weekdays = weekdays;
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
+    }
+
+    public boolean isSmoking() {
+        return smoking;
+    }
+
+    public void setSmoking(boolean smoking) {
+        this.smoking = smoking;
     }
 }

@@ -40,7 +40,7 @@ public class ScheduleFragment extends Fragment implements ScheduleView,
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_schedule, container, false);
-        unbinder = ButterKnife.bind(getActivity(), view);
+        unbinder = ButterKnife.bind(this, view);
 
         swipeRefreshLayout.setOnRefreshListener(this);
 
@@ -49,6 +49,12 @@ public class ScheduleFragment extends Fragment implements ScheduleView,
         recyclerView.setAdapter(scheduleAdapter);
 
         return view;
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        unbinder.unbind();
     }
 
     @Override
