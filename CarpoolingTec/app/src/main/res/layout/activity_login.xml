@@ -4,6 +4,7 @@
     android:id="@+id/activity_login"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/tec"
     tools:context="itesm.mx.carpoolingtec.login.LoginActivity">
 
     <ScrollView
@@ -13,7 +14,6 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="50dp"
             android:layout_gravity="center">
 
             <ProgressBar
@@ -32,18 +32,27 @@
                     android:id="@+id/image_logo"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/protocarpooling2"
+                    android:src="@drawable/logo"
+                    android:scaleType="fitCenter"
+                    android:adjustViewBounds="true"
                     android:layout_gravity="center_horizontal"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="50dp">
 
                 <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="50dp">
+                    android:textColorHint="@color/white">
 
                     <EditText
                         android:id="@+id/edit_student_id"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:textColor="@color/white"
                         android:hint="@string/prompt_student_id"
                         android:maxLines="1"/>
 
@@ -51,6 +60,7 @@
 
                 <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
+                    android:textColorHint="@color/white"
                     android:layout_height="wrap_content">
 
                     <EditText
@@ -58,6 +68,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="textPassword"
+                        android:textColor="@color/white"
                         android:hint="@string/prompt_password"/>
 
                 </android.support.design.widget.TextInputLayout>
@@ -71,8 +82,10 @@
                     android:text="@string/action_sign_in_short"
                     android:textSize="20sp"
                     android:padding="15dp"
-                    android:textColor="@color/white"
-                    android:background="@color/colorPrimary" />
+                    android:textColor="@color/colorPrimary"
+                    android:background="@color/white" />
+
+                </LinearLayout>
 
             </LinearLayout>
 

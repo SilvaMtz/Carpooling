@@ -18,7 +18,7 @@
         app:tabMode="fixed"
         app:tabTextColor="@color/tabTextColor"
         app:tabSelectedTextColor="@color/colorTabSelected"
-        android:background="@color/tabBackground"/>
+        android:background="@color/colorPrimary"/>
 
     <android.support.v4.view.ViewPager
         android:id="@+id/view_pager"
