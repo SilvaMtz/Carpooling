@@ -3,6 +3,8 @@ package itesm.mx.carpoolingtec.rides;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Typeface;
+import android.graphics.drawable.BitmapDrawable;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
@@ -13,6 +15,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import com.squareup.picasso.Callback;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -42,17 +47,42 @@ public class RidesAdapter extends RecyclerView.Adapter<RidesAdapter.ViewHolder> 
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(final ViewHolder holder, int position) {
         final Ride ride = rides.get(position);
 
-        //TODO: set view data.
+        Picasso.with(context)
+                .load(ride.getDriver().getFoto())
+                .into(holder.ivPicture, new Callback() {
+                    @Override
+                    public void onSuccess() {
+                        Bitmap imageBitmap = ((BitmapDrawable) holder.ivPicture.getDrawable())
+                                .getBitmap();
+                        RoundedBitmapDrawable drawable = RoundedBitmapDrawableFactory
+                                .create(context.getResources(), imageBitmap);
+                        drawable.setCircular(true);
+                        drawable.setCornerRadius(Math.max(imageBitmap.getWidth(),
+                                imageBitmap.getHeight()) / 2.0f);
+                        holder.ivPicture.setImageDrawable(drawable);
+                    }
 
-        // Make image view round.
-        Bitmap bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.gates);
-        RoundedBitmapDrawable drawable = RoundedBitmapDrawableFactory
-                .create(context.getResources(), bitmap);
-        drawable.setCornerRadius(1000f);
-        holder.ivPicture.setImageDrawable(drawable);
+                    @Override
+                    public void onError() {
+                        Bitmap bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.gates);
+                        RoundedBitmapDrawable drawable = RoundedBitmapDrawableFactory
+                                .create(context.getResources(), bitmap);
+                        drawable.setCircular(true);
+                        drawable.setCornerRadius(Math.max(bitmap.getWidth(),
+                                bitmap.getHeight()) / 2.0f);
+
+                        holder.ivPicture.setImageDrawable(drawable);
+                    }
+                });
+
+        holder.tvNeighborhood.setText(ride.getDriver().getLocation());
+        holder.tvDistance.setText("2 km");
+        holder.tvArrival.setText(context.getString(R.string.arrival, ride.getTime()));
+
+        setWeekdaysStyle(holder, ride.getWeekdays());
 
         holder.rlContainer.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -71,6 +101,67 @@ public class RidesAdapter extends RecyclerView.Adapter<RidesAdapter.ViewHolder> 
         rides.clear();
         rides.addAll(data);
         notifyDataSetChanged();
+    }
+
+    private void setWeekdaysStyle(ViewHolder holder, boolean[] weekdays) {
+        final int colorAccent = ContextCompat.getColor(context, R.color.colorAccent);
+        final int colorNormal = ContextCompat.getColor(context, R.color.textSecondary);
+
+        if (weekdays[0]) {
+            holder.tvMonday.setTextColor(colorAccent);
+            holder.tvMonday.setTypeface(null, Typeface.BOLD);
+        } else {
+            holder.tvMonday.setTextColor(colorNormal);
+            holder.tvMonday.setTypeface(null, Typeface.NORMAL);
+        }
+
+        if (weekdays[1]) {
+            holder.tvTuesday.setTextColor(colorAccent);
+            holder.tvTuesday.setTypeface(null, Typeface.BOLD);
+        } else {
+            holder.tvTuesday.setTextColor(colorNormal);
+            holder.tvTuesday.setTypeface(null, Typeface.NORMAL);
+        }
+
+        if (weekdays[2]) {
+            holder.tvWednesday.setTextColor(colorAccent);
+            holder.tvWednesday.setTypeface(null, Typeface.BOLD);
+        } else {
+            holder.tvWednesday.setTextColor(colorNormal);
+            holder.tvWednesday.setTypeface(null, Typeface.NORMAL);
+        }
+
+        if (weekdays[3]) {
+            holder.tvThursday.setTextColor(colorAccent);
+            holder.tvThursday.setTypeface(null, Typeface.BOLD);
+        } else {
+            holder.tvThursday.setTextColor(colorNormal);
+            holder.tvThursday.setTypeface(null, Typeface.NORMAL);
+        }
+
+        if (weekdays[4]) {
+            holder.tvFriday.setTextColor(colorAccent);
+            holder.tvFriday.setTypeface(null, Typeface.BOLD);
+        } else {
+            holder.tvFriday.setTextColor(colorNormal);
+            holder.tvFriday.setTypeface(null, Typeface.NORMAL);
+        }
+
+        if (weekdays[5]) {
+            holder.tvSaturday.setTextColor(colorAccent);
+            holder.tvSaturday.setTypeface(null, Typeface.BOLD);
+        } else {
+            holder.tvSaturday.setTextColor(colorNormal);
+            holder.tvSaturday.setTypeface(null, Typeface.NORMAL);
+        }
+
+        if (weekdays[6]) {
+            holder.tvSunday.setTextColor(colorAccent);
+            holder.tvSunday.setTypeface(null, Typeface.BOLD);
+        } else {
+            holder.tvSunday.setTextColor(colorNormal);
+            holder.tvSunday.setTypeface(null, Typeface.NORMAL);
+        }
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {

@@ -4,12 +4,17 @@
     tools:context="itesm.mx.carpoolingtec.main.MainActivity">
     <item
         android:id="@+id/action_sort"
-        android:title="@string/sort"
+        android:title="@string/action_sort"
         android:orderInCategory="100"
         app:showAsAction="ifRoom"
         
         android:icon="@drawable/ic_sort_black_24dp"
         android:visible="false"/>
+
+    <item
+        android:id="@+id/action_profile"
+        android:title="@string/action_profile"
+        app:showAsAction="never" />
 
     <item
         android:id="@+id/action_settings"

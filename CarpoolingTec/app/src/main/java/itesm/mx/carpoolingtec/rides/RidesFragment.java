@@ -1,6 +1,5 @@
 package itesm.mx.carpoolingtec.rides;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -12,7 +11,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import butterknife.BindView;
@@ -20,6 +18,7 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import itesm.mx.carpoolingtec.R;
 import itesm.mx.carpoolingtec.model.Ride;
+import itesm.mx.carpoolingtec.model.User;
 
 public class RidesFragment extends Fragment implements RidesView,
         SwipeRefreshLayout.OnRefreshListener, RideItemListener {
@@ -102,8 +101,21 @@ public class RidesFragment extends Fragment implements RidesView,
     }
 
     private List<Ride> getDummyRides() {
-        return Arrays.asList(new Ride(), new Ride(), new Ride(), new Ride(), new Ride(), new Ride(),
-                new Ride());
+        List<User> users = new ArrayList<>();
+        users.add(new User("http://orig04.deviantart.net/aded/f/2013/066/c/2/profile_picture_by_naivety_stock-d5x8lbn.jpg", "Valle Primavera"));
+        users.add(new User("http://orig10.deviantart.net/b1f3/f/2011/258/1/8/profile_picture_by_ff_stock-d49yyse.jpg", "Narvarte"));
+        users.add(new User("http://skateparkoftampa.com/spot/headshots/2585.jpg", "Lomas de Rosales"));
+
+        List<Ride> rides = new ArrayList<>();
+        rides.add(new Ride(users.get(0), new boolean[]{true, false, false, true, false, false, false}, "9:00"));
+        rides.add(new Ride(users.get(1), new boolean[]{false, true, true, false, false, true, false}, "16:00"));
+        rides.add(new Ride(users.get(0), new boolean[]{false, false, false, true, false, false, false}, "14:30"));
+        rides.add(new Ride(users.get(2), new boolean[]{false, true, false, false, true, false, false}, "13:45"));
+        rides.add(new Ride(users.get(2), new boolean[]{false, false, false, false, false, true, true}, "10:30"));
+        rides.add(new Ride(users.get(1), new boolean[]{true, true, false, true, true, false, false}, "9:00"));
+        rides.add(new Ride(users.get(0), new boolean[]{false, true, true, false, false, false, false}, "11:00"));
+
+        return rides;
     }
 
     @Override
