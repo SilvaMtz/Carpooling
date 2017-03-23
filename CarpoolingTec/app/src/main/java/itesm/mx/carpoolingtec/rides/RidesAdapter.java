@@ -80,7 +80,7 @@ public class RidesAdapter extends RecyclerView.Adapter<RidesAdapter.ViewHolder> 
 
         holder.tvNeighborhood.setText(ride.getDriver().getLocation());
         holder.tvDistance.setText("2 km");
-        holder.tvArrival.setText(ride.getTime());
+        holder.tvArrival.setText(context.getString(R.string.arrival, ride.getTime()));
 
         setWeekdaysStyle(holder, ride.getWeekdays());
 
