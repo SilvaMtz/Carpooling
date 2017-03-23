@@ -4,10 +4,14 @@ import java.util.List;
 
 public class Ride {
 
-    private String driverId;
-    private List<String> passengersIds;
+    public enum Gender {
+        HOMBRE, MUJER
+    }
+
+    private User driver;
+    private List<User> passengers;
     private boolean smoking;
-    private int genders;
+    private List<Gender> genders;
     private String description;
     private boolean[] weekdays;
     private String time;
@@ -15,9 +19,16 @@ public class Ride {
     public Ride() {
     }
 
-    public Ride(String driverId, List<String> passengersIds, boolean smoking, int genders, String description, boolean[] weekdays, String time) {
-        this.driverId = driverId;
-        this.passengersIds = passengersIds;
+    public Ride(User driver, boolean[] weekdays, String time) {
+        this.driver = driver;
+        this.weekdays = weekdays;
+        this.time = time;
+    }
+
+    public Ride(User driver, List<User> passengers, boolean smoking, List<Gender> genders,
+                String description, boolean[] weekdays, String time) {
+        this.driver = driver;
+        this.passengers = passengers;
         this.smoking = smoking;
         this.genders = genders;
         this.description = description;
@@ -25,43 +36,35 @@ public class Ride {
         this.time = time;
     }
 
-    public String getDriverId() {
-        return driverId;
+    public User getDriver() {
+        return driver;
     }
 
-    public void setDriverId(String driverId) {
-        this.driverId = driverId;
+    public void setDriver(User driver) {
+        this.driver = driver;
     }
 
-    public List<String> getPassengersIds() {
-        return passengersIds;
+    public List<User> getPassengers() {
+        return passengers;
     }
 
-    public String getPassangers_IdStudent(int index) {
-        return passengersIds.get(index);
+    public void setPassengers(List<User> passengers) {
+        this.passengers = passengers;
     }
 
-    public void setPassengersIds(List<String> passengersIds) {
-        this.passengersIds = passengersIds;
+    public boolean isSmoking() {
+        return smoking;
     }
 
-    public int getGenders() {
+    public void setSmoking(boolean smoking) {
+        this.smoking = smoking;
+    }
+
+    public List<Gender> getGenders() {
         return genders;
     }
 
-    public String getGendersString() {
-        switch (genders){
-            case 1:
-                return "Male";
-            case 2:
-                return "Female";
-            case 3:
-                return "Both";
-        }
-        return null;
-    }
-
-    public void setGenders(int genders) {
+    public void setGenders(List<Gender> genders) {
         this.genders = genders;
     }
 
@@ -87,13 +90,5 @@ public class Ride {
 
     public void setTime(String time) {
         this.time = time;
-    }
-
-    public boolean isSmoking() {
-        return smoking;
-    }
-
-    public void setSmoking(boolean smoking) {
-        this.smoking = smoking;
     }
 }

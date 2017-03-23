@@ -23,10 +23,10 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Profile.ProfileActivity"
+            android:name=".profile.ProfileActivity"
             android:label="@string/title_activity_profile"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".Post.PostActivity"></activity>
+        <activity android:name=".post.PostActivity"></activity>
     </application>
 
 </manifest>

@@ -1,4 +1,4 @@
-package itesm.mx.carpoolingtec.Post;
+package itesm.mx.carpoolingtec.post;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
