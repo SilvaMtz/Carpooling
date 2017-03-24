@@ -1,5 +1,6 @@
 package itesm.mx.carpoolingtec.main;
 
+import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -23,6 +24,8 @@ import butterknife.ButterKnife;
 import itesm.mx.carpoolingtec.R;
 import itesm.mx.carpoolingtec.contacts.ContactsFragment;
 import itesm.mx.carpoolingtec.model.Ride;
+import itesm.mx.carpoolingtec.post.PostActivity;
+import itesm.mx.carpoolingtec.profile.ProfileActivity;
 import itesm.mx.carpoolingtec.rides.RidesFragment;
 import itesm.mx.carpoolingtec.schedule.ScheduleFragment;
 
@@ -67,6 +70,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         switch (item.getItemId()) {
             case R.id.action_settings:
                 return true;
+            case R.id.action_profile:
+                Intent intent = new Intent(this, ProfileActivity.class);
+                startActivity(intent);
             case R.id.action_sort:
                 return true;
         }
@@ -76,6 +82,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View v) {
         Toast.makeText(this, "FAB clicked", Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(this, PostActivity.class);
+        startActivity(intent);
     }
 
     class MyAdapter extends FragmentPagerAdapter {
