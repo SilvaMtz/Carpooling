@@ -19,9 +19,12 @@
     <string name="action_profile">Perfil</string>
     <string name="action_settings">Ajustes</string>
     <string name="action_sign_in_short">Iniciar sesión</string>
-    <string name="Smoking"></string>
+    <string name="Smoking">Fumar</string>
     <string name="action_sort">Filtrar</string>
     <string name="arrival_tec">Entrada al Tec %1$s</string>
     <string name="driver_pick_up">Recoger a %1$s</string>
     <string name="passenger_picked_up">%1$s te recogerá</string>
+    <string name="contact_name">Jorge Gil</string>
+    <string name="call">Llamar</string>
+    <string name="send_message">Enviar Mensaje</string>
 </resources>

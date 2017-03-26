@@ -48,4 +48,9 @@
     <string name="Gendertext">Both</string>
     <string name="Smoking">Smoking:</string>
     <string name="Smokingtext">No</string>
+
+    <!-- Contact info -->
+    <string name="contact_name">Jorge Gil</string>
+    <string name="call">Llamar</string>
+    <string name="send_message">Enviar Mensaje</string>
 </resources>
