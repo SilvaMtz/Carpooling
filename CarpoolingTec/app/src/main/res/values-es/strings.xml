@@ -20,4 +20,8 @@
     <string name="action_settings">Ajustes</string>
     <string name="action_sign_in_short">Iniciar sesión</string>
     <string name="Smoking"></string>
+    <string name="action_sort">Filtrar</string>
+    <string name="arrival_tec">Entrada al Tec %1$s</string>
+    <string name="driver_pick_up">Recoger a %1$s</string>
+    <string name="passenger_picked_up">%1$s te recogerá</string>
 </resources>

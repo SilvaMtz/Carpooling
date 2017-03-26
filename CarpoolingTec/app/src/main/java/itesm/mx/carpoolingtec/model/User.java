@@ -13,6 +13,12 @@ public class User {
         this.location = location;
     }
 
+    public User(String nombre, String foto, String location) {
+        this.nombre = nombre;
+        this.foto = foto;
+        this.location = location;
+    }
+
     public User(String nombre, String matricula, String celular, String foto, String location) {
         this.nombre = nombre;
         this.matricula = matricula;
