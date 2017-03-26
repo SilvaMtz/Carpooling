@@ -3,28 +3,24 @@ package itesm.mx.carpoolingtec.model;
 public class User {
 
     private String name;
-    private String matricula;
+    private String studentId;
     private String phone;
     private String photo;
-    private String location;
 
-    public User(String photo, String location) {
+    public User(String photo) {
         this.photo = photo;
-        this.location = location;
     }
 
-    public User(String name, String photo, String location) {
+    public User(String name, String photo) {
         this.name = name;
         this.photo = photo;
-        this.location = location;
     }
 
-    public User(String name, String matricula, String phone, String photo, String location) {
+    public User(String name, String studentId, String phone, String photo) {
         this.name = name;
-        this.matricula = matricula;
+        this.studentId = studentId;
         this.phone = phone;
         this.photo = photo;
-        this.location = location;
     }
 
     public String getName() {
@@ -35,12 +31,12 @@ public class User {
         this.name = name;
     }
 
-    public String getMatricula() {
-        return matricula;
+    public String getStudentId() {
+        return studentId;
     }
 
-    public void setMatricula(String matricula) {
-        this.matricula = matricula;
+    public void setStudentId(String studentId) {
+        this.studentId = studentId;
     }
 
     public String getPhone() {
@@ -59,11 +55,4 @@ public class User {
         this.photo = photo;
     }
 
-    public String getLocation() {
-        return location;
-    }
-
-    public void setLocation(String location) {
-        this.location = location;
-    }
 }

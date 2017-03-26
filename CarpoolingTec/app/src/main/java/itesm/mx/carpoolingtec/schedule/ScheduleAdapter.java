@@ -124,7 +124,7 @@ public class ScheduleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 });
 
         holder.tvArrival.setText(context.getString(R.string.arrival_tec, scheduleItem.getTime()));
-        holder.tvDestination.setText(scheduleItem.getPassenger().getLocation());
+        holder.tvDestination.setText("Destino");
         holder.tvTitle.setText(context.getString(R.string.driver_pick_up, scheduleItem.getPassenger().getName()));
     }
 

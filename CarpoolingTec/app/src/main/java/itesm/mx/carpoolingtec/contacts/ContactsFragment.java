@@ -98,9 +98,9 @@ public class ContactsFragment extends Fragment implements ContactsView,
 
     private List<User> getDummyContacts() {
         List<User> contacts = new ArrayList<>();
-        contacts.add(new User("Mariel Palacios","http://orig04.deviantart.net/aded/f/2013/066/c/2/profile_picture_by_naivety_stock-d5x8lbn.jpg", "Valle Primavera"));
-        contacts.add(new User("Kenan Zertuche","http://orig10.deviantart.net/b1f3/f/2011/258/1/8/profile_picture_by_ff_stock-d49yyse.jpg", "Narvarte"));
-        contacts.add(new User("Kel Zertuche","http://skateparkoftampa.com/spot/headshots/2585.jpg", "Lomas de Rosales"));
+        contacts.add(new User("Mariel Palacios","http://orig04.deviantart.net/aded/f/2013/066/c/2/profile_picture_by_naivety_stock-d5x8lbn.jpg"));
+        contacts.add(new User("Kenan Zertuche","http://orig10.deviantart.net/b1f3/f/2011/258/1/8/profile_picture_by_ff_stock-d49yyse.jpg"));
+        contacts.add(new User("Kel Zertuche","http://skateparkoftampa.com/spot/headshots/2585.jpg"));
 
         return contacts;
     }

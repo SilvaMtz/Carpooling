@@ -94,9 +94,9 @@ public class ScheduleFragment extends Fragment implements ScheduleView,
 
     private List<ScheduleItem> getDummyScheduleItems() {
         List<User> users = new ArrayList<>();
-        users.add(new User("Jorge", "http://orig04.deviantart.net/aded/f/2013/066/c/2/profile_picture_by_naivety_stock-d5x8lbn.jpg", "Corintio 3112, Valle Primavera"));
-        users.add(new User("Karen", "http://orig10.deviantart.net/b1f3/f/2011/258/1/8/profile_picture_by_ff_stock-d49yyse.jpg", "Playa de Hornos 1024, Narvarte"));
-        users.add(new User("Raúl" ,"http://skateparkoftampa.com/spot/headshots/2585.jpg", "Loma del Mirador 10202-A, Lomas de Rosales"));
+        users.add(new User("Jorge", "http://orig04.deviantart.net/aded/f/2013/066/c/2/profile_picture_by_naivety_stock-d5x8lbn.jpg"));
+        users.add(new User("Karen", "http://orig10.deviantart.net/b1f3/f/2011/258/1/8/profile_picture_by_ff_stock-d49yyse.jpg"));
+        users.add(new User("Raúl" ,"http://skateparkoftampa.com/spot/headshots/2585.jpg"));
 
         List<ScheduleItem> scheduleItems = new ArrayList<>();
         scheduleItems.add(new ScheduleItem(ScheduleItem.RideType.DAY_TEXT, ScheduleItem.DayOfWeek.TUESDAY));

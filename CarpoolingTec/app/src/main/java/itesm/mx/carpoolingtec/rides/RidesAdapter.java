@@ -78,7 +78,7 @@ public class RidesAdapter extends RecyclerView.Adapter<RidesAdapter.ViewHolder> 
                     }
                 });
 
-        holder.tvNeighborhood.setText(ride.getDriver().getLocation());
+        holder.tvNeighborhood.setText("Colonia");
         holder.tvDistance.setText("2 km");
         holder.tvArrival.setText(context.getString(R.string.arrival, ride.getTime()));
 
