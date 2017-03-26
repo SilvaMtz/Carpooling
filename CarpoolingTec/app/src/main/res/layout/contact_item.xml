@@ -3,7 +3,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="80dp"
-    android:padding="10dp">
+    android:padding="10dp"
+    android:id="@+id/contactLayout">
 
     <ImageView
         android:id="@+id/image_user"
@@ -19,11 +20,12 @@
         android:layout_height="wrap_content"
         android:text="Jorge Gil"
         android:textSize="18sp"
-        style="@style/Base.TextAppearance.AppCompat.Body1"
+        android:textColor="@color/textPrimary"
         android:layout_marginStart="15dp"
         android:layout_toEndOf="@id/image_user"
         android:layout_alignParentTop="true"
         android:layout_alignParentBottom="true"
         android:gravity="center_vertical"/>
+
 
 </RelativeLayout>
