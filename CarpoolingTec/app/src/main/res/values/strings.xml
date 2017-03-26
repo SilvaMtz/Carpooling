@@ -13,13 +13,13 @@
 
     <!-- Ride item layout -->
     <string name="neighborhood">Neighborhood</string>
-    <string name="monday_initial">M</string>
-    <string name="tuesday_initial">T</string>
-    <string name="wednesday_initial">W</string>
-    <string name="thursday_initial">T</string>
-    <string name="friday_initial">F</string>
+    <string name="monday_initial">L</string>
+    <string name="tuesday_initial">M</string>
+    <string name="wednesday_initial">M</string>
+    <string name="thursday_initial">J</string>
+    <string name="friday_initial">V</string>
     <string name="saturday_initial">S</string>
-    <string name="sunday_initial">S</string>
+    <string name="sunday_initial">D</string>
     <string name="arrival">Arrival %1$s</string>
 
     <string name="arrival_tec">Arrival at Tec %1$s</string>
@@ -49,14 +49,14 @@
     <string name="Smoking">Smoking:</string>
     <string name="Smokingtext">No</string>
 
-    <string-array name="post_mode">
-        <item>Ofrecer</item>
-        <item>Pedir</item>
-    </string-array>
-
     <string name="hint_origin">Origen</string>
     <string name="hint_destination">Destino</string>
     <string name="hint_seats">Número de asientos</string>
     <string name="hint_price">Precio</string>
     <string name="hint_notes">Notas</string>
+
+    <!-- Contact info -->
+    <string name="contact_name">Jorge Gil</string>
+    <string name="call">Llamar</string>
+    <string name="send_message">Enviar Mensaje</string>
 </resources>
