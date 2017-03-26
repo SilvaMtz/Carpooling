@@ -3,10 +3,7 @@ package itesm.mx.carpoolingtec.contacts;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Typeface;
 import android.graphics.drawable.BitmapDrawable;
-import android.provider.ContactsContract;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v7.widget.RecyclerView;
@@ -25,18 +22,9 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import itesm.mx.carpoolingtec.R;
-import itesm.mx.carpoolingtec.model.Ride;
 import itesm.mx.carpoolingtec.model.User;
-import itesm.mx.carpoolingtec.rides.RideItemListener;
-import itesm.mx.carpoolingtec.rides.RidesAdapter;
-
-/**
- * Created by DavidMartinez on 3/26/17.
- */
 
 public class ContactsAdapter extends RecyclerView.Adapter<ContactsAdapter.ViewHolder>{
-
-
 
     private Context context;
     private List<User> contacts;
@@ -61,7 +49,7 @@ public class ContactsAdapter extends RecyclerView.Adapter<ContactsAdapter.ViewHo
         final User contact = contacts.get(position);
 
         Picasso.with(context)
-                .load(contact.getFoto())
+                .load(contact.getPhoto())
                 .into(holder.ivPicture, new Callback() {
                     @Override
                     public void onSuccess() {
@@ -88,7 +76,7 @@ public class ContactsAdapter extends RecyclerView.Adapter<ContactsAdapter.ViewHo
                     }
                 });
 
-        holder.tvName.setText(contact.getNombre());
+        holder.tvName.setText(contact.getName());
         holder.rlContainer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -107,7 +95,6 @@ public class ContactsAdapter extends RecyclerView.Adapter<ContactsAdapter.ViewHo
         contacts.addAll(data);
         notifyDataSetChanged();
     }
-
 
     static class ViewHolder extends RecyclerView.ViewHolder {
 

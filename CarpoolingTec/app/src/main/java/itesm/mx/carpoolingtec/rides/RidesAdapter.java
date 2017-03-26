@@ -51,7 +51,7 @@ public class RidesAdapter extends RecyclerView.Adapter<RidesAdapter.ViewHolder> 
         final Ride ride = rides.get(position);
 
         Picasso.with(context)
-                .load(ride.getDriver().getFoto())
+                .load(ride.getDriver().getPhoto())
                 .into(holder.ivPicture, new Callback() {
                     @Override
                     public void onSuccess() {

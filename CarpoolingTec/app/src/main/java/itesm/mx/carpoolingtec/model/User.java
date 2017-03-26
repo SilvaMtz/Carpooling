@@ -2,37 +2,37 @@ package itesm.mx.carpoolingtec.model;
 
 public class User {
 
-    private String nombre;
+    private String name;
     private String matricula;
-    private String celular;
-    private String foto;
+    private String phone;
+    private String photo;
     private String location;
 
-    public User(String foto, String location) {
-        this.foto = foto;
+    public User(String photo, String location) {
+        this.photo = photo;
         this.location = location;
     }
 
-    public User(String nombre, String foto, String location) {
-        this.nombre = nombre;
-        this.foto = foto;
+    public User(String name, String photo, String location) {
+        this.name = name;
+        this.photo = photo;
         this.location = location;
     }
 
-    public User(String nombre, String matricula, String celular, String foto, String location) {
-        this.nombre = nombre;
+    public User(String name, String matricula, String phone, String photo, String location) {
+        this.name = name;
         this.matricula = matricula;
-        this.celular = celular;
-        this.foto = foto;
+        this.phone = phone;
+        this.photo = photo;
         this.location = location;
     }
 
-    public String getNombre() {
-        return nombre;
+    public String getName() {
+        return name;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getMatricula() {
@@ -43,20 +43,20 @@ public class User {
         this.matricula = matricula;
     }
 
-    public String getCelular() {
-        return celular;
+    public String getPhone() {
+        return phone;
     }
 
-    public void setCelular(String celular) {
-        this.celular = celular;
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
-    public String getFoto() {
-        return foto;
+    public String getPhoto() {
+        return photo;
     }
 
-    public void setFoto(String foto) {
-        this.foto = foto;
+    public void setPhoto(String photo) {
+        this.photo = photo;
     }
 
     public String getLocation() {

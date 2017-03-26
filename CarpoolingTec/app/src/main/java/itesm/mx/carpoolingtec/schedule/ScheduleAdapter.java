@@ -4,7 +4,6 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v7.widget.RecyclerView;
@@ -97,7 +96,7 @@ public class ScheduleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     private void setHolderDriverViews(final ViewHolderDriver holder, ScheduleItem scheduleItem) {
         Picasso.with(context)
-                .load(scheduleItem.getPassenger().getFoto())
+                .load(scheduleItem.getPassenger().getPhoto())
                 .into(holder.ivPicture, new Callback() {
                     @Override
                     public void onSuccess() {
@@ -126,12 +125,12 @@ public class ScheduleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
         holder.tvArrival.setText(context.getString(R.string.arrival_tec, scheduleItem.getTime()));
         holder.tvDestination.setText(scheduleItem.getPassenger().getLocation());
-        holder.tvTitle.setText(context.getString(R.string.driver_pick_up, scheduleItem.getPassenger().getNombre()));
+        holder.tvTitle.setText(context.getString(R.string.driver_pick_up, scheduleItem.getPassenger().getName()));
     }
 
     private void setHolderPassengerViews(final ViewHolderPassenger holder, ScheduleItem scheduleItem) {
         Picasso.with(context)
-                .load(scheduleItem.getPassenger().getFoto())
+                .load(scheduleItem.getPassenger().getPhoto())
                 .into(holder.ivPicture, new Callback() {
                     @Override
                     public void onSuccess() {
@@ -159,7 +158,7 @@ public class ScheduleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 });
 
         holder.tvArrival.setText(context.getString(R.string.arrival_tec, scheduleItem.getTime()));
-        holder.tvTitle.setText(context.getString(R.string.passenger_picked_up, scheduleItem.getPassenger().getNombre()));
+        holder.tvTitle.setText(context.getString(R.string.passenger_picked_up, scheduleItem.getPassenger().getName()));
     }
 
     private void setHolderDayTextViews(final ViewHolderDayText holder, ScheduleItem item) {
