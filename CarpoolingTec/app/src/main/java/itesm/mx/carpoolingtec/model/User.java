@@ -6,17 +6,14 @@ public class User {
     private String matricula;
     private String celular;
     private String foto;
-    private String location;
 
-    public User(String foto, String location) {
+    public User(String foto) {
         this.foto = foto;
-        this.location = location;
     }
 
-    public User(String nombre, String foto, String location) {
+    public User(String nombre, String foto) {
         this.nombre = nombre;
         this.foto = foto;
-        this.location = location;
     }
 
     public User(String nombre, String matricula, String celular, String foto, String location) {
@@ -24,7 +21,6 @@ public class User {
         this.matricula = matricula;
         this.celular = celular;
         this.foto = foto;
-        this.location = location;
     }
 
     public String getNombre() {
@@ -59,11 +55,4 @@ public class User {
         this.foto = foto;
     }
 
-    public String getLocation() {
-        return location;
-    }
-
-    public void setLocation(String location) {
-        this.location = location;
-    }
 }
