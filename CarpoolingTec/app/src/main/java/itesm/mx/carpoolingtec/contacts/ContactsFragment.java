@@ -25,6 +25,7 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import itesm.mx.carpoolingtec.R;
 import itesm.mx.carpoolingtec.data.CarpoolingService;
+import itesm.mx.carpoolingtec.data.FakeCarpoolingService;
 import itesm.mx.carpoolingtec.model.User;
 import itesm.mx.carpoolingtec.util.schedulers.SchedulerProvider;
 import retrofit2.Retrofit;
@@ -81,8 +82,9 @@ public class ContactsFragment extends Fragment implements ContactsView,
                 .build();
 
         CarpoolingService service = retrofit.create(CarpoolingService.class);
+        CarpoolingService fakeService = new FakeCarpoolingService();
 
-        presenter = new ContactsPresenter(this, service, SchedulerProvider.getInstance());
+        presenter = new ContactsPresenter(this, fakeService, SchedulerProvider.getInstance());
         presenter.start();
         presenter.loadContacts();
 
@@ -94,15 +96,6 @@ public class ContactsFragment extends Fragment implements ContactsView,
         super.onDestroyView();
         unbinder.unbind();
         presenter.stop();
-    }
-
-    private List<User> getDummyContacts() {
-        List<User> contacts = new ArrayList<>();
-        contacts.add(new User("Mariel Palacios","http://orig04.deviantart.net/aded/f/2013/066/c/2/profile_picture_by_naivety_stock-d5x8lbn.jpg"));
-        contacts.add(new User("Kenan Zertuche","http://orig10.deviantart.net/b1f3/f/2011/258/1/8/profile_picture_by_ff_stock-d49yyse.jpg"));
-        contacts.add(new User("Kel Zertuche","http://skateparkoftampa.com/spot/headshots/2585.jpg"));
-
-        return contacts;
     }
 
     @Override

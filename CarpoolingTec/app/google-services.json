@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "422963762982",
+    "firebase_url": "https://carpooling-tec.firebaseio.com",
+    "project_id": "carpooling-tec",
+    "storage_bucket": "carpooling-tec.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:422963762982:android:3bd32a4b2615f241",
+        "android_client_info": {
+          "package_name": "itesm.mx.carpoolingtec"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "422963762982-rr00s6r1v2btbpqugrudch29r66hrmsq.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "itesm.mx.carpoolingtec",
+            "certificate_hash": "3178b10965d8367d2a9bc83aa8d69d42016cfb33"
+          }
+        },
+        {
+          "client_id": "422963762982-qp4q0esas10dlfqtqk241np5b83cmhga.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBNJbrskIAHHHs_mBzMq6UBAe6n9YUH-4U"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "422963762982-qp4q0esas10dlfqtqk241np5b83cmhga.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

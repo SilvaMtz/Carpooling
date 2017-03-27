@@ -1,19 +1,23 @@
 package itesm.mx.carpoolingtec.model;
 
-public class Ride {
+public class RideResponse {
 
-    private User driver;
+    private String driver;
     private String weekday;
     private String time;
     private String ride_type;
     private double latitude;
     private double longitude;
 
-    public Ride(User driver) {
+    public RideResponse() {
+
+    }
+
+    public RideResponse(String driver) {
         this.driver = driver;
     }
 
-    public Ride(User driver, String weekday, String time, String ride_type, double latitude, double longitude) {
+    public RideResponse(String driver, String weekday, String time, String ride_type, double latitude, double longitude) {
         this.driver = driver;
         this.weekday = weekday;
         this.time = time;
@@ -22,11 +26,11 @@ public class Ride {
         this.longitude = longitude;
     }
 
-    public User getDriver() {
+    public String getDriver() {
         return driver;
     }
 
-    public void setDriver(User driver) {
+    public void setDriver(String driver) {
         this.driver = driver;
     }
 

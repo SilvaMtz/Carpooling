@@ -10,18 +10,36 @@ import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
+
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import itesm.mx.carpoolingtec.R;
+import itesm.mx.carpoolingtec.data.CarpoolingService;
+import itesm.mx.carpoolingtec.data.FakeCarpoolingService;
 import itesm.mx.carpoolingtec.model.Ride;
 import itesm.mx.carpoolingtec.model.User;
+import itesm.mx.carpoolingtec.util.schedulers.SchedulerProvider;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RidesFragment extends Fragment implements RidesView,
-        SwipeRefreshLayout.OnRefreshListener, RideItemListener {
+        SwipeRefreshLayout.OnRefreshListener, RideItemListener, ChildEventListener {
+
+    private static final String TAG = "RidesFragment";
+
+    public static final String RIDE_TYPE = "rideType";
+    public static final int TO_TEC = 0;
+    public static final int FROM_TEC = 1;
 
     @BindView(R.id.swipeRefreshLayout) SwipeRefreshLayout swipeRefreshLayout;
     @BindView(R.id.rv_rides) RecyclerView recyclerView;
@@ -29,18 +47,30 @@ public class RidesFragment extends Fragment implements RidesView,
     private RidesAdapter ridesAdapter;
     private Unbinder unbinder;
 
+    private DatabaseReference databaseReference;
+    private RidesPresenter presenter;
+
+    private int rideType;
+    private List<User> users;
+
     public RidesFragment() {
         // Required empty public constructor
     }
 
-    public static RidesFragment newInstance() {
-        return new RidesFragment();
+    public static RidesFragment newInstance(int type) {
+        RidesFragment fragment = new RidesFragment();
+        Bundle args = new Bundle();
+        args.putInt(RIDE_TYPE, type);
+        fragment.setArguments(args);
+        return fragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
+
+        rideType = getArguments().getInt(RIDE_TYPE);
     }
 
     @Override
@@ -58,8 +88,21 @@ public class RidesFragment extends Fragment implements RidesView,
         swipeRefreshLayout.setOnRefreshListener(this);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        ridesAdapter = new RidesAdapter(getActivity(), getDummyRides(), this);
+        ridesAdapter = new RidesAdapter(getActivity(), new ArrayList<Ride>(), this, rideType);
         recyclerView.setAdapter(ridesAdapter);
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("https://carpooling-tec.firebaseio.com/")
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        CarpoolingService service = retrofit.create(CarpoolingService.class);
+        FakeCarpoolingService fakeService = new FakeCarpoolingService();
+
+        presenter = new RidesPresenter(this, fakeService, SchedulerProvider.getInstance());
+        presenter.start();
+        presenter.loadRides();
 
         return view;
     }
@@ -68,21 +111,23 @@ public class RidesFragment extends Fragment implements RidesView,
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
+        presenter.stop();
     }
 
     @Override
     public void setLoadingIndicator(boolean active) {
-
+        swipeRefreshLayout.setRefreshing(active);
     }
 
     @Override
     public void showRides(List<Ride> rides) {
-
+        ridesAdapter.setData(rides);
+        recyclerView.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void hideRides() {
-
+        recyclerView.setVisibility(View.GONE);
     }
 
     @Override
@@ -97,29 +142,36 @@ public class RidesFragment extends Fragment implements RidesView,
 
     @Override
     public void onRefresh() {
-
-    }
-
-    private List<Ride> getDummyRides() {
-        List<User> users = new ArrayList<>();
-        users.add(new User("http://orig04.deviantart.net/aded/f/2013/066/c/2/profile_picture_by_naivety_stock-d5x8lbn.jpg", "Valle Primavera"));
-        users.add(new User("http://orig10.deviantart.net/b1f3/f/2011/258/1/8/profile_picture_by_ff_stock-d49yyse.jpg", "Narvarte"));
-        users.add(new User("http://skateparkoftampa.com/spot/headshots/2585.jpg", "Lomas de Rosales"));
-
-        List<Ride> rides = new ArrayList<>();
-        rides.add(new Ride(users.get(0), new boolean[]{true, false, false, true, false, false, false}, "9:00"));
-        rides.add(new Ride(users.get(1), new boolean[]{false, true, true, false, false, true, false}, "16:00"));
-        rides.add(new Ride(users.get(0), new boolean[]{false, false, false, true, false, false, false}, "14:30"));
-        rides.add(new Ride(users.get(2), new boolean[]{false, true, false, false, true, false, false}, "13:45"));
-        rides.add(new Ride(users.get(2), new boolean[]{false, false, false, false, false, true, true}, "10:30"));
-        rides.add(new Ride(users.get(1), new boolean[]{true, true, false, true, true, false, false}, "9:00"));
-        rides.add(new Ride(users.get(0), new boolean[]{false, true, true, false, false, false, false}, "11:00"));
-
-        return rides;
+        presenter.loadRides();
     }
 
     @Override
     public void onRideClick(Ride ride) {
+
+    }
+
+    @Override
+    public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+
+    }
+
+    @Override
+    public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+    }
+
+    @Override
+    public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+    }
+
+    @Override
+    public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+    }
+
+    @Override
+    public void onCancelled(DatabaseError databaseError) {
 
     }
 }

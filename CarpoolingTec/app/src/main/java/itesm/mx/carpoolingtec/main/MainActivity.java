@@ -5,7 +5,6 @@ import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -23,7 +22,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import itesm.mx.carpoolingtec.R;
 import itesm.mx.carpoolingtec.contacts.ContactsFragment;
-import itesm.mx.carpoolingtec.model.Ride;
 import itesm.mx.carpoolingtec.post.PostActivity;
 import itesm.mx.carpoolingtec.profile.ProfileActivity;
 import itesm.mx.carpoolingtec.rides.RidesFragment;
@@ -101,9 +99,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 case 0:
                     return ContactsFragment.newInstance();
                 case 1:
-                    return RidesFragment.newInstance();
+                    return RidesFragment.newInstance(RidesFragment.TO_TEC);
                 case 2:
-                    return ScheduleFragment.newInstance();
+                    return RidesFragment.newInstance(RidesFragment.FROM_TEC);
             }
             return null;
         }
@@ -120,9 +118,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 case 0:
                     return getResources().getString(R.string.contacts);
                 case 1:
-                    return getResources().getString(R.string.rides);
+                    return getResources().getString(R.string.rides_to_tec);
                 case 2:
-                    return getResources().getString(R.string.schedule);
+                    return getResources().getString(R.string.rides_from_tec);
             }
             return null;
         }

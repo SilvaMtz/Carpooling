@@ -6,9 +6,9 @@
     <string name="action_sort">Sort</string>
     <string name="action_profile">Profile</string>
 
-    <string name="rides">Rides</string>
+    <string name="rides_to_tec">Viajes al Tec</string>
     <string name="contacts">Contacts</string>
-    <string name="schedule">Schedule</string>
+    <string name="rides_from_tec">Viajes del Tec</string>
     <string name="post">New Post</string>
 
     <!-- Ride item layout -->
