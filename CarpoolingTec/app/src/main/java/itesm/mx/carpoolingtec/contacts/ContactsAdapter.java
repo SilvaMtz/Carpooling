@@ -23,14 +23,15 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import itesm.mx.carpoolingtec.R;
 import itesm.mx.carpoolingtec.model.User;
+import itesm.mx.carpoolingtec.model.firebase.Contact;
 
 public class ContactsAdapter extends RecyclerView.Adapter<ContactsAdapter.ViewHolder>{
 
     private Context context;
-    private List<User> contacts;
+    private List<Contact> contacts;
     private ContactItemListener listener;
 
-    public ContactsAdapter(Context context, List<User> contacts, ContactItemListener listener) {
+    public ContactsAdapter(Context context, List<Contact> contacts, ContactItemListener listener) {
         this.context = context;
         this.contacts = contacts;
         this.listener = listener;
@@ -46,7 +47,7 @@ public class ContactsAdapter extends RecyclerView.Adapter<ContactsAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        final User contact = contacts.get(position);
+        final Contact contact = contacts.get(position);
 
         Picasso.with(context)
                 .load(contact.getPhoto())
@@ -90,9 +91,19 @@ public class ContactsAdapter extends RecyclerView.Adapter<ContactsAdapter.ViewHo
         return null != contacts ? contacts.size() : 0;
     }
 
-    public void setData(List<User> data) {
+    public void setData(List<Contact> data) {
         contacts.clear();
         contacts.addAll(data);
+        notifyDataSetChanged();
+    }
+
+    public void clearData() {
+        contacts.clear();
+        notifyDataSetChanged();
+    }
+
+    public void addContact(Contact contact) {
+        contacts.add(contact);
         notifyDataSetChanged();
     }
 

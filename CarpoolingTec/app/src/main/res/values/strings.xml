@@ -11,6 +11,9 @@
     <string name="rides_from_tec">Viajes del Tec</string>
     <string name="post">New Post</string>
 
+    <!-- ContactFragment -->
+    <string name="error_loading_contacts">Error cargando contactos</string>
+
     <!-- Ride item layout -->
     <string name="neighborhood">Neighborhood</string>
     <string name="monday_initial">L</string>

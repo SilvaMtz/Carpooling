@@ -1,7 +1,5 @@
 package itesm.mx.carpoolingtec.contacts;
 
-import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -13,23 +11,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
-
 import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import itesm.mx.carpoolingtec.R;
-import itesm.mx.carpoolingtec.data.CarpoolingService;
-import itesm.mx.carpoolingtec.data.FakeCarpoolingService;
-import itesm.mx.carpoolingtec.model.User;
+import itesm.mx.carpoolingtec.data.AppRepository;
+import itesm.mx.carpoolingtec.model.firebase.Contact;
 import itesm.mx.carpoolingtec.util.schedulers.SchedulerProvider;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 
 public class ContactsFragment extends Fragment implements ContactsView,
@@ -70,21 +60,15 @@ public class ContactsFragment extends Fragment implements ContactsView,
         unbinder = ButterKnife.bind(this, view);
 
         swipeRefreshLayout.setOnRefreshListener(this);
+        swipeRefreshLayout.setRefreshing(false);
+        swipeRefreshLayout.setEnabled(false);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        contactsAdapter = new ContactsAdapter(getActivity(), new ArrayList<User>(), this);
+        contactsAdapter = new ContactsAdapter(getActivity(), new ArrayList<Contact>(), this);
         recyclerView.setAdapter(contactsAdapter);
 
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://carpooling-tec.firebaseio.com/")
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-
-        CarpoolingService service = retrofit.create(CarpoolingService.class);
-        CarpoolingService fakeService = new FakeCarpoolingService();
-
-        presenter = new ContactsPresenter(this, fakeService, SchedulerProvider.getInstance());
+        presenter = new ContactsPresenter(this, AppRepository.getInstance(),
+                SchedulerProvider.getInstance());
         presenter.start();
         presenter.loadContacts();
 
@@ -99,7 +83,7 @@ public class ContactsFragment extends Fragment implements ContactsView,
     }
 
     @Override
-    public void onContactClick(User contact) {
+    public void onContactClick(Contact contact) {
 
     }
 
@@ -114,8 +98,7 @@ public class ContactsFragment extends Fragment implements ContactsView,
     }
 
     @Override
-    public void showContacts(List<User> users) {
-        contactsAdapter.setData(users);
+    public void showContacts() {
         recyclerView.setVisibility(View.VISIBLE);
     }
 
@@ -125,7 +108,17 @@ public class ContactsFragment extends Fragment implements ContactsView,
     }
 
     @Override
+    public void clearContacts() {
+        contactsAdapter.clearData();
+    }
+
+    @Override
     public void showErrorMessageToast() {
-        Toast.makeText(getContext(), "Error cargando contactos", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getContext(), R.string.error_loading_contacts, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void addContact(Contact contact) {
+        contactsAdapter.addContact(contact);
     }
 }

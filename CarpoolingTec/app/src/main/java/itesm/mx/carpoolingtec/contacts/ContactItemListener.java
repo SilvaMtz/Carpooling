@@ -1,11 +1,8 @@
 package itesm.mx.carpoolingtec.contacts;
 
 import itesm.mx.carpoolingtec.model.User;
-
-/**
- * Created by DavidMartinez on 3/26/17.
- */
+import itesm.mx.carpoolingtec.model.firebase.Contact;
 
 public interface ContactItemListener {
-    void onContactClick(User contact);
+    void onContactClick(Contact contact);
 }
