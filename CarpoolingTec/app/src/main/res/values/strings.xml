@@ -62,4 +62,5 @@
     <string name="contact_name">Jorge Gil</string>
     <string name="call">Llamar</string>
     <string name="send_message">Enviar Mensaje</string>
+    <string name="add_contact">Agregar Contacto</string>
 </resources>

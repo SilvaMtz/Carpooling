@@ -1,83 +1,132 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="10dp">
+
     <LinearLayout
         android:id="@+id/contactinfo"
         android:layout_width="match_parent"
-        android:layout_height="150dp"
-        android:orientation="vertical">
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="15dp">
+
         <LinearLayout
             android:id="@+id/Layoutcontact"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
+
             <ImageView
                 android:id="@+id/image_user"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
                 android:src="@drawable/circleshape" />
 
-            <TextView
-                android:id="@+id/text_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Jorge Gil"
-                android:textSize="18sp"
-                style="@style/Base.TextAppearance.AppCompat.Body1"
-                android:layout_marginStart="15dp"
-                android:layout_marginTop="20dp"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/text_name"
+                    style="@style/Base.TextAppearance.AppCompat.Body1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_weight="1"
+                    android:text="Jorge Gil"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/tvNumero"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="7dp"
+                    android:layout_marginStart="15dp"
+                    android:layout_weight="1"
+                    android:text="811 501 6036"
+                    android:textSize="16sp" />
+            </LinearLayout>
+
+
         </LinearLayout>
+
         <LinearLayout
             android:id="@+id/LayoutCall"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:paddingStart="15dp"
             android:layout_marginTop="15dp"
-            >
+            android:orientation="horizontal"
+            android:paddingStart="15dp">
+
             <ImageView
                 android:id="@+id/image_cell"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:src="@drawable/ic_call_black_24dp"
-                />
+                android:src="@drawable/ic_call_black_24dp" />
 
             <TextView
                 android:id="@+id/text_call"
+                style="@style/Base.TextAppearance.AppCompat.Body1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/call"
-                android:textSize="15sp"
-                style="@style/Base.TextAppearance.AppCompat.Body1"
                 android:layout_marginStart="15dp"
-                android:layout_marginTop="5dp"/>
+                android:layout_marginTop="5dp"
+                android:text="@string/call"
+                android:textSize="15sp" />
         </LinearLayout>
+
         <LinearLayout
             android:id="@+id/LayoutMessage"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
             android:orientation="horizontal"
-            android:paddingStart="15dp"
-            android:layout_marginTop="10dp">
+            android:paddingStart="15dp">
+
             <ImageView
                 android:id="@+id/image_message"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:src="@drawable/ic_comment_black_24dp"
-                />
+                android:src="@drawable/ic_comment_black_24dp" />
 
             <TextView
                 android:id="@+id/text_message"
+                style="@style/Base.TextAppearance.AppCompat.Body1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/send_message"
-                android:textSize="15sp"
-                style="@style/Base.TextAppearance.AppCompat.Body1"
                 android:layout_marginStart="15dp"
-                android:layout_marginTop="5dp"/>
+                android:layout_marginTop="5dp"
+                android:text="@string/send_message"
+                android:textSize="15sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/LayoutAgregar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal"
+            android:paddingStart="15dp">
+
+            <ImageView
+                android:id="@+id/imageAgregar"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/ic_person_add_black_24dp" />
+
+            <TextView
+                android:id="@+id/text_agregar"
+                style="@style/Base.TextAppearance.AppCompat.Body1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="5dp"
+                android:text="@string/add_contact"
+                android:textSize="15sp" />
         </LinearLayout>
     </LinearLayout>
 
