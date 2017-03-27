@@ -9,31 +9,26 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
-import com.google.firebase.database.ChildEventListener;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 
 import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import itesm.mx.carpoolingtec.R;
+import itesm.mx.carpoolingtec.data.AppRepository;
 import itesm.mx.carpoolingtec.data.CarpoolingService;
 import itesm.mx.carpoolingtec.data.FakeCarpoolingService;
-import itesm.mx.carpoolingtec.model.Ride;
-import itesm.mx.carpoolingtec.model.User;
+import itesm.mx.carpoolingtec.model.firebase.UserRide;
 import itesm.mx.carpoolingtec.util.schedulers.SchedulerProvider;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RidesFragment extends Fragment implements RidesView,
-        SwipeRefreshLayout.OnRefreshListener, RideItemListener, ChildEventListener {
+        SwipeRefreshLayout.OnRefreshListener, RideItemListener {
 
     private static final String TAG = "RidesFragment";
 
@@ -47,11 +42,9 @@ public class RidesFragment extends Fragment implements RidesView,
     private RidesAdapter ridesAdapter;
     private Unbinder unbinder;
 
-    private DatabaseReference databaseReference;
     private RidesPresenter presenter;
 
     private int rideType;
-    private List<User> users;
 
     public RidesFragment() {
         // Required empty public constructor
@@ -86,9 +79,11 @@ public class RidesFragment extends Fragment implements RidesView,
         unbinder = ButterKnife.bind(this, view);
 
         swipeRefreshLayout.setOnRefreshListener(this);
+        swipeRefreshLayout.setRefreshing(false);
+        swipeRefreshLayout.setEnabled(false);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        ridesAdapter = new RidesAdapter(getActivity(), new ArrayList<Ride>(), this, rideType);
+        ridesAdapter = new RidesAdapter(getActivity(), new ArrayList<UserRide>(), this, rideType);
         recyclerView.setAdapter(ridesAdapter);
 
         Retrofit retrofit = new Retrofit.Builder()
@@ -100,7 +95,7 @@ public class RidesFragment extends Fragment implements RidesView,
         CarpoolingService service = retrofit.create(CarpoolingService.class);
         FakeCarpoolingService fakeService = new FakeCarpoolingService();
 
-        presenter = new RidesPresenter(this, fakeService, SchedulerProvider.getInstance());
+        presenter = new RidesPresenter(this, AppRepository.getInstance(), SchedulerProvider.getInstance(), rideType);
         presenter.start();
         presenter.loadRides();
 
@@ -120,24 +115,29 @@ public class RidesFragment extends Fragment implements RidesView,
     }
 
     @Override
-    public void showRides(List<Ride> rides) {
-        ridesAdapter.setData(rides);
+    public void showUserRides() {
         recyclerView.setVisibility(View.VISIBLE);
     }
 
     @Override
-    public void hideRides() {
+    public void hideUserRides() {
         recyclerView.setVisibility(View.GONE);
     }
 
     @Override
-    public void showNoRidesAvailableToast() {
-
+    public void addUserRide(UserRide userRide) {
+        ridesAdapter.addUserRide(userRide);
     }
 
     @Override
-    public void showErrorLoadingRidesToast() {
+    public void clearUserRides() {
+        ridesAdapter.clearUserRides();
+    }
 
+
+    @Override
+    public void showErrorLoadingRidesToast() {
+        Toast.makeText(getContext(), R.string.error_loading_rides, Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -146,32 +146,7 @@ public class RidesFragment extends Fragment implements RidesView,
     }
 
     @Override
-    public void onRideClick(Ride ride) {
-
-    }
-
-    @Override
-    public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-
-    }
-
-    @Override
-    public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
-    }
-
-    @Override
-    public void onChildRemoved(DataSnapshot dataSnapshot) {
-
-    }
-
-    @Override
-    public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
-    }
-
-    @Override
-    public void onCancelled(DatabaseError databaseError) {
+    public void onRideClick(UserRide ride) {
 
     }
 }

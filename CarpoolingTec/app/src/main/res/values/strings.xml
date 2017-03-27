@@ -14,6 +14,9 @@
     <!-- ContactFragment -->
     <string name="error_loading_contacts">Error cargando contactos</string>
 
+    <!-- RidesFragment -->
+    <string name="error_loading_rides">Error cargando viajes</string>
+
     <!-- Ride item layout -->
     <string name="neighborhood">Neighborhood</string>
     <string name="monday_initial">L</string>

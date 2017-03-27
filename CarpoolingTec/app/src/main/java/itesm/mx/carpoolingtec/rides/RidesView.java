@@ -1,18 +1,18 @@
 package itesm.mx.carpoolingtec.rides;
 
-import java.util.List;
-
-import itesm.mx.carpoolingtec.model.Ride;
+import itesm.mx.carpoolingtec.model.firebase.UserRide;
 
 public interface RidesView {
 
     void setLoadingIndicator(boolean active);
 
-    void showRides(List<Ride> rides);
+    void showUserRides();
 
-    void hideRides();
+    void hideUserRides();
 
-    void showNoRidesAvailableToast();
+    void addUserRide(UserRide userRide);
+
+    void clearUserRides();
 
     void showErrorLoadingRidesToast();
 }

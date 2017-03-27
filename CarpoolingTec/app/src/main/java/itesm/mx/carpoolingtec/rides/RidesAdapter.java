@@ -23,17 +23,19 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import itesm.mx.carpoolingtec.R;
 import itesm.mx.carpoolingtec.model.Ride;
+import itesm.mx.carpoolingtec.model.firebase.UserRide;
 
 public class RidesAdapter extends RecyclerView.Adapter<RidesAdapter.ViewHolder> {
 
     private Context context;
-    private List<Ride> rides;
+    private List<UserRide> userRides;
     private RideItemListener listener;
     private int rideType;
 
-    public RidesAdapter(Context context, List<Ride> rides, RideItemListener listener, int rideType) {
+    public RidesAdapter(Context context, List<UserRide> userRides, RideItemListener listener,
+                        int rideType) {
         this.context = context;
-        this.rides = rides;
+        this.userRides = userRides;
         this.listener = listener;
         this.rideType = rideType;
     }
@@ -48,10 +50,10 @@ public class RidesAdapter extends RecyclerView.Adapter<RidesAdapter.ViewHolder> 
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        final Ride ride = rides.get(position);
+        final UserRide ride = userRides.get(position);
 
         Picasso.with(context)
-                .load(ride.getDriver().getPhoto())
+                .load(ride.getUser().getPhoto())
                 .into(holder.ivPicture, new Callback() {
                     @Override
                     public void onSuccess() {
@@ -78,12 +80,12 @@ public class RidesAdapter extends RecyclerView.Adapter<RidesAdapter.ViewHolder> 
                     }
                 });
 
-        holder.tvName.setText(ride.getDriver().getName());
+        holder.tvName.setText(ride.getUser().getName());
 
         if (rideType == RidesFragment.TO_TEC) {
-            holder.tvName.setText("Salida 3 km de tu ubicación");
+            holder.tvDescription.setText("Salida 3 km de tu ubicación");
         } else {
-            holder.tvName.setText("Destino 3 km de tu ubicación");
+            holder.tvDescription.setText("Destino 3 km de tu ubicación");
         }
 
         holder.rlContainer.setOnClickListener(new View.OnClickListener() {
@@ -97,12 +99,22 @@ public class RidesAdapter extends RecyclerView.Adapter<RidesAdapter.ViewHolder> 
 
     @Override
     public int getItemCount() {
-        return null != rides ? rides.size() : 0;
+        return null != userRides ? userRides.size() : 0;
     }
 
-    public void setData(List<Ride> data) {
-        rides.clear();
-        rides.addAll(data);
+    public void setData(List<UserRide> data) {
+        userRides.clear();
+        userRides.addAll(data);
+        notifyDataSetChanged();
+    }
+
+    public void addUserRide(UserRide userRide) {
+        userRides.add(userRide);
+        notifyDataSetChanged();
+    }
+
+    public void clearUserRides() {
+        userRides.clear();
         notifyDataSetChanged();
     }
 
