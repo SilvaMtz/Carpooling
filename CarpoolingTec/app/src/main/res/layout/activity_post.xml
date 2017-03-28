@@ -26,6 +26,18 @@
                 android:layout_height="wrap_content"
                 android:padding="10dp">
 
+                <Spinner
+                    android:id="@+id/tipoSpinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="10dp">
+
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
@@ -33,6 +45,7 @@
                     android:src="@drawable/ic_gps_not_fixed_black_24dp" />
 
                 <AutoCompleteTextView
+                    android:id="@+id/origen_tv"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/hint_origin"
@@ -46,11 +59,20 @@
                 android:layout_height="wrap_content"
                 android:padding="10dp">
 
-                <Spinner
-                    android:id="@+id/tipoSpinner"
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginEnd="10dp"
+                    android:src="@drawable/ic_location_on_black_24dp" />
+
+                <AutoCompleteTextView
+                    android:id="@+id/destino_tv"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1" />
+                    android:hint="@string/hint_destination"
+                    android:inputType="text"
+                    android:maxLines="1" />
+
             </LinearLayout>
 
             <RelativeLayout
