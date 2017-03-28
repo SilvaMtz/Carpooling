@@ -29,15 +29,15 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:src="@drawable/ic_gps_not_fixed_black_24dp"
-                    android:layout_marginEnd="10dp"/>
+                    android:layout_marginEnd="10dp"
+                    android:src="@drawable/ic_gps_not_fixed_black_24dp" />
 
                 <AutoCompleteTextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/hint_origin"
                     android:inputType="text"
-                    android:maxLines="1"/>
+                    android:maxLines="1" />
 
             </LinearLayout>
 
@@ -46,19 +46,11 @@
                 android:layout_height="wrap_content"
                 android:padding="10dp">
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:src="@drawable/ic_gps_not_fixed_black_24dp"
-                    android:layout_marginEnd="10dp"/>
-
-                <AutoCompleteTextView
+                <Spinner
+                    android:id="@+id/tipoSpinner"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/hint_destination"
-                    android:inputType="text"
-                    android:maxLines="1"/>
-
+                    android:layout_weight="1" />
             </LinearLayout>
 
             <RelativeLayout
@@ -77,8 +69,8 @@
                     android:id="@+id/layout_days"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:orientation="horizontal"
-                    android:layout_toEndOf="@id/image_time">
+                    android:layout_toEndOf="@id/image_time"
+                    android:orientation="horizontal">
 
                     <Button
                         android:layout_width="20dp"
@@ -136,9 +128,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_alignParentEnd="true"
+                    android:gravity="center_vertical"
                     android:text="10:00"
                     android:textColor="@color/textPrimary"
-                    android:gravity="center_vertical"
                     android:textSize="18sp" />
 
             </RelativeLayout>
@@ -159,29 +151,29 @@
                     android:id="@+id/text_men"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:padding="5dp"
                     android:layout_toEndOf="@id/image_person"
+                    android:padding="5dp"
                     android:text="Hombres"
-                    android:textSize="16sp"
-                    android:textColor="@color/textPrimary"/>
+                    android:textColor="@color/textPrimary"
+                    android:textSize="16sp" />
 
                 <TextView
                     android:id="@+id/text_women"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:padding="5dp"
-                    android:layout_toEndOf="@id/image_person"
                     android:layout_below="@id/text_men"
+                    android:layout_toEndOf="@id/image_person"
+                    android:padding="5dp"
                     android:text="Mujeres"
-                    android:textSize="16sp"
-                    android:textColor="@color/textPrimary"/>
+                    android:textColor="@color/textPrimary"
+                    android:textSize="16sp" />
 
                 <CheckBox
                     android:id="@+id/checkbox_men"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
-                    android:padding="5dp"/>
+                    android:padding="5dp" />
 
                 <CheckBox
                     android:id="@+id/checkbox_women"
@@ -189,29 +181,9 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
                     android:layout_below="@id/checkbox_men"
-                    android:padding="5dp"/>
+                    android:padding="5dp" />
 
             </RelativeLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="10dp">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginEnd="10dp"
-                    android:src="@drawable/ic_people_black_24dp" />
-
-                <AutoCompleteTextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/hint_seats"
-                    android:inputType="text"
-                    android:maxLines="1"/>
-
-            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -229,7 +201,7 @@
                     android:layout_height="wrap_content"
                     android:hint="@string/hint_price"
                     android:inputType="text"
-                    android:maxLines="1"/>
+                    android:maxLines="1" />
 
             </LinearLayout>
 
@@ -248,7 +220,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/hint_notes"
-                    android:inputType="text"/>
+                    android:inputType="text" />
             </LinearLayout>
 
         </LinearLayout>

@@ -63,4 +63,9 @@
     <string name="call">Llamar</string>
     <string name="send_message">Enviar Mensaje</string>
     <string name="add_contact">Agregar Contacto</string>
+
+    <string-array name="viaje_spinner">
+        <item>Hacia el TEC</item>
+        <item>Desde el TEC</item>
+    </string-array>
 </resources>
