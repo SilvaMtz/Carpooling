@@ -18,17 +18,17 @@
     <string name="error_loading_rides">Error cargando viajes</string>
 
     <!-- Ride item layout -->
-    <string name="neighborhood">Neighborhood</string>
-    <string name="monday_initial">L</string>
-    <string name="tuesday_initial">M</string>
-    <string name="wednesday_initial">M</string>
-    <string name="thursday_initial">J</string>
-    <string name="friday_initial">V</string>
-    <string name="saturday_initial">S</string>
-    <string name="sunday_initial">D</string>
+    <string name="neighborhood">Colonia</string>
+    <string name="monday_initial">Lunes</string>
+    <string name="tuesday_initial">Martes</string>
+    <string name="wednesday_initial">Miercoles</string>
+    <string name="thursday_initial">Jueves</string>
+    <string name="friday_initial">Viernes</string>
+    <string name="saturday_initial">Sabado</string>
+    <string name="sunday_initial">Domingo</string>
     <string name="arrival">Arrival %1$s</string>
 
-    <string name="arrival_tec">Arrival at Tec %1$s</string>
+    <string name="arrival_tec">Llegada al Tec %1$s</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
