@@ -2,9 +2,10 @@
 
     <!-- General -->
     <string name="app_name">CarpoolingTec</string>
-    <string name="action_settings">Settings</string>
+    <string name="action_settings">Configuracion</string>
     <string name="action_sort">Sort</string>
-    <string name="action_profile">Profile</string>
+    <string name="action_profile">Perfil</string>
+    <string name="action_Solicitudes">Solicitudes</string>
 
     <string name="rides_to_tec">Viajes al Tec</string>
     <string name="contacts">Contacts</string>

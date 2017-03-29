@@ -24,6 +24,7 @@ import itesm.mx.carpoolingtec.R;
 import itesm.mx.carpoolingtec.contacts.ContactsFragment;
 import itesm.mx.carpoolingtec.post.PostActivity;
 import itesm.mx.carpoolingtec.profile.ProfileActivity;
+import itesm.mx.carpoolingtec.request.RequestActivity;
 import itesm.mx.carpoolingtec.rides.RidesFragment;
 import itesm.mx.carpoolingtec.schedule.ScheduleFragment;
 
@@ -71,6 +72,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.action_profile:
                 Intent intent = new Intent(this, ProfileActivity.class);
                 startActivity(intent);
+            case R.id.action_solicitudes:
+                Intent intent2 = new Intent(this, RequestActivity.class);
+                startActivity(intent2);
             case R.id.action_sort:
                 return true;
         }
