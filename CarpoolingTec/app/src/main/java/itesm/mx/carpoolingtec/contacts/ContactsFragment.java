@@ -1,5 +1,6 @@
 package itesm.mx.carpoolingtec.contacts;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -18,8 +19,11 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import itesm.mx.carpoolingtec.R;
 import itesm.mx.carpoolingtec.data.AppRepository;
+import itesm.mx.carpoolingtec.data.MySharedPreferences;
 import itesm.mx.carpoolingtec.model.firebase.Contact;
 import itesm.mx.carpoolingtec.util.schedulers.SchedulerProvider;
+
+import static android.content.Context.MODE_PRIVATE;
 
 
 public class ContactsFragment extends Fragment implements ContactsView,
@@ -67,7 +71,10 @@ public class ContactsFragment extends Fragment implements ContactsView,
         contactsAdapter = new ContactsAdapter(getActivity(), new ArrayList<Contact>(), this);
         recyclerView.setAdapter(contactsAdapter);
 
-        presenter = new ContactsPresenter(this, AppRepository.getInstance(),
+        SharedPreferences sharedPreferences = getActivity()
+                .getSharedPreferences(MySharedPreferences.MY_PREFERENCES, MODE_PRIVATE);
+
+        presenter = new ContactsPresenter(this, AppRepository.getInstance(sharedPreferences),
                 SchedulerProvider.getInstance());
         presenter.start();
         presenter.loadContacts();

@@ -1,5 +1,6 @@
 package itesm.mx.carpoolingtec.rides;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -22,10 +23,13 @@ import itesm.mx.carpoolingtec.R;
 import itesm.mx.carpoolingtec.data.AppRepository;
 import itesm.mx.carpoolingtec.data.CarpoolingService;
 import itesm.mx.carpoolingtec.data.FakeCarpoolingService;
+import itesm.mx.carpoolingtec.data.MySharedPreferences;
 import itesm.mx.carpoolingtec.model.firebase.UserRide;
 import itesm.mx.carpoolingtec.util.schedulers.SchedulerProvider;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+
+import static android.content.Context.MODE_PRIVATE;
 
 public class RidesFragment extends Fragment implements RidesView,
         SwipeRefreshLayout.OnRefreshListener, RideItemListener {
@@ -95,7 +99,11 @@ public class RidesFragment extends Fragment implements RidesView,
         CarpoolingService service = retrofit.create(CarpoolingService.class);
         FakeCarpoolingService fakeService = new FakeCarpoolingService();
 
-        presenter = new RidesPresenter(this, AppRepository.getInstance(), SchedulerProvider.getInstance(), rideType);
+        SharedPreferences sharedPreferences = getActivity()
+                .getSharedPreferences(MySharedPreferences.MY_PREFERENCES, MODE_PRIVATE);
+
+        presenter = new RidesPresenter(this, AppRepository.getInstance(sharedPreferences),
+                SchedulerProvider.getInstance(), rideType);
         presenter.start();
         presenter.loadRides();
 

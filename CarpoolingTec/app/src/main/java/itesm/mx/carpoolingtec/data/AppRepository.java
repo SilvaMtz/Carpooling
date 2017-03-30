@@ -1,5 +1,6 @@
 package itesm.mx.carpoolingtec.data;
 
+import android.content.SharedPreferences;
 import android.util.Log;
 
 import com.google.firebase.database.ChildEventListener;
@@ -18,6 +19,7 @@ import io.reactivex.CompletableOnSubscribe;
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
+import io.reactivex.Single;
 import itesm.mx.carpoolingtec.model.firebase.Contact;
 import itesm.mx.carpoolingtec.model.firebase.Ride;
 import itesm.mx.carpoolingtec.model.firebase.User;
@@ -33,10 +35,11 @@ public class AppRepository implements Repository {
     private static AppRepository INSTANCE = null;
 
     private DatabaseReference database;
+    private SharedPreferences sharedPreferences;
 
-    public static AppRepository getInstance() {
+    public static AppRepository getInstance(SharedPreferences sharedPreferences) {
         if (INSTANCE == null) {
-            INSTANCE = new AppRepository();
+            INSTANCE = new AppRepository(sharedPreferences);
         }
         return INSTANCE;
     }
@@ -45,8 +48,9 @@ public class AppRepository implements Repository {
         INSTANCE = null;
     }
 
-    private AppRepository() {
+    private AppRepository(SharedPreferences sharedPreferences) {
         database = FirebaseDatabase.getInstance().getReference();
+        this.sharedPreferences = sharedPreferences;
     }
 
     @Override
@@ -175,4 +179,23 @@ public class AppRepository implements Repository {
             }
         });
     }
+
+    @Override
+    public Single<User> getUser(String id) {
+        // TODO: get user data from Firebase.
+        return null;
+    }
+
+    @Override
+    public void saveMyId(String id) {
+        // TODO: save user id to local shared preferences.
+    }
+
+    @Override
+    public String getMyId() {
+        // TODO: get user id from local shared preferences.
+        return null;
+    }
+
+
 }
