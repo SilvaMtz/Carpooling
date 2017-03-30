@@ -1,5 +1,8 @@
 package itesm.mx.carpoolingtec.model.firebase;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class Ride {
 
     private String ride_type;
@@ -58,5 +61,15 @@ public class Ride {
 
     public void setLatitude(double latitude) {
         this.latitude = latitude;
+    }
+
+    public Map<String, Object> toMap() {
+        Map<String, Object> map = new HashMap<>();
+        map.put("latitude", latitude);
+        map.put("longitude", longitude);
+        map.put("weekday", weekday);
+        map.put("ride_type", ride_type);
+        map.put("time", time);
+        return map;
     }
 }

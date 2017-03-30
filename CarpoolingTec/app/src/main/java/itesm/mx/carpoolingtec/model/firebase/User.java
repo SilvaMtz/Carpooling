@@ -1,10 +1,12 @@
 package itesm.mx.carpoolingtec.model.firebase;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class User {
 
+    private String id;
     private String name;
     private String phone;
     private String photo;
@@ -22,9 +24,14 @@ public class User {
 
     }
 
-    public User(String name, String phone, String photo, int seats, double latitude,
-                double longitude, boolean smoking, int gender, int passenger_gender, String notes,
-                List<User> contacts, Map<String, Boolean> rides) {
+    public User(String id, String name, String photo) {
+        this.id = id;
+        this.name = name;
+        this.photo = photo;
+    }
+
+    public User(String id, String name, String phone, String photo, int seats, double latitude, double longitude, boolean smoking, int gender, int passenger_gender, String notes, List<User> contacts, Map<String, Boolean> rides) {
+        this.id = id;
         this.name = name;
         this.phone = phone;
         this.photo = photo;
@@ -37,6 +44,14 @@ public class User {
         this.notes = notes;
         this.contacts = contacts;
         this.rides = rides;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -133,5 +148,13 @@ public class User {
 
     public void setRides(Map<String, Boolean> rides) {
         this.rides = rides;
+    }
+
+    public Map<String, Object> toMap() {
+        Map<String, Object> map = new HashMap<>();
+        map.put("id", id);
+        map.put("name", name);
+        map.put("photo", photo);
+        return map;
     }
 }

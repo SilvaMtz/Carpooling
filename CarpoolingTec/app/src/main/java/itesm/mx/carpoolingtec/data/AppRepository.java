@@ -7,16 +7,28 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import io.reactivex.Completable;
+import io.reactivex.CompletableEmitter;
+import io.reactivex.CompletableOnSubscribe;
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
 import itesm.mx.carpoolingtec.model.firebase.Contact;
+import itesm.mx.carpoolingtec.model.firebase.Ride;
+import itesm.mx.carpoolingtec.model.firebase.User;
 import itesm.mx.carpoolingtec.model.firebase.UserRide;
 import itesm.mx.carpoolingtec.rides.RidesFragment;
 
 
 public class AppRepository implements Repository {
+
+    private static final String TYPE_FROM_TEC = "FROM_TEC";
+    private static final String TYPE_TO_TEC = "TO_TEC";
 
     private static AppRepository INSTANCE = null;
 
@@ -96,11 +108,7 @@ public class AppRepository implements Repository {
                 database.child(childKey).addChildEventListener(new ChildEventListener() {
                     @Override
                     public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                        Log.d("AppRepository", "onChildAdded");
-
                         UserRide userRide = dataSnapshot.getValue(UserRide.class);
-                        Log.d("AppRepository", "UserRide: " + userRide.getUser().getName());
-
                         e.onNext(userRide);
                     }
 
@@ -127,5 +135,44 @@ public class AppRepository implements Repository {
             }
         });
         return observable;
+    }
+
+    @Override
+    public Completable saveRide(final User user, final Ride ride) {
+        return Completable.create(new CompletableOnSubscribe() {
+            @Override
+            public void subscribe(final CompletableEmitter e) throws Exception {
+                String firebasePath;
+                if (ride.getRide_type().equals(TYPE_FROM_TEC)) {
+                    firebasePath = "rides_from_tec";
+                } else {
+                    firebasePath = "rides_to_tec";
+                }
+
+                // Add user details under ride type.
+                database.child(firebasePath).child(user.getId()).child("user")
+                        .setValue(user.toMap());
+
+                String key = database.child(firebasePath).child(user.getId())
+                        .child("rides").push().getKey();
+
+                Map<String, Object> rideValues = ride.toMap();
+
+                Map<String, Object> childUpdates = new HashMap<>();
+                childUpdates.put("/" + firebasePath + "/" + user.getId() + "/rides/" + key,
+                        rideValues);
+
+                database.updateChildren(childUpdates, new DatabaseReference.CompletionListener() {
+                    @Override
+                    public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
+                        if (databaseError != null) {
+                            e.onError(databaseError.toException());
+                        } else {
+                            e.onComplete();
+                        }
+                    }
+                });
+            }
+        });
     }
 }
