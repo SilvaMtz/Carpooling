@@ -72,9 +72,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.action_profile:
                 Intent intent = new Intent(this, ProfileActivity.class);
                 startActivity(intent);
+                return true;
             case R.id.action_solicitudes:
                 Intent intent2 = new Intent(this, RequestActivity.class);
                 startActivity(intent2);
+                return true;
             case R.id.action_sort:
                 return true;
         }
