@@ -85,7 +85,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View v) {
-        Toast.makeText(this, "FAB clicked", Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(this, PostActivity.class);
         startActivity(intent);
     }

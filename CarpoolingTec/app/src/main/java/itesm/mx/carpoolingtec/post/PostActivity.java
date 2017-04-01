@@ -1,12 +1,20 @@
 package itesm.mx.carpoolingtec.post;
 
 import android.content.SharedPreferences;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.observers.DisposableCompletableObserver;
 import itesm.mx.carpoolingtec.R;
@@ -22,12 +30,22 @@ public class PostActivity extends AppCompatActivity implements PostView {
 
     private static final String TAG = "PostActivity";
 
+    @BindView(R.id.toolbar) Toolbar toolbar;
+
     private PostPresenter presenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post);
+        ButterKnife.bind(this);
+
+        setTitle("");
+        setSupportActionBar(toolbar);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_close_black_24dp);
+        }
 
         Spinner spinner = (Spinner) findViewById(R.id.tipoSpinner);
 
@@ -44,6 +62,24 @@ public class PostActivity extends AppCompatActivity implements PostView {
         presenter = new PostPresenter(this, AppRepository.getInstance(sharedPreferences),
                 SchedulerProvider.getInstance());
         presenter.start();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_post, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_post:
+                return true;
+            case android.R.id.home:
+                finish();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override

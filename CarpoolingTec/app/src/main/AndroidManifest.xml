@@ -25,7 +25,9 @@
             android:name=".profile.ProfileActivity"
             android:label="@string/title_activity_profile"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".post.PostActivity" />
+        <activity
+            android:name=".post.PostActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name=".request.RequestActivity"></activity>
     </application>
 
