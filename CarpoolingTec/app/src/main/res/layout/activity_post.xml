@@ -52,7 +52,8 @@
                         android:id="@+id/tipoSpinner"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1" />
+                        android:layout_weight="1"
+                        android:entries="@array/viaje_spinner"/>
                 </LinearLayout>
 
                 <View
@@ -60,54 +61,12 @@
                     android:layout_height="2dp"
                     android:background="@drawable/border" />
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:padding="15dp">
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_marginEnd="15dp"
-                        android:src="@drawable/ic_gps_not_fixed_black_24dp" />
-
-                    <AutoCompleteTextView
-                        android:id="@+id/origen_tv"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="@string/hint_origin"
-                        android:inputType="text"
-                        android:maxLines="1"
-                        android:background="@android:color/transparent"/>
-
-                </LinearLayout>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="2dp"
-                    android:background="@drawable/border" />
-
-                <LinearLayout
+                <fragment
+                    android:id="@+id/place_autocomplete_fragment"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="15dp">
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_marginEnd="15dp"
-                        android:src="@drawable/ic_location_on_black_24dp" />
-
-                    <AutoCompleteTextView
-                        android:id="@+id/destino_tv"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="@string/hint_destination"
-                        android:inputType="text"
-                        android:maxLines="1"
-                        android:background="@android:color/transparent"/>
-
-                </LinearLayout>
+                    android:name="com.google.android.gms.location.places.ui.PlaceAutocompleteFragment"
+                    />
 
                 <View
                     android:layout_width="match_parent"

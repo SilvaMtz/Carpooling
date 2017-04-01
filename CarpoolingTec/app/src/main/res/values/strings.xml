@@ -2,15 +2,15 @@
 
     <!-- General -->
     <string name="app_name">CarpoolingTec</string>
-    <string name="action_settings">Configuracion</string>
-    <string name="action_sort">Sort</string>
+    <string name="action_settings">Ajustes</string>
+    <string name="action_sort">Filtrar</string>
     <string name="action_profile">Perfil</string>
     <string name="action_Solicitudes">Solicitudes</string>
 
     <string name="rides_to_tec">Viajes al Tec</string>
     <string name="contacts">Contacts</string>
     <string name="rides_from_tec">Viajes del Tec</string>
-    <string name="post">New Post</string>
+    <string name="post">Nueva publicación</string>
 
     <!-- ContactFragment -->
     <string name="error_loading_contacts">Error cargando contactos</string>
@@ -27,7 +27,7 @@
     <string name="friday_initial">Viernes</string>
     <string name="saturday_initial">Sabado</string>
     <string name="sunday_initial">Domingo</string>
-    <string name="arrival">Arrival %1$s</string>
+    <string name="arrival">Entrada %1$s</string>
 
     <string name="arrival_tec">Llegada al Tec %1$s</string>
 
@@ -36,16 +36,16 @@
     <string name="title_activity_profile" translatable="false">ProfileActivity</string>
 
     <!-- Drive item layout -->
-    <string name="passenger_picked_up">%1$s will pick you up</string>
-    <string name="driver_pick_up">Pick up %1$s</string>
+    <string name="passenger_picked_up">%1$s te recogerá</string>
+    <string name="driver_pick_up">Recoger a %1$s</string>
     <string name="Person">David</string>
     <string name="street" translatable="false">Corintio 3112, Valle Primavera</string>
 
     <!-- Strings related to login -->
     <string name="ErrorMessage">Please Insert Student ID and Password</string>
-    <string name="prompt_student_id">Student ID</string>
-    <string name="prompt_password">Password</string>
-    <string name="action_sign_in_short">Sign in</string>
+    <string name="prompt_student_id">Matricula</string>
+    <string name="prompt_password">Contraseña</string>
+    <string name="action_sign_in_short">Iniciar sesión</string>
 
     <!-- ridecard -->
     <string name="Driver">Driver:</string>
@@ -53,7 +53,7 @@
     <string name="Description">Description:</string>
     <string name="Gender">Gender:</string>
     <string name="Gendertext">Both</string>
-    <string name="Smoking">Smoking:</string>
+    <string name="Smoking">Fumar</string>
     <string name="Smokingtext">No</string>
 
     <string name="hint_origin">Origen</string>
@@ -69,7 +69,7 @@
     <string name="add_contact">Agregar Contacto</string>
 
     <string-array name="viaje_spinner">
-        <item>Hacia el TEC</item>
-        <item>Desde el TEC</item>
+        <item>Hacia el Tec</item>
+        <item>Desde el T</item>
     </string-array>
 </resources>
