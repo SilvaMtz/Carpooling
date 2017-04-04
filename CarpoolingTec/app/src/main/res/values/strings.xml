@@ -8,7 +8,7 @@
     <string name="action_Solicitudes">Solicitudes</string>
 
     <string name="rides_to_tec">Viajes al Tec</string>
-    <string name="contacts">Contacts</string>
+    <string name="contacts">Contactos</string>
     <string name="rides_from_tec">Viajes del Tec</string>
     <string name="post">Nueva publicación</string>
 
@@ -70,6 +70,6 @@
 
     <string-array name="viaje_spinner">
         <item>Hacia el Tec</item>
-        <item>Desde el T</item>
+        <item>Desde el Tec</item>
     </string-array>
 </resources>

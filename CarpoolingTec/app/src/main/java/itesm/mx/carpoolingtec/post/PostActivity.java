@@ -46,6 +46,7 @@ public class PostActivity extends AppCompatActivity implements PostView, PlaceSe
     private static final String ORIGEN = "Origen";
     private static final String DESTINO = "Destino";
 
+
     @BindView(R.id.toolbar) Toolbar toolbar;
     @BindView(R.id.tipoSpinner) Spinner spinner;
 

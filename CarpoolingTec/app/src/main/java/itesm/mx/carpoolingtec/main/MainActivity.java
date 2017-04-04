@@ -68,6 +68,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_settings:
+
                 return true;
             case R.id.action_profile:
                 Intent intent = new Intent(this, ProfileActivity.class);
