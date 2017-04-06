@@ -188,13 +188,16 @@ public class AppRepository implements Repository {
 
     @Override
     public void saveMyId(String id) {
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("Matricula",id);
+        editor.commit();
         // TODO: save user id to local shared preferences.
     }
 
     @Override
     public String getMyId() {
         // TODO: get user id from local shared preferences.
-        return null;
+        return sharedPreferences.getString("Matricula",null);
     }
 
 

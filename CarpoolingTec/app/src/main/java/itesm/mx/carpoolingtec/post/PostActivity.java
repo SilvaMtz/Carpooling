@@ -1,6 +1,7 @@
 package itesm.mx.carpoolingtec.post;
 
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
@@ -14,7 +15,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -40,7 +43,7 @@ import itesm.mx.carpoolingtec.util.schedulers.BaseSchedulerProvider;
 import itesm.mx.carpoolingtec.util.schedulers.SchedulerProvider;
 
 public class PostActivity extends AppCompatActivity implements PostView, PlaceSelectionListener,
-        GoogleApiClient.OnConnectionFailedListener, AdapterView.OnItemSelectedListener {
+        GoogleApiClient.OnConnectionFailedListener, AdapterView.OnItemSelectedListener,View.OnClickListener {
 
     private static final String TAG = "PostActivity";
     private static final String ORIGEN = "Origen";
@@ -49,11 +52,23 @@ public class PostActivity extends AppCompatActivity implements PostView, PlaceSe
 
     @BindView(R.id.toolbar) Toolbar toolbar;
     @BindView(R.id.tipoSpinner) Spinner spinner;
+    @BindView(R.id.Post_monday) Button BM;
+    @BindView(R.id.Post_Tuesday) Button BT;
+    @BindView(R.id.Post_Wednesday) Button BW;
+    @BindView(R.id.Post_thursday) Button BTT;
+    @BindView(R.id.Post_friday) Button BF;
+    @BindView(R.id.Post_saturday) Button BS;
+    @BindView(R.id.Post_sunday) Button BSU;
 
     private PlaceAutocompleteFragment autocompleteFragment;
     private GoogleApiClient googleApiClient;
     private PostPresenter presenter;
-
+    private boolean dir = false;
+    private double lat = -1;
+    private double longi = -1;
+    private int pos = -1;
+    private String sOrigen = "FROM_TEC";;
+    private String[] dias = new String[] {"Lunes","Martes","Miercoles","Jueves","Viernes","Sabado","Domingo"};
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -86,14 +101,23 @@ public class PostActivity extends AppCompatActivity implements PostView, PlaceSe
 
         spinner.setOnItemSelectedListener(this);
 
-        User user = new User("A00513176", "Juan Perez", "http://skateparkoftampa.com/spot/headshots/2585.jpg");
-        Ride ride = new Ride("FROM_TEC", "11:30 am", "Miercoles", 12345678.0, 87654321.0);
+        // User user = new User("A00513176", "Juan Perez", "http://skateparkoftampa.com/spot/headshots/2585.jpg");
+        // Ride ride = new Ride("FROM_TEC", "11:30 am", "Miercoles", 12345678.0, 87654321.0);
 
         SharedPreferences sharedPreferences = getSharedPreferences(MySharedPreferences.MY_PREFERENCES, MODE_PRIVATE);
 
         presenter = new PostPresenter(this, AppRepository.getInstance(sharedPreferences),
                 SchedulerProvider.getInstance());
         presenter.start();
+        BM.setOnClickListener(this);
+        BT.setOnClickListener(this);
+        BTT.setOnClickListener(this);
+        BW.setOnClickListener(this);
+        BF.setOnClickListener(this);
+        BS.setOnClickListener(this);
+        BSU.setOnClickListener(this);
+
+
     }
 
     @Override
@@ -106,6 +130,15 @@ public class PostActivity extends AppCompatActivity implements PostView, PlaceSe
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_post:
+                //Dummy
+                if(lat<0 || !dir){
+                    //Toast.makeText(getApplicationContext(),"Datos Incompletos " + Integer.toString(pos) +" " + Double.toString(longi) +" " + Double.toString(lat),Toast.LENGTH_LONG).show();
+                    return true;
+                }
+                Ride ride = new Ride(sOrigen, "11:30 am", dias[pos], longi, lat);
+                User user = new User("A00513176", "Juan Perez", "http://skateparkoftampa.com/spot/headshots/2585.jpg");
+                presenter.saveRide(user,ride);
+                finish();
                 return true;
             case android.R.id.home:
                 finish();
@@ -128,6 +161,9 @@ public class PostActivity extends AppCompatActivity implements PostView, PlaceSe
     @Override
     public void onPlaceSelected(Place place) {
         // TODO: Get info about the selected place.
+        lat = place.getLatLng().latitude;
+        longi = place.getLatLng().longitude;
+        dir = true;
         Log.i(TAG, "Place: " + place.getName());
     }
 
@@ -142,13 +178,117 @@ public class PostActivity extends AppCompatActivity implements PostView, PlaceSe
         Log.d(TAG, parent.getItemAtPosition(position).toString() + " selected");
         if (position == 0) {
             autocompleteFragment.setHint(ORIGEN);
+            sOrigen = "FROM_TEC";
         } else {
             autocompleteFragment.setHint(DESTINO);
+            sOrigen = "TO_TEC";
         }
     }
 
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
 
+    }
+
+    public void clean(int pos){
+        switch (pos){
+            case 0:
+                BM.setTextColor(Color.parseColor("#E6000000"));
+                break;
+            case 1:
+                BT.setTextColor(Color.parseColor("#E6000000"));
+                break;
+            case 2:
+                BW.setTextColor(Color.parseColor("#E6000000"));
+                break;
+            case 3:
+                BTT.setTextColor(Color.parseColor("#E6000000"));
+                break;
+            case 4:
+                BF.setTextColor(Color.parseColor("#E6000000"));
+                break;
+            case 5:
+                BS.setTextColor(Color.parseColor("#E6000000"));
+                break;
+            case 6:
+                BSU.setTextColor(Color.parseColor("#E6000000"));
+                break;
+        }
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.Post_monday:
+                if(pos<0){
+                    pos = 0;
+                    BM.setTextColor(Color.GREEN);
+                }else{
+                    clean(pos);
+                    pos = 0;
+                    BM.setTextColor(Color.GREEN);
+                }
+                break;
+            case R.id.Post_Tuesday:
+                if(pos<0){
+                    pos = 1;
+                    BT.setTextColor(Color.GREEN);
+                }else{
+                    clean(pos);
+                    pos = 1;
+                    BT.setTextColor(Color.GREEN);
+                }
+                break;
+            case R.id.Post_Wednesday:
+                if(pos<0){
+                    pos = 2;
+                    BW.setTextColor(Color.GREEN);
+                }else{
+                    clean(pos);
+                    pos = 2;
+                    BW.setTextColor(Color.GREEN);
+                }
+                break;
+            case R.id.Post_thursday:
+                if(pos<0){
+                    pos = 3;
+                    BTT.setTextColor(Color.GREEN);
+                }else{
+                    clean(pos);
+                    pos = 3;
+                    BTT.setTextColor(Color.GREEN);
+                }
+                break;
+            case R.id.Post_friday:
+                if(pos<0){
+                    pos = 4;
+                    BF.setTextColor(Color.GREEN);
+                }else{
+                    clean(pos);
+                    pos = 4;
+                    BF.setTextColor(Color.GREEN);
+                }
+                break;
+            case R.id.Post_saturday:
+                if(pos<0){
+                    pos = 5;
+                    BS.setTextColor(Color.GREEN);
+                }else{
+                    clean(pos);
+                    pos = 5;
+                    BS.setTextColor(Color.GREEN);
+                }
+                break;
+            case R.id.Post_sunday:
+                if(pos<0){
+                    pos = 6;
+                    BSU.setTextColor(Color.GREEN);
+                }else{
+                    clean(pos);
+                    pos = 6;
+                    BSU.setTextColor(Color.GREEN);
+                }
+                break;
+        }
     }
 }

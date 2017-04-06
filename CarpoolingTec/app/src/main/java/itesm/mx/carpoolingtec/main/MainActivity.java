@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -101,12 +102,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         @Override
         public Fragment getItem(int position)
         {
+            CoordinatorLayout.LayoutParams params = (CoordinatorLayout.LayoutParams) fab.getLayoutParams();
+            params.setBehavior(null);
+            fab.requestLayout();
             switch (position){
                 case 0:
+                    fab.setVisibility(View.GONE);
+                    Toast.makeText(getApplicationContext(),"testing",Toast.LENGTH_SHORT).show();
                     return ContactsFragment.newInstance();
                 case 1:
+                    fab.setVisibility(View.VISIBLE);
                     return RidesFragment.newInstance(RidesFragment.TO_TEC);
                 case 2:
+                    fab.setVisibility(View.VISIBLE);
                     return RidesFragment.newInstance(RidesFragment.FROM_TEC);
             }
             return null;

@@ -93,6 +93,7 @@
                         android:orientation="horizontal">
 
                         <Button
+                            android:id="@+id/Post_monday"
                             android:layout_width="25dp"
                             android:layout_height="25dp"
                             android:layout_gravity="center_vertical"
@@ -100,6 +101,7 @@
                             android:text="L" />
 
                         <Button
+                            android:id="@+id/Post_Tuesday"
                             android:layout_width="25dp"
                             android:layout_height="25dp"
                             android:layout_gravity="center_vertical"
@@ -107,6 +109,7 @@
                             android:text="M" />
 
                         <Button
+                            android:id="@+id/Post_Wednesday"
                             android:layout_width="25dp"
                             android:layout_height="25dp"
                             android:layout_gravity="center_vertical"
@@ -114,6 +117,7 @@
                             android:text="M" />
 
                         <Button
+                            android:id="@+id/Post_thursday"
                             android:layout_width="25dp"
                             android:layout_height="25dp"
                             android:layout_gravity="center_vertical"
@@ -121,6 +125,7 @@
                             android:text="J" />
 
                         <Button
+                            android:id="@+id/Post_friday"
                             android:layout_width="25dp"
                             android:layout_height="25dp"
                             android:layout_gravity="center_vertical"
@@ -128,6 +133,7 @@
                             android:text="V" />
 
                         <Button
+                            android:id="@+id/Post_saturday"
                             android:layout_width="25dp"
                             android:layout_height="25dp"
                             android:layout_gravity="center_vertical"
@@ -135,6 +141,7 @@
                             android:text="S" />
 
                         <Button
+                            android:id="@+id/Post_sunday"
                             android:layout_width="25dp"
                             android:layout_height="25dp"
                             android:layout_gravity="center_vertical"
