@@ -10,11 +10,15 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.Toast;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -155,6 +159,25 @@ public class RidesFragment extends Fragment implements RidesView,
 
     @Override
     public void onRideClick(UserRide ride) {
+        MaterialDialog dialog = new MaterialDialog.Builder(getContext())
+                .customView(R.layout.user_preview_card, true)
+                .positiveText("Solicitar")
+                .build();
 
+        View view = dialog.getCustomView();
+        if (view == null) {
+            return;
+        }
+
+        RecyclerView rvLunes = (RecyclerView) view.findViewById(R.id.rv_lunes);
+        rvLunes.setLayoutManager(new LinearLayoutManager(getActivity()));
+        List<String> lunes = new ArrayList<>();
+        lunes.add("8:00 am");
+        lunes.add("4:00 pm");
+
+        RidesTimeAdapter adapter = new RidesTimeAdapter(lunes);
+        rvLunes.setAdapter(adapter);
+
+        dialog.show();
     }
 }
