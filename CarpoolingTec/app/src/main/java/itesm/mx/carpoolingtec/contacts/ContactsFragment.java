@@ -2,6 +2,7 @@ package itesm.mx.carpoolingtec.contacts;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -24,6 +25,7 @@ import itesm.mx.carpoolingtec.model.firebase.Contact;
 import itesm.mx.carpoolingtec.util.schedulers.SchedulerProvider;
 
 import static android.content.Context.MODE_PRIVATE;
+import static itesm.mx.carpoolingtec.R.id.fab;
 
 
 public class ContactsFragment extends Fragment implements ContactsView,
@@ -31,7 +33,6 @@ public class ContactsFragment extends Fragment implements ContactsView,
 
     @BindView(R.id.swipeRefreshLayout) SwipeRefreshLayout swipeRefreshLayout;
     @BindView(R.id.rv_contacts) RecyclerView recyclerView;
-
     private ContactsAdapter contactsAdapter;
     private Unbinder unbinder;
 
@@ -78,7 +79,6 @@ public class ContactsFragment extends Fragment implements ContactsView,
                 SchedulerProvider.getInstance());
         presenter.start();
         presenter.loadContacts();
-
         return view;
     }
 

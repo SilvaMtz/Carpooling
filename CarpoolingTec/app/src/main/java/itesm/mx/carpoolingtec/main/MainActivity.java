@@ -29,7 +29,7 @@ import itesm.mx.carpoolingtec.request.RequestActivity;
 import itesm.mx.carpoolingtec.rides.RidesFragment;
 import itesm.mx.carpoolingtec.schedule.ScheduleFragment;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener{
+public class MainActivity extends AppCompatActivity implements View.OnClickListener, TabLayout.OnTabSelectedListener{
 
     @BindView(R.id.toolbar) Toolbar toolbar;
     @BindView(R.id.tab_layout) TabLayout tabLayout;
@@ -48,6 +48,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         viewPager.setAdapter(new MyAdapter(getSupportFragmentManager()));
         tabLayout.setupWithViewPager(viewPager);
+        tabLayout.addOnTabSelectedListener(this);
         viewPager.setCurrentItem(1);
     }
 
@@ -91,6 +92,31 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         startActivity(intent);
     }
 
+    @Override
+    public void onTabSelected(TabLayout.Tab tab) {
+        switch (tab.getPosition()){
+            case 0:
+                fab.setVisibility(View.GONE);
+                break;
+            case 1:
+                fab.setVisibility(View.VISIBLE);
+                break;
+            case 2:
+                fab.setVisibility(View.VISIBLE);
+                break;
+        }
+    }
+
+    @Override
+    public void onTabUnselected(TabLayout.Tab tab) {
+
+    }
+
+    @Override
+    public void onTabReselected(TabLayout.Tab tab) {
+
+    }
+
     class MyAdapter extends FragmentPagerAdapter {
 
         private static final int FRAGMENT_COUNT = 3;
@@ -102,19 +128,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         @Override
         public Fragment getItem(int position)
         {
-            CoordinatorLayout.LayoutParams params = (CoordinatorLayout.LayoutParams) fab.getLayoutParams();
-            params.setBehavior(null);
-            fab.requestLayout();
             switch (position){
                 case 0:
-                    fab.setVisibility(View.GONE);
-                    Toast.makeText(getApplicationContext(),"testing",Toast.LENGTH_SHORT).show();
+                    //fab.setVisibility(View.INVISIBLE);
                     return ContactsFragment.newInstance();
                 case 1:
-                    fab.setVisibility(View.VISIBLE);
+                    //fab.setVisibility(View.VISIBLE);
                     return RidesFragment.newInstance(RidesFragment.TO_TEC);
                 case 2:
-                    fab.setVisibility(View.VISIBLE);
                     return RidesFragment.newInstance(RidesFragment.FROM_TEC);
             }
             return null;
