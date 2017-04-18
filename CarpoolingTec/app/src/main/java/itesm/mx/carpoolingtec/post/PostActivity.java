@@ -143,8 +143,7 @@ public class PostActivity extends AppCompatActivity implements PostView, PlaceSe
                     return true;
                 }
                 Ride ride = new Ride(sOrigen, tvClock.getText().toString(), dias[pos], longi, lat);
-                User user = new User("A00513176", "Juan Perez", "http://skateparkoftampa.com/spot/headshots/2585.jpg");
-                presenter.saveRide(user,ride);
+                presenter.saveRide(ride);
                 finish();
                 return true;
             case android.R.id.home:

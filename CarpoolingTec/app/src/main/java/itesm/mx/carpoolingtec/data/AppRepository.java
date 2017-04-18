@@ -184,22 +184,23 @@ public class AppRepository implements Repository {
 
     @Override
     public Single<User> getUser(final String id) {
-
         return Single.create(new SingleOnSubscribe<User>() {
             @Override
             public void subscribe(final SingleEmitter<User> e) throws Exception {
+                if (id == null) {
+                    e.onError(new Exception());
+                    return;
+                }
 
                 database.child("users").child(id).addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
-
                         User user = dataSnapshot.getValue(User.class);
                         e.onSuccess(user);
                     }
 
                     @Override
                     public void onCancelled(DatabaseError databaseError) {
-
                         e.onError(new Exception());
                     }
                 });

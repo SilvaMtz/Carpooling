@@ -1,6 +1,10 @@
 package itesm.mx.carpoolingtec.post;
 
+import io.reactivex.CompletableSource;
+import io.reactivex.MaybeSource;
+import io.reactivex.SingleSource;
 import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.functions.Function;
 import io.reactivex.observers.DisposableCompletableObserver;
 import itesm.mx.carpoolingtec.data.Repository;
 import itesm.mx.carpoolingtec.model.firebase.Ride;
@@ -24,8 +28,14 @@ public class PostPresenter {
         disposables = new CompositeDisposable();
     }
 
-    public void saveRide(User user, Ride ride) {
-        disposables.add(repository.saveRide(user, ride)
+    public void saveRide(final Ride ride) {
+        disposables.add(repository.getUser(repository.getMyId())
+                .flatMapCompletable(new Function<User, CompletableSource>() {
+                    @Override
+                    public CompletableSource apply(User user) throws Exception {
+                        return repository.saveRide(user, ride);
+                    }
+                })
                 .subscribeOn(schedulerProvider.io())
                 .observeOn(schedulerProvider.ui())
                 .subscribeWith(new DisposableCompletableObserver() {
