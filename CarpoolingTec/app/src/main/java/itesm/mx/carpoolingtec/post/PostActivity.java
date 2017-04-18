@@ -1,14 +1,18 @@
 package itesm.mx.carpoolingtec.post;
 
+import android.app.Dialog;
+import android.app.TimePickerDialog;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -17,6 +21,8 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
+import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -29,8 +35,11 @@ import com.google.android.gms.location.places.ui.PlaceSelectionListener;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 
+import java.util.Calendar;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.observers.DisposableCompletableObserver;
 import itesm.mx.carpoolingtec.R;
@@ -43,7 +52,7 @@ import itesm.mx.carpoolingtec.util.schedulers.BaseSchedulerProvider;
 import itesm.mx.carpoolingtec.util.schedulers.SchedulerProvider;
 
 public class PostActivity extends AppCompatActivity implements PostView, PlaceSelectionListener,
-        GoogleApiClient.OnConnectionFailedListener, AdapterView.OnItemSelectedListener,View.OnClickListener {
+        GoogleApiClient.OnConnectionFailedListener, AdapterView.OnItemSelectedListener, View.OnClickListener, OnTimeSetListener {
 
     private static final String TAG = "PostActivity";
     private static final String ORIGEN = "Origen";
@@ -59,6 +68,7 @@ public class PostActivity extends AppCompatActivity implements PostView, PlaceSe
     @BindView(R.id.Post_friday) Button BF;
     @BindView(R.id.Post_saturday) Button BS;
     @BindView(R.id.Post_sunday) Button BSU;
+    @BindView(R.id.text_clock) TextView tvClock;
 
     private PlaceAutocompleteFragment autocompleteFragment;
     private GoogleApiClient googleApiClient;
@@ -67,7 +77,7 @@ public class PostActivity extends AppCompatActivity implements PostView, PlaceSe
     private double lat = -1;
     private double longi = -1;
     private int pos = -1;
-    private String sOrigen = "FROM_TEC";;
+    private String sOrigen = "FROM_TEC";
     private String[] dias = new String[] {"Lunes","Martes","Miercoles","Jueves","Viernes","Sabado","Domingo"};
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,9 +111,6 @@ public class PostActivity extends AppCompatActivity implements PostView, PlaceSe
 
         spinner.setOnItemSelectedListener(this);
 
-        // User user = new User("A00513176", "Juan Perez", "http://skateparkoftampa.com/spot/headshots/2585.jpg");
-        // Ride ride = new Ride("FROM_TEC", "11:30 am", "Miercoles", 12345678.0, 87654321.0);
-
         SharedPreferences sharedPreferences = getSharedPreferences(MySharedPreferences.MY_PREFERENCES, MODE_PRIVATE);
 
         presenter = new PostPresenter(this, AppRepository.getInstance(sharedPreferences),
@@ -135,7 +142,7 @@ public class PostActivity extends AppCompatActivity implements PostView, PlaceSe
                     //Toast.makeText(getApplicationContext(),"Datos Incompletos " + Integer.toString(pos) +" " + Double.toString(longi) +" " + Double.toString(lat),Toast.LENGTH_LONG).show();
                     return true;
                 }
-                Ride ride = new Ride(sOrigen, "11:30 am", dias[pos], longi, lat);
+                Ride ride = new Ride(sOrigen, tvClock.getText().toString(), dias[pos], longi, lat);
                 User user = new User("A00513176", "Juan Perez", "http://skateparkoftampa.com/spot/headshots/2585.jpg");
                 presenter.saveRide(user,ride);
                 finish();
@@ -175,7 +182,6 @@ public class PostActivity extends AppCompatActivity implements PostView, PlaceSe
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        Log.d(TAG, parent.getItemAtPosition(position).toString() + " selected");
         if (position == 0) {
             autocompleteFragment.setHint(ORIGEN);
             sOrigen = "FROM_TEC";
@@ -193,25 +199,25 @@ public class PostActivity extends AppCompatActivity implements PostView, PlaceSe
     public void clean(int pos){
         switch (pos){
             case 0:
-                BM.setTextColor(Color.parseColor("#E6000000"));
+                BM.setTextColor(getResources().getColor(R.color.textPrimary));
                 break;
             case 1:
-                BT.setTextColor(Color.parseColor("#E6000000"));
+                BT.setTextColor(getResources().getColor(R.color.textPrimary));
                 break;
             case 2:
-                BW.setTextColor(Color.parseColor("#E6000000"));
+                BW.setTextColor(getResources().getColor(R.color.textPrimary));
                 break;
             case 3:
-                BTT.setTextColor(Color.parseColor("#E6000000"));
+                BTT.setTextColor(getResources().getColor(R.color.textPrimary));
                 break;
             case 4:
-                BF.setTextColor(Color.parseColor("#E6000000"));
+                BF.setTextColor(getResources().getColor(R.color.textPrimary));
                 break;
             case 5:
-                BS.setTextColor(Color.parseColor("#E6000000"));
+                BS.setTextColor(getResources().getColor(R.color.textPrimary));
                 break;
             case 6:
-                BSU.setTextColor(Color.parseColor("#E6000000"));
+                BSU.setTextColor(getResources().getColor(R.color.textPrimary));
                 break;
         }
     }
@@ -222,73 +228,117 @@ public class PostActivity extends AppCompatActivity implements PostView, PlaceSe
             case R.id.Post_monday:
                 if(pos<0){
                     pos = 0;
-                    BM.setTextColor(Color.GREEN);
+                    BM.setTextColor(getResources().getColor(R.color.colorAccent));
                 }else{
                     clean(pos);
                     pos = 0;
-                    BM.setTextColor(Color.GREEN);
+                    BM.setTextColor(getResources().getColor(R.color.colorAccent));
                 }
                 break;
             case R.id.Post_Tuesday:
                 if(pos<0){
                     pos = 1;
-                    BT.setTextColor(Color.GREEN);
+                    BT.setTextColor(getResources().getColor(R.color.colorAccent));
                 }else{
                     clean(pos);
                     pos = 1;
-                    BT.setTextColor(Color.GREEN);
+                    BT.setTextColor(getResources().getColor(R.color.colorAccent));
                 }
                 break;
             case R.id.Post_Wednesday:
                 if(pos<0){
                     pos = 2;
-                    BW.setTextColor(Color.GREEN);
+                    BW.setTextColor(getResources().getColor(R.color.colorAccent));
                 }else{
                     clean(pos);
                     pos = 2;
-                    BW.setTextColor(Color.GREEN);
+                    BW.setTextColor(getResources().getColor(R.color.colorAccent));
                 }
                 break;
             case R.id.Post_thursday:
                 if(pos<0){
                     pos = 3;
-                    BTT.setTextColor(Color.GREEN);
+                    BTT.setTextColor(getResources().getColor(R.color.colorAccent));
                 }else{
                     clean(pos);
                     pos = 3;
-                    BTT.setTextColor(Color.GREEN);
+                    BTT.setTextColor(getResources().getColor(R.color.colorAccent));
                 }
                 break;
             case R.id.Post_friday:
                 if(pos<0){
                     pos = 4;
-                    BF.setTextColor(Color.GREEN);
+                    BF.setTextColor(getResources().getColor(R.color.colorAccent));
                 }else{
                     clean(pos);
                     pos = 4;
-                    BF.setTextColor(Color.GREEN);
+                    BF.setTextColor(getResources().getColor(R.color.colorAccent));
                 }
                 break;
             case R.id.Post_saturday:
                 if(pos<0){
                     pos = 5;
-                    BS.setTextColor(Color.GREEN);
+                    BS.setTextColor(getResources().getColor(R.color.colorAccent));
                 }else{
                     clean(pos);
                     pos = 5;
-                    BS.setTextColor(Color.GREEN);
+                    BS.setTextColor(getResources().getColor(R.color.colorAccent));
                 }
                 break;
             case R.id.Post_sunday:
                 if(pos<0){
                     pos = 6;
-                    BSU.setTextColor(Color.GREEN);
+                    BSU.setTextColor(getResources().getColor(R.color.colorAccent));
                 }else{
                     clean(pos);
                     pos = 6;
-                    BSU.setTextColor(Color.GREEN);
+                    BSU.setTextColor(getResources().getColor(R.color.colorAccent));
                 }
                 break;
+        }
+    }
+
+    @OnClick(R.id.text_clock)
+    public void onClockClick() {
+        TimePickerFragment timePickerFragment = new TimePickerFragment();
+        timePickerFragment.setListener(this);
+        timePickerFragment.show(getSupportFragmentManager(), "timePicker");
+    }
+
+    @Override
+    public void onTimeSet(int hourOfDay, int minute) {
+        if (tvClock != null) {
+            String hours = hourOfDay > 9 ? String.valueOf(hourOfDay) : "0" + String.valueOf(hourOfDay);
+            String minutes = minute > 9 ? String.valueOf(minute) : "0" + String.valueOf(minute);
+            tvClock.setText(hours + ":" + minutes);
+        }
+    }
+
+    public static class TimePickerFragment extends DialogFragment
+            implements TimePickerDialog.OnTimeSetListener {
+
+        private OnTimeSetListener listener;
+
+        public void setListener(OnTimeSetListener listener) {
+            this.listener = listener;
+        }
+
+        @Override
+        public Dialog onCreateDialog(Bundle savedInstanceState) {
+            // Use the current time as the default values for the picker
+            final Calendar c = Calendar.getInstance();
+            int hour = c.get(Calendar.HOUR_OF_DAY);
+            int minute = c.get(Calendar.MINUTE);
+
+            // Create a new instance of TimePickerDialog and return it
+            return new TimePickerDialog(getActivity(), this, hour, minute,
+                    DateFormat.is24HourFormat(getActivity()));
+        }
+
+        public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+            if (listener != null) {
+                listener.onTimeSet(hourOfDay, minute);
+            }
         }
     }
 }

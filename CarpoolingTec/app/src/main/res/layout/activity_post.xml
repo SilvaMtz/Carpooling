@@ -151,7 +151,7 @@
                     </LinearLayout>
 
                     <TextView
-                        android:id="@+id/textView"
+                        android:id="@+id/text_clock"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_alignParentEnd="true"
@@ -167,105 +167,6 @@
                     android:layout_height="2dp"
                     android:background="@drawable/border" />
 
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="15dp">
-
-                    <ImageView
-                        android:id="@+id/image_person"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="15dp"
-                        android:src="@drawable/ic_person_black_24dp" />
-
-                    <CheckBox
-                        android:id="@+id/checkbox_men"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true" />
-
-                    <CheckBox
-                        android:id="@+id/checkbox_women"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:layout_below="@id/checkbox_men" />
-
-                    <TextView
-                        android:id="@+id/text_men"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_toEndOf="@id/image_person"
-                        android:layout_alignTop="@id/checkbox_men"
-                        android:layout_alignBottom="@id/checkbox_men"
-                        android:text="Hombres"
-                        android:textColor="@color/textPrimary"
-                        android:textSize="15sp"/>
-
-                    <TextView
-                        android:id="@+id/text_women"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/text_men"
-                        android:layout_toEndOf="@id/image_person"
-                        android:layout_alignTop="@id/checkbox_women"
-                        android:layout_alignBottom="@id/checkbox_women"
-                        android:text="Mujeres"
-                        android:textColor="@color/textPrimary"
-                        android:textSize="15sp"/>
-
-                </RelativeLayout>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="2dp"
-                    android:background="@drawable/border" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="15dp">
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="15dp"
-                        android:src="@drawable/ic_attach_money_black_24dp" />
-
-                    <AutoCompleteTextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="@string/hint_price"
-                        android:inputType="text"
-                        android:maxLines="1"
-                        android:background="@android:color/transparent"/>
-
-                </LinearLayout>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="2dp"
-                    android:background="@drawable/border" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="15dp">
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="15dp"
-                        android:src="@drawable/ic_subject_black_24dp" />
-
-                    <AutoCompleteTextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="@string/hint_notes"
-                        android:inputType="textMultiLine"
-                        android:background="@android:color/transparent"/>
-                </LinearLayout>
 
             </LinearLayout>
 
