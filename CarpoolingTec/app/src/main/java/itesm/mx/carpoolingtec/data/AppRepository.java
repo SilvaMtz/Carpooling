@@ -20,6 +20,8 @@ import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.Single;
+import io.reactivex.SingleEmitter;
+import io.reactivex.SingleOnSubscribe;
 import itesm.mx.carpoolingtec.model.firebase.Contact;
 import itesm.mx.carpoolingtec.model.firebase.Ride;
 import itesm.mx.carpoolingtec.model.firebase.User;
@@ -181,23 +183,46 @@ public class AppRepository implements Repository {
     }
 
     @Override
-    public Single<User> getUser(String id) {
-        // TODO: get user data from Firebase.
-        return null;
+    public Single<User> getUser(final String id) {
+
+        return Single.create(new SingleOnSubscribe<User>() {
+            @Override
+            public void subscribe(final SingleEmitter<User> e) throws Exception {
+
+                database.child("users").child(id).addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+
+                        User user = dataSnapshot.getValue(User.class);
+                        e.onSuccess(user);
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                        e.onError(new Exception());
+                    }
+                });
+
+
+            }
+        });
+
+
     }
 
     @Override
     public void saveMyId(String id) {
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString("Matricula",id);
+        editor.putString("Matricula", id);
         editor.commit();
-        // TODO: save user id to local shared preferences.
+
     }
 
     @Override
     public String getMyId() {
-        // TODO: get user id from local shared preferences.
-        return sharedPreferences.getString("Matricula",null);
+        return sharedPreferences.getString("Matricula" ,null);
+
     }
 
 
