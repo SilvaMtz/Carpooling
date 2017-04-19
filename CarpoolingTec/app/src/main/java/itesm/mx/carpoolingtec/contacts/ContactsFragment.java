@@ -1,17 +1,28 @@
 package itesm.mx.carpoolingtec.contacts;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
-import android.support.design.widget.CoordinatorLayout;
+import android.provider.ContactsContract;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import com.afollestad.materialdialogs.MaterialDialog;
 
 import java.util.ArrayList;
 
@@ -22,14 +33,16 @@ import itesm.mx.carpoolingtec.R;
 import itesm.mx.carpoolingtec.data.AppRepository;
 import itesm.mx.carpoolingtec.data.MySharedPreferences;
 import itesm.mx.carpoolingtec.model.firebase.Contact;
+import itesm.mx.carpoolingtec.util.Utilities;
 import itesm.mx.carpoolingtec.util.schedulers.SchedulerProvider;
 
 import static android.content.Context.MODE_PRIVATE;
-import static itesm.mx.carpoolingtec.R.id.fab;
 
 
 public class ContactsFragment extends Fragment implements ContactsView,
         SwipeRefreshLayout.OnRefreshListener, ContactItemListener {
+
+    private static final int CALL_PHONE_PERMISSION_REQUEST = 1;
 
     @BindView(R.id.swipeRefreshLayout) SwipeRefreshLayout swipeRefreshLayout;
     @BindView(R.id.rv_contacts) RecyclerView recyclerView;
@@ -37,6 +50,7 @@ public class ContactsFragment extends Fragment implements ContactsView,
     private Unbinder unbinder;
 
     private ContactsPresenter presenter;
+    private String phoneNumber;
 
     public ContactsFragment() {
         // Required empty public constructor
@@ -90,8 +104,24 @@ public class ContactsFragment extends Fragment implements ContactsView,
     }
 
     @Override
-    public void onContactClick(Contact contact) {
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
+                                           @NonNull int[] grantResults) {
+        switch (requestCode) {
+            case CALL_PHONE_PERMISSION_REQUEST:
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    makePhoneCall(phoneNumber);
+                } else {
+                    Toast.makeText(getActivity(), "Se necesita permiso para realizar una llamada",
+                            Toast.LENGTH_SHORT).show();
+                }
+                break;
+        }
+    }
 
+    @Override
+    public void onContactClick(Contact contact) {
+        presenter.onContactClick(contact);
     }
 
     @Override
@@ -127,5 +157,79 @@ public class ContactsFragment extends Fragment implements ContactsView,
     @Override
     public void addContact(Contact contact) {
         contactsAdapter.addContact(contact);
+    }
+
+    @Override
+    public void openContactDetails(final Contact contact) {
+        MaterialDialog dialog = new MaterialDialog.Builder(getActivity())
+                .customView(R.layout.contactinfo_item, true)
+                .build();
+
+        View view = dialog.getCustomView();
+        if (view == null) {
+            return;
+        }
+
+        ImageView ivPhoto = (ImageView) view.findViewById(R.id.image_user);
+        TextView tvName = (TextView) view.findViewById(R.id.text_name);
+        TextView tvPhone = (TextView) view.findViewById(R.id.text_phone);
+        LinearLayout layoutCall = (LinearLayout) view.findViewById(R.id.layout_call);
+        LinearLayout layoutMessage = (LinearLayout) view.findViewById(R.id.layout_message);
+        LinearLayout layoutAdd = (LinearLayout) view.findViewById(R.id.layout_add);
+
+        Utilities.setRoundedPhoto(getActivity(), contact.getPhoto(), ivPhoto);
+        tvName.setText(contact.getName());
+        tvPhone.setText(contact.getPhone());
+
+        layoutCall.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int permissionCheck = ContextCompat.checkSelfPermission(getActivity(),
+                        android.Manifest.permission.CALL_PHONE);
+
+                if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
+                    phoneNumber = contact.getPhone();
+                    requestPermissions(new String[]{android.Manifest.permission.CALL_PHONE},
+                            CALL_PHONE_PERMISSION_REQUEST);
+
+                } else {
+                    makePhoneCall(contact.getPhone());
+                }
+            }
+        });
+
+        layoutMessage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent();
+                intent.setAction(Intent.ACTION_SEND);
+                intent.setType("text/plain");
+                startActivity(intent);
+            }
+        });
+
+        layoutAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ContactsContract.Intents.Insert.ACTION);
+                intent.setType(ContactsContract.RawContacts.CONTENT_TYPE);
+                intent.putExtra(ContactsContract.Intents.Insert.PHONE, contact.getPhone())
+                        .putExtra(ContactsContract.Intents.Insert.NAME, contact.getName());
+
+                startActivity(intent);
+            }
+        });
+
+        dialog.show();
+    }
+
+    private void makePhoneCall(String number) {
+        if (number != null){
+            Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + number));
+            startActivity(intent);
+        } else {
+            Toast.makeText(getActivity(), "No se puede realizar la llamada",
+                    Toast.LENGTH_SHORT).show();
+        }
     }
 }

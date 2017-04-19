@@ -25,7 +25,6 @@ public class ContactsPresenter {
 
     public void loadContacts() {
         view.clearContacts();
-        disposables.clear();
         disposables.add(repository.getContacts("A00513173")
                 .subscribeOn(schedulerProvider.io())
                 .observeOn(schedulerProvider.ui())
@@ -50,6 +49,10 @@ public class ContactsPresenter {
                     }
                 })
         );
+    }
+
+    public void onContactClick(Contact contact) {
+        view.openContactDetails(contact);
     }
 
     public void stop() {

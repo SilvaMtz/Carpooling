@@ -18,4 +18,6 @@ public interface ContactsView {
     void showErrorMessageToast();
 
     void addContact(Contact contact);
+
+    void openContactDetails(Contact contact);
 }

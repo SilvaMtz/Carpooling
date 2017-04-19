@@ -2,6 +2,7 @@ package itesm.mx.carpoolingtec.model.firebase;
 
 public class Contact {
 
+    private String id;
     private String name;
     private String photo;
     private String phone;
@@ -10,10 +11,19 @@ public class Contact {
 
     }
 
-    public Contact(String name, String photo, String phone) {
+    public Contact(String id, String name, String photo, String phone) {
+        this.id = id;
         this.name = name;
         this.photo = photo;
         this.phone = phone;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getName() {
