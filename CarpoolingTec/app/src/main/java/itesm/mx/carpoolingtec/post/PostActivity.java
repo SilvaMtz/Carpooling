@@ -40,15 +40,10 @@ import java.util.Calendar;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import io.reactivex.disposables.CompositeDisposable;
-import io.reactivex.observers.DisposableCompletableObserver;
 import itesm.mx.carpoolingtec.R;
 import itesm.mx.carpoolingtec.data.AppRepository;
 import itesm.mx.carpoolingtec.data.MySharedPreferences;
-import itesm.mx.carpoolingtec.data.Repository;
 import itesm.mx.carpoolingtec.model.firebase.Ride;
-import itesm.mx.carpoolingtec.model.firebase.User;
-import itesm.mx.carpoolingtec.util.schedulers.BaseSchedulerProvider;
 import itesm.mx.carpoolingtec.util.schedulers.SchedulerProvider;
 
 public class PostActivity extends AppCompatActivity implements PostView, PlaceSelectionListener,

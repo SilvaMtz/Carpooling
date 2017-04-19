@@ -24,6 +24,7 @@ import butterknife.ButterKnife;
 import itesm.mx.carpoolingtec.R;
 import itesm.mx.carpoolingtec.model.Ride;
 import itesm.mx.carpoolingtec.model.firebase.UserRide;
+import itesm.mx.carpoolingtec.util.Utilities;
 
 public class RidesAdapter extends RecyclerView.Adapter<RidesAdapter.ViewHolder> {
 
@@ -52,34 +53,7 @@ public class RidesAdapter extends RecyclerView.Adapter<RidesAdapter.ViewHolder> 
     public void onBindViewHolder(final ViewHolder holder, int position) {
         final UserRide ride = userRides.get(position);
 
-        Picasso.with(context)
-                .load(ride.getUser().getPhoto())
-                .into(holder.ivPicture, new Callback() {
-                    @Override
-                    public void onSuccess() {
-                        Bitmap imageBitmap = ((BitmapDrawable) holder.ivPicture.getDrawable())
-                                .getBitmap();
-                        RoundedBitmapDrawable drawable = RoundedBitmapDrawableFactory
-                                .create(context.getResources(), imageBitmap);
-                        drawable.setCircular(true);
-                        drawable.setCornerRadius(Math.max(imageBitmap.getWidth(),
-                                imageBitmap.getHeight()) / 2.0f);
-                        holder.ivPicture.setImageDrawable(drawable);
-                    }
-
-                    @Override
-                    public void onError() {
-                        Bitmap bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.gates);
-                        RoundedBitmapDrawable drawable = RoundedBitmapDrawableFactory
-                                .create(context.getResources(), bitmap);
-                        drawable.setCircular(true);
-                        drawable.setCornerRadius(Math.max(bitmap.getWidth(),
-                                bitmap.getHeight()) / 2.0f);
-
-                        holder.ivPicture.setImageDrawable(drawable);
-                    }
-                });
-
+        Utilities.setRoundedPhoto(context, ride.getUser().getPhoto(), holder.ivPicture);
         holder.tvName.setText(ride.getUser().getName());
 
         if (rideType == RidesFragment.TO_TEC) {

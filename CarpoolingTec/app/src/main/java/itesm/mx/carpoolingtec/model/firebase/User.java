@@ -17,7 +17,7 @@ public class User {
     private int gender;
     private int passenger_gender;
     private String notes;
-    List<User> contacts;
+    Map<String, User> contacts;
     Map<String, Boolean> rides;
 
     public User() {
@@ -30,7 +30,9 @@ public class User {
         this.photo = photo;
     }
 
-    public User(String id, String name, String phone, String photo, int seats, double latitude, double longitude, boolean smoking, int gender, int passenger_gender, String notes, List<User> contacts, Map<String, Boolean> rides) {
+    public User(String id, String name, String phone, String photo, int seats, double latitude,
+                double longitude, boolean smoking, int gender, int passenger_gender, String notes,
+                Map<String, User> contacts, Map<String, Boolean> rides) {
         this.id = id;
         this.name = name;
         this.phone = phone;
@@ -134,11 +136,11 @@ public class User {
         this.notes = notes;
     }
 
-    public List<User> getContacts() {
+    public Map<String, User> getContacts() {
         return contacts;
     }
 
-    public void setContacts(List<User> contacts) {
+    public void setContacts(Map<String, User> contacts) {
         this.contacts = contacts;
     }
 

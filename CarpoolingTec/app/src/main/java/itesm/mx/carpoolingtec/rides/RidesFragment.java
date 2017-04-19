@@ -10,12 +10,11 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,13 +24,12 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import itesm.mx.carpoolingtec.R;
 import itesm.mx.carpoolingtec.data.AppRepository;
-import itesm.mx.carpoolingtec.data.CarpoolingService;
-import itesm.mx.carpoolingtec.data.FakeCarpoolingService;
 import itesm.mx.carpoolingtec.data.MySharedPreferences;
+import itesm.mx.carpoolingtec.model.firebase.Ride;
+import itesm.mx.carpoolingtec.model.firebase.User;
 import itesm.mx.carpoolingtec.model.firebase.UserRide;
+import itesm.mx.carpoolingtec.util.Utilities;
 import itesm.mx.carpoolingtec.util.schedulers.SchedulerProvider;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -94,15 +92,6 @@ public class RidesFragment extends Fragment implements RidesView,
         ridesAdapter = new RidesAdapter(getActivity(), new ArrayList<UserRide>(), this, rideType);
         recyclerView.setAdapter(ridesAdapter);
 
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://carpooling-tec.firebaseio.com/")
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-
-        CarpoolingService service = retrofit.create(CarpoolingService.class);
-        FakeCarpoolingService fakeService = new FakeCarpoolingService();
-
         SharedPreferences sharedPreferences = getActivity()
                 .getSharedPreferences(MySharedPreferences.MY_PREFERENCES, MODE_PRIVATE);
 
@@ -153,12 +142,15 @@ public class RidesFragment extends Fragment implements RidesView,
     }
 
     @Override
-    public void onRefresh() {
-        presenter.loadRides();
-    }
+    public void openUserRideDetails(User user,
+                                    List<String> ridesMonday,
+                                    List<String> ridesTuesday,
+                                    List<String> ridesWednesday,
+                                    List<String> ridesThursday,
+                                    List<String> ridesFriday,
+                                    List<String> ridesSaturday,
+                                    List<String> ridesSunday) {
 
-    @Override
-    public void onRideClick(UserRide ride) {
         MaterialDialog dialog = new MaterialDialog.Builder(getContext())
                 .customView(R.layout.user_preview_card, true)
                 .positiveText("Solicitar")
@@ -169,15 +161,61 @@ public class RidesFragment extends Fragment implements RidesView,
             return;
         }
 
-        RecyclerView rvLunes = (RecyclerView) view.findViewById(R.id.rv_lunes);
-        rvLunes.setLayoutManager(new LinearLayoutManager(getActivity()));
-        List<String> lunes = new ArrayList<>();
-        lunes.add("8:00 am");
-        lunes.add("4:00 pm");
+        // Set user name, photo and description.
+        ImageView ivPhoto = (ImageView) view.findViewById(R.id.image_user);
+        TextView tvName = (TextView) view.findViewById(R.id.text_name);
+        TextView tvNotes = (TextView) view.findViewById(R.id.text_notes);
+        Utilities.setRoundedPhoto(getActivity(), user.getPhoto(), ivPhoto);
+        tvName.setText(user.getName());
+        tvNotes.setText(user.getNotes());
 
-        RidesTimeAdapter adapter = new RidesTimeAdapter(lunes);
-        rvLunes.setAdapter(adapter);
+
+        // Populate lists with rides for each day.
+        RecyclerView rvMonday = (RecyclerView) view.findViewById(R.id.rv_lunes);
+        rvMonday.setLayoutManager(new LinearLayoutManager(getActivity()));
+        RidesTimeAdapter adapterMonday = new RidesTimeAdapter(ridesMonday);
+        rvMonday.setAdapter(adapterMonday);
+
+        RecyclerView rvTuesday = (RecyclerView) view.findViewById(R.id.rv_martes);
+        rvTuesday.setLayoutManager(new LinearLayoutManager(getActivity()));
+        RidesTimeAdapter adapterTuesday = new RidesTimeAdapter(ridesTuesday);
+        rvTuesday.setAdapter(adapterTuesday);
+
+        RecyclerView rvWednesday = (RecyclerView) view.findViewById(R.id.rv_miercoles);
+        rvWednesday.setLayoutManager(new LinearLayoutManager(getActivity()));
+        RidesTimeAdapter adapterWednesday = new RidesTimeAdapter(ridesWednesday);
+        rvWednesday.setAdapter(adapterWednesday);
+
+        RecyclerView rvThursday = (RecyclerView) view.findViewById(R.id.rv_jueves);
+        rvThursday.setLayoutManager(new LinearLayoutManager(getActivity()));
+        RidesTimeAdapter adapterThursday = new RidesTimeAdapter(ridesThursday);
+        rvThursday.setAdapter(adapterThursday);
+
+        RecyclerView rvFriday = (RecyclerView) view.findViewById(R.id.rv_viernes);
+        rvFriday.setLayoutManager(new LinearLayoutManager(getActivity()));
+        RidesTimeAdapter adapterFriday = new RidesTimeAdapter(ridesFriday);
+        rvFriday.setAdapter(adapterFriday);
+
+        RecyclerView rvSaturday = (RecyclerView) view.findViewById(R.id.rv_sabado);
+        rvSaturday.setLayoutManager(new LinearLayoutManager(getActivity()));
+        RidesTimeAdapter adapterSaturday = new RidesTimeAdapter(ridesSaturday);
+        rvSaturday.setAdapter(adapterSaturday);
+
+        RecyclerView rvSunday = (RecyclerView) view.findViewById(R.id.rv_domingo);
+        rvSunday.setLayoutManager(new LinearLayoutManager(getActivity()));
+        RidesTimeAdapter adapterSunday = new RidesTimeAdapter(ridesSunday);
+        rvSunday.setAdapter(adapterSunday);
 
         dialog.show();
+    }
+
+    @Override
+    public void onRefresh() {
+        presenter.loadRides();
+    }
+
+    @Override
+    public void onRideClick(UserRide ride) {
+        presenter.onRideClick(ride);
     }
 }
