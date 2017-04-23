@@ -11,6 +11,8 @@ import android.widget.Toast;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import itesm.mx.carpoolingtec.R;
+import itesm.mx.carpoolingtec.data.AppRepository;
+import itesm.mx.carpoolingtec.data.MySharedPreferences;
 import itesm.mx.carpoolingtec.main.MainActivity;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener{
@@ -31,9 +33,17 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     @Override
     public void onClick(View v) {
         if(!etStudentId.getText().toString().isEmpty() && !etPassword.getText().toString().isEmpty()){
-            Intent intent = new Intent(this, MainActivity.class);
-            intent.putExtra("Matricula", etStudentId.getText().toString());
-            startActivity(intent);
+            AppRepository app = AppRepository.getInstance(getSharedPreferences(MySharedPreferences.MY_PREFERENCES, MODE_PRIVATE));
+            app.saveMyId(etStudentId.getText().toString());
+            if(false){ //TODO buscar en firebase que exista cuenta
+                Intent intent = new Intent(this, MainActivity.class);
+                startActivity(intent);
+            }else{
+                Intent intent = new Intent(this, PedirInfo.class);
+                intent.putExtra("Mat",etStudentId.getText().toString());
+                intent.putExtra("Nom","Andres" + " "+ "Sosa"); //TODO conseguir el nombre y el apellido del parse del xml
+                startActivity(intent);
+            }
 
         }else{
             Toast.makeText(v.getContext(),getResources().getString(R.string.ErrorMessage),Toast.LENGTH_LONG).show();

@@ -23,6 +23,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import itesm.mx.carpoolingtec.R;
 import itesm.mx.carpoolingtec.contacts.ContactsFragment;
+import itesm.mx.carpoolingtec.data.AppRepository;
+import itesm.mx.carpoolingtec.data.MySharedPreferences;
+import itesm.mx.carpoolingtec.login.LoginActivity;
 import itesm.mx.carpoolingtec.post.PostActivity;
 import itesm.mx.carpoolingtec.profile.ProfileActivity;
 import itesm.mx.carpoolingtec.request.RequestActivity;
@@ -70,7 +73,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_settings:
-
+                AppRepository app = AppRepository.getInstance(getSharedPreferences(MySharedPreferences.MY_PREFERENCES, MODE_PRIVATE));
+                app.saveMyId(null);
+                Intent intent3 = new Intent(this, LoginActivity.class);
+                finish();
+                startActivity(intent3);
                 return true;
             case R.id.action_profile:
                 Intent intent = new Intent(this, ProfileActivity.class);
