@@ -153,7 +153,7 @@ public class RidesFragment extends Fragment implements RidesView,
 
         MaterialDialog dialog = new MaterialDialog.Builder(getContext())
                 .customView(R.layout.user_preview_card, true)
-                .positiveText("Solicitar")
+                .positiveText("Solicitar Contacto")
                 .build();
 
         View view = dialog.getCustomView();

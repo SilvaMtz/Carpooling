@@ -7,9 +7,9 @@
     <string name="action_profile">Perfil</string>
     <string name="action_Solicitudes">Solicitudes</string>
 
-    <string name="rides_to_tec">Viajes al Tec</string>
+    <string name="rides_to_tec">Hacia el Tec</string>
     <string name="contacts">Contactos</string>
-    <string name="rides_from_tec">Viajes del Tec</string>
+    <string name="rides_from_tec">Desde el Tec</string>
     <string name="post">Nueva publicación</string>
 
     <!-- ContactFragment -->
