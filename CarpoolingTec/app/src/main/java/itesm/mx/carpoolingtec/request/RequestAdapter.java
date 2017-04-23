@@ -2,6 +2,7 @@ package itesm.mx.carpoolingtec.request;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -27,9 +28,19 @@ public class RequestAdapter extends RecyclerView.Adapter<RequestAdapter.ViewHold
     private List<Request> requests;
     private RequestListener listener;
 
+    public RequestAdapter(Context context, List<Request> requests, RequestListener listener) {
+        this.context = context;
+        this.requests = requests;
+        this.listener = listener;
+    }
+
+
     @Override
     public RequestAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return null;
+        View view = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.request_item, parent, false);
+
+        return new ViewHolder(view);
     }
 
     @Override
@@ -55,9 +66,25 @@ public class RequestAdapter extends RecyclerView.Adapter<RequestAdapter.ViewHold
         });
     }
 
+    public void setData(List<Request> data) {
+        requests.clear();
+        requests.addAll(data);
+        notifyDataSetChanged();
+    }
+
+    public void addRequest(Request request) {
+        requests.add(request);
+        notifyDataSetChanged();
+    }
+
+    public void clearRequests() {
+        requests.clear();
+        notifyDataSetChanged();
+    }
+
     @Override
     public int getItemCount() {
-        return 0;
+        return null != requests ? requests.size() : 0;
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
