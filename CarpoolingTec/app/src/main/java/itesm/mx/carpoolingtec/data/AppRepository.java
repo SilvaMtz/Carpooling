@@ -227,7 +227,6 @@ public class AppRepository implements Repository {
     @Override
     public String getMyId() {
         return sharedPreferences.getString("Matricula" ,null);
-
     }
 
 
