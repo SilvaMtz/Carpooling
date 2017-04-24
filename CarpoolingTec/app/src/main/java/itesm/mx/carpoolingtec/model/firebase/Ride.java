@@ -10,9 +10,19 @@ public class Ride {
     private String weekday;
     private double longitude;
     private double latitude;
+    private String key;
 
     public Ride() {
 
+    }
+
+    public Ride(String ride_type, String time, String weekday, double longitude, double latitude, String key) {
+        this.ride_type = ride_type;
+        this.time = time;
+        this.weekday = weekday;
+        this.longitude = longitude;
+        this.latitude = latitude;
+        this.key = key;
     }
 
     public Ride(String ride_type, String time, String weekday, double longitude, double latitude) {
@@ -61,6 +71,14 @@ public class Ride {
 
     public void setLatitude(double latitude) {
         this.latitude = latitude;
+    }
+
+    public String getKey() {
+        return key;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
     }
 
     public Map<String, Object> toMap() {
