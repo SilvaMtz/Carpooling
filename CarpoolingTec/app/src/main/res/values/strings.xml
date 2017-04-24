@@ -2,14 +2,14 @@
 
     <!-- General -->
     <string name="app_name">CarpoolingTec</string>
-    <string name="action_settings">Ajustes</string>
+    <string name="action_settings">Logout</string>
     <string name="action_sort">Filtrar</string>
     <string name="action_profile">Perfil</string>
     <string name="action_Solicitudes">Solicitudes</string>
 
-    <string name="rides_to_tec">Viajes al Tec</string>
+    <string name="rides_to_tec">Hacia el Tec</string>
     <string name="contacts">Contactos</string>
-    <string name="rides_from_tec">Viajes del Tec</string>
+    <string name="rides_from_tec">Desde el Tec</string>
     <string name="post">Nueva publicación</string>
 
     <!-- ContactFragment -->
@@ -42,9 +42,22 @@
     <string name="street" translatable="false">Corintio 3112, Valle Primavera</string>
 
     <!-- Strings related to login -->
-    <string name="ErrorMessage">Please Insert Student ID and Password</string>
-    <string name="prompt_student_id">Matricula</string>
+    <string name="ErrorMessage">Favor de Insertar tu Matricula y Contreseña</string>
+    <string name="ErrorMessage2">Favor de Poner direccion</string>
+    <string name="prompt_student_id">Matricula:</string>
+    <string name="prompt_student_name">Nombre:</string>
     <string name="prompt_password">Contraseña</string>
+    <string name="prompt_smoke">Fumar:</string>
+    <string name="prompt_smoke2">Compartir carro con fumadores</string>
+    <string name="prompt_gender">Pasajeros:</string>
+    <string name="prompt_gender2">Con que pasajeros te gustaria compartir el carro</string>
+    <string name="prompt_genderH">Hombre:</string>
+    <string name="prompt_genderM">Mujer:</string>
+    <string name="prompt_cost">Cobro:</string>
+    <string name="prompt_cost2">Al ofrecer ride pagarian tu servicio</string>
+    <string name="prompt_note">Nota:</string>
+    <string name="prompt_note2">Pon una descripcion tuya que la gente leera</string>
+    <string name="prompt_save">Guardar Informacion</string>
     <string name="action_sign_in_short">Iniciar sesión</string>
 
     <!-- ridecard -->
@@ -67,6 +80,7 @@
     <string name="call">Llamar</string>
     <string name="send_message">Enviar Mensaje</string>
     <string name="add_contact">Agregar Contacto</string>
+    <string name="aqui">Aqui</string>
 
     <string-array name="viaje_spinner">
         <item>Hacia el Tec</item>
