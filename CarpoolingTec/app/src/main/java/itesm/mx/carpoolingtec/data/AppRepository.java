@@ -56,6 +56,11 @@ public class AppRepository implements Repository {
     }
 
     @Override
+    public DatabaseReference getDatabase() {
+        return database;
+    }
+
+    @Override
     public Observable<Contact> getContacts(final String userId) {
         Observable observable = Observable.create(new ObservableOnSubscribe() {
             @Override
@@ -144,6 +149,74 @@ public class AppRepository implements Repository {
     }
 
     @Override
+    public Observable<Ride> getRidesFromUser(final String userId) {
+        return Observable.create(new ObservableOnSubscribe<Ride>() {
+            @Override
+            public void subscribe(final ObservableEmitter<Ride> e) throws Exception {
+                database.child("rides_from_tec").child(userId).child("rides")
+                        .addChildEventListener(new ChildEventListener() {
+                            @Override
+                            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                                Ride ride = dataSnapshot.getValue(Ride.class);
+                                ride.setKey(dataSnapshot.getKey());
+                                e.onNext(ride);
+                            }
+
+                            @Override
+                            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+                            }
+
+                            @Override
+                            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+                            }
+
+                            @Override
+                            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+                            }
+
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+
+                            }
+                        });
+
+                database.child("rides_to_tec").child(userId).child("rides")
+                        .addChildEventListener(new ChildEventListener() {
+                            @Override
+                            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                                Ride ride = dataSnapshot.getValue(Ride.class);
+                                ride.setKey(dataSnapshot.getKey());
+                                e.onNext(ride);
+                            }
+
+                            @Override
+                            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+                            }
+
+                            @Override
+                            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+                            }
+
+                            @Override
+                            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+                            }
+
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+
+                            }
+                        });
+            }
+        });
+    }
+
+    @Override
     public Completable saveRide(final User user, final Ride ride) {
         return Completable.create(new CompletableOnSubscribe() {
             @Override
@@ -180,6 +253,19 @@ public class AppRepository implements Repository {
                 });
             }
         });
+    }
+
+    @Override
+    public void removeRide(final Ride ride, final String userId, String key) {
+        String rideTypeKey;
+        if (ride.getRide_type().equals("FROM_TEC")) {
+            rideTypeKey = "rides_from_tec";
+        } else {
+            rideTypeKey = "rides_to_tec";
+        }
+
+        database.child(rideTypeKey).child(userId).child("rides").child(key)
+                .removeValue();
     }
 
     @Override
