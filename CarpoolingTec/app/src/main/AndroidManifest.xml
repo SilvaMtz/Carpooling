@@ -18,15 +18,16 @@
             android:name=".main.MainActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".login.LoginActivity"
-            android:theme="@style/LoginTheme" />
+            android:theme="@style/LoginTheme" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".profile.ProfileActivity"
             android:label="@string/title_activity_profile"
@@ -35,7 +36,7 @@
             android:name=".post.PostActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".request.RequestActivity" />
-        <activity android:name=".login.PedirInfo"></activity>
+        <activity android:name=".userinfo.PedirInfoActivity"/>
     </application>
 
 </manifest>
