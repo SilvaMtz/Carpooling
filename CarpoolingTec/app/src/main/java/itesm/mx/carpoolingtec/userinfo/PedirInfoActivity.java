@@ -1,4 +1,4 @@
-package itesm.mx.carpoolingtec.login;
+package itesm.mx.carpoolingtec.userinfo;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -28,7 +28,12 @@ import butterknife.ButterKnife;
 import itesm.mx.carpoolingtec.R;
 import itesm.mx.carpoolingtec.main.MainActivity;
 
-public class PedirInfo extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener, PlaceSelectionListener, View.OnClickListener {
+public class PedirInfoActivity extends AppCompatActivity
+        implements GoogleApiClient.OnConnectionFailedListener, PlaceSelectionListener,
+        View.OnClickListener {
+
+    public static final String MATRICULA = "matricula";
+    public static final String NOMBRE = "nombre";
 
     @BindView(R.id.FumarCheckPedirInfo) CheckBox cFumar;
     @BindView(R.id.HombreCheckPedirInfo) CheckBox cHombre;
@@ -48,17 +53,15 @@ public class PedirInfo extends AppCompatActivity implements GoogleApiClient.OnCo
     private PlaceAutocompleteFragment autocompleteFragment;
 
     private static final String ORIGEN = "Tu Casa";
-    private static final String TAG = "PedirInfo";
-
-
+    private static final String TAG = "PedirInfoActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pedir_info);
         ButterKnife.bind(this);
-        Matricula = getIntent().getStringExtra("Mat");
-        nombre = getIntent().getStringExtra("Nom");
+        Matricula = getIntent().getStringExtra(MATRICULA);
+        nombre = getIntent().getStringExtra(NOMBRE);
 
         googleApiClient = new GoogleApiClient
                 .Builder(this)
