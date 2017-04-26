@@ -44,7 +44,7 @@
     <!-- Strings related to login -->
     <string name="ErrorMessage">Favor de Insertar tu Matricula y Contreseña</string>
     <string name="ErrorMessage2">Favor de Poner direccion</string>
-    <string name="prompt_student_id">Matricula:</string>
+    <string name="prompt_student_id">Matricula</string>
     <string name="prompt_student_name">Nombre:</string>
     <string name="prompt_password">Contraseña</string>
     <string name="prompt_smoke">Fumar:</string>
