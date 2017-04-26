@@ -80,8 +80,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
                     android:text="@string/action_sign_in_short"
-                    android:textSize="20sp"
-                    android:padding="15dp"
+                    android:textSize="18sp"
+                    android:padding="5dp"
                     android:textColor="@color/colorPrimary"
                     android:background="@color/white" />
 
