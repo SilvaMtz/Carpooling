@@ -15,7 +15,7 @@
 
         <android.support.design.widget.CollapsingToolbarLayout
             android:layout_width="match_parent"
-            android:layout_height="100dp"
+            android:layout_height="110dp"
             app:expandedTitleMarginStart="48dp"
             app:expandedTitleMarginEnd="64dp"
             app:layout_scrollFlags="scroll|snap">
@@ -40,29 +40,20 @@
             app:layout_scrollFlags="scroll|enterAlways|snap">
 
             <TextView
+                android:id="@+id/text_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAppearance="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
-                android:text="Bill Gates" />
+                android:textAppearance="@style/TextAppearance.AppCompat.Widget.ActionBar.Title" />
 
             <TextView
+                android:id="@+id/text_phone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
                 android:layout_marginBottom="4dp"
                 android:textAppearance="@style/TextAppearance.AppCompat.Widget.ActionBar.Subtitle"
-                android:text="833 157 8460"
                 android:textColor="@android:color/white" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="4dp"
-                android:padding="10dp"
-                android:inputType="textMultiLine"
-                android:textAppearance="@style/TextAppearance.AppCompat.Widget.ActionBar.Subtitle"
-                android:text="Ofrezco rides al Tec todas las mañanas desde la colonia Valle Primavera"
-                android:textColor="@android:color/white" />
         </LinearLayout>
 
         <android.support.v7.widget.Toolbar

@@ -283,6 +283,7 @@ public class AppRepository implements Repository {
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         User user = dataSnapshot.getValue(User.class);
                         if (user != null) {
+                            user.setId(dataSnapshot.getKey());
                             e.onSuccess(user);
                         } else {
                             e.onError(new Exception());

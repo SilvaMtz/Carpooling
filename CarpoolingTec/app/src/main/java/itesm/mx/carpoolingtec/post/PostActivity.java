@@ -72,7 +72,7 @@ public class PostActivity extends AppCompatActivity implements PostView, PlaceSe
     private double lat = -1;
     private double longi = -1;
     private int pos = -1;
-    private String sOrigen = "FROM_TEC";
+    private String sOrigen = "TO_TEC";
     private String[] dias = new String[] {"Lunes","Martes","Miercoles","Jueves","Viernes","Sabado","Domingo"};
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -178,10 +178,10 @@ public class PostActivity extends AppCompatActivity implements PostView, PlaceSe
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         if (position == 0) {
             autocompleteFragment.setHint(ORIGEN);
-            sOrigen = "FROM_TEC";
+            sOrigen = "TO_TEC";
         } else {
             autocompleteFragment.setHint(DESTINO);
-            sOrigen = "TO_TEC";
+            sOrigen = "FROM_TEC";
         }
     }
 
