@@ -29,6 +29,7 @@ public class LoginService {
     private static final String LOGIN_URL = "https://alsvdbw01.itesm.mx/autentica/servicio/identidad";
 
     public Single<Alumno> login(String username, String password) {
+
         final String header = username + ":" + password;
 
         return Single.create(new SingleOnSubscribe<Alumno>() {

@@ -19,6 +19,7 @@ import android.widget.Toast;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.database.DatabaseReference;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -29,6 +30,7 @@ import itesm.mx.carpoolingtec.data.AppRepository;
 import itesm.mx.carpoolingtec.data.MySharedPreferences;
 import itesm.mx.carpoolingtec.data.Repository;
 import itesm.mx.carpoolingtec.model.firebase.Ride;
+import itesm.mx.carpoolingtec.model.firebase.User;
 import itesm.mx.carpoolingtec.util.schedulers.SchedulerProvider;
 
 public class ProfileActivity extends AppCompatActivity
@@ -41,6 +43,8 @@ public class ProfileActivity extends AppCompatActivity
     @BindView(R.id.toolbar) Toolbar toolbar;
     @BindView(R.id.toolbar_title) Toolbar toolbarTitle;
     @BindView(R.id.rv_profile_rides) RecyclerView rvProfileRides;
+    @BindView(R.id.text_name) TextView tvName;
+    @BindView(R.id.text_phone) TextView tvPhone;
 
     private int maxScrollSize;
     private boolean isAvatorShown;
@@ -87,6 +91,7 @@ public class ProfileActivity extends AppCompatActivity
         presenter = new ProfilePresenter(AppRepository.getInstance(sharedPreferences),
                 SchedulerProvider.getInstance());
         presenter.attachView(this);
+        presenter.loadUserData();
 
         ridesAdapter = new FirebaseRecyclerAdapter<Ride, ProfileRideHolder>(Ride.class,
                 R.layout.ride_item, ProfileRideHolder.class, ridesRef) {
@@ -207,6 +212,13 @@ public class ProfileActivity extends AppCompatActivity
     @Override
     public void showRemovedRideToast() {
         Toast.makeText(this, "Ride eliminado", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void showUserData(User user) {
+        tvName.setText(user.getName());
+        tvPhone.setText(user.getPhone());
+        Picasso.with(this).load(user.getPhoto()).into(ivProfile);
     }
 }
 

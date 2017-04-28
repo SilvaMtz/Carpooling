@@ -159,4 +159,9 @@ public class User {
         map.put("photo", photo);
         return map;
     }
+
+    @Override
+    public String toString() {
+        return "id: " + id + " - name: " + name + " - photo: " + photo;
+    }
 }
