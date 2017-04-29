@@ -23,34 +23,6 @@ public class ContactsPresenter {
         disposables = new CompositeDisposable();
     }
 
-    public void loadContacts() {
-        view.clearContacts();
-        disposables.add(repository.getContacts("A00513173")
-                .subscribeOn(schedulerProvider.io())
-                .observeOn(schedulerProvider.ui())
-                .subscribeWith(new DisposableObserver<Contact>() {
-                    @Override
-                    public void onNext(Contact contact) {
-                        if (isViewAttached()) {
-                            view.addContact(contact);
-                        }
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        if (isViewAttached()) {
-                            view.showErrorMessageToast();
-                        }
-                    }
-
-                    @Override
-                    public void onComplete() {
-
-                    }
-                })
-        );
-    }
-
     public void onContactClick(Contact contact) {
         view.openContactDetails(contact);
     }

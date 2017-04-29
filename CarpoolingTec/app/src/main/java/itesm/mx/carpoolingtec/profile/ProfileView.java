@@ -5,10 +5,6 @@ import itesm.mx.carpoolingtec.model.firebase.User;
 
 public interface ProfileView {
 
-    void addRide(Ride ride);
-
-    void removeRide(Ride ride);
-
     void openEditRideOptions(Ride ride, String key);
 
     void showRemovedRideToast();

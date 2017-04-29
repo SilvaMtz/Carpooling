@@ -9,15 +9,7 @@ public interface ContactsView {
 
     void setLoadingIndicator(boolean active);
 
-    void showContacts();
-
-    void hideContacts();
-
-    void clearContacts();
-
     void showErrorMessageToast();
-
-    void addContact(Contact contact);
 
     void openContactDetails(Contact contact);
 }

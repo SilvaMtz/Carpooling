@@ -81,11 +81,11 @@ public class ProfileActivity extends AppCompatActivity
         SharedPreferences sharedPreferences = getSharedPreferences(
                 MySharedPreferences.MY_PREFERENCES, MODE_PRIVATE);
 
+        // TODO get ALL rides
         Repository repository = AppRepository.getInstance(sharedPreferences);
         DatabaseReference ridesRef = repository.getDatabase().child("rides_to_tec")
                 .child("A00513173").child("rides");
 
-        profileRideAdapter = new ProfileRideAdapter(this, new ArrayList<Ride>());
         rvProfileRides.setLayoutManager(new LinearLayoutManager(this));
 
         presenter = new ProfilePresenter(AppRepository.getInstance(sharedPreferences),
@@ -164,16 +164,6 @@ public class ProfileActivity extends AppCompatActivity
                     .scaleY(1).scaleX(1)
                     .start();
         }
-    }
-
-    @Override
-    public void addRide(Ride ride) {
-        profileRideAdapter.addRide(ride);
-    }
-
-    @Override
-    public void removeRide(Ride ride) {
-        profileRideAdapter.removeRide(ride);
     }
 
     @Override
