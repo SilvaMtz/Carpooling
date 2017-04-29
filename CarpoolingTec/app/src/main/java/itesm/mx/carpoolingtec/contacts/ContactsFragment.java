@@ -3,12 +3,17 @@ package itesm.mx.carpoolingtec.contacts;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -23,6 +28,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.google.firebase.database.DatabaseReference;
+import com.squareup.picasso.Callback;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -32,6 +41,7 @@ import butterknife.Unbinder;
 import itesm.mx.carpoolingtec.R;
 import itesm.mx.carpoolingtec.data.AppRepository;
 import itesm.mx.carpoolingtec.data.MySharedPreferences;
+import itesm.mx.carpoolingtec.data.Repository;
 import itesm.mx.carpoolingtec.model.firebase.Contact;
 import itesm.mx.carpoolingtec.util.Utilities;
 import itesm.mx.carpoolingtec.util.schedulers.SchedulerProvider;
@@ -40,15 +50,15 @@ import static android.content.Context.MODE_PRIVATE;
 
 
 public class ContactsFragment extends Fragment implements ContactsView,
-        SwipeRefreshLayout.OnRefreshListener, ContactItemListener {
+        SwipeRefreshLayout.OnRefreshListener {
 
     private static final int CALL_PHONE_PERMISSION_REQUEST = 1;
 
     @BindView(R.id.swipeRefreshLayout) SwipeRefreshLayout swipeRefreshLayout;
     @BindView(R.id.rv_contacts) RecyclerView recyclerView;
-    private ContactsAdapter contactsAdapter;
     private Unbinder unbinder;
 
+    private FirebaseRecyclerAdapter<Contact, ContactHolder> contactsAdapter;
     private ContactsPresenter presenter;
     private String phoneNumber;
 
@@ -82,17 +92,52 @@ public class ContactsFragment extends Fragment implements ContactsView,
         swipeRefreshLayout.setRefreshing(false);
         swipeRefreshLayout.setEnabled(false);
 
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        contactsAdapter = new ContactsAdapter(getActivity(), new ArrayList<Contact>(), this);
-        recyclerView.setAdapter(contactsAdapter);
-
         SharedPreferences sharedPreferences = getActivity()
                 .getSharedPreferences(MySharedPreferences.MY_PREFERENCES, MODE_PRIVATE);
+
+        Repository repository = AppRepository.getInstance(sharedPreferences);
+        DatabaseReference contactsRef = repository.getDatabase().child("users").child(repository.getMyId()).child("contacts");
+
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+
+        contactsAdapter = new FirebaseRecyclerAdapter<Contact, ContactHolder>(Contact.class, R.layout.contact_item, ContactHolder.class, contactsRef) {
+            @Override
+            protected void populateViewHolder(final ContactHolder holder, final Contact contact, int position) {
+                Picasso.with(getActivity())
+                        .load(contact.getPhoto())
+                        .into(holder.ivPicture, new Callback() {
+                            @Override
+                            public void onSuccess() {
+                                Bitmap imageBitmap = ((BitmapDrawable) holder.ivPicture.getDrawable())
+                                        .getBitmap();
+                                RoundedBitmapDrawable drawable = RoundedBitmapDrawableFactory
+                                        .create(getActivity().getResources(), imageBitmap);
+                                drawable.setCircular(true);
+                                drawable.setCornerRadius(Math.max(imageBitmap.getWidth(),
+                                        imageBitmap.getHeight()) / 2.0f);
+                                holder.ivPicture.setImageDrawable(drawable);
+                            }
+
+                            @Override
+                            public void onError() {
+                            }
+                        });
+
+                holder.tvName.setText(contact.getName());
+                holder.rlContainer.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        presenter.onContactClick(contact);
+                    }
+                });
+            }
+        };
+
+        recyclerView.setAdapter(contactsAdapter);
 
         presenter = new ContactsPresenter(this, AppRepository.getInstance(sharedPreferences),
                 SchedulerProvider.getInstance());
         presenter.start();
-        presenter.loadContacts();
         return view;
     }
 
@@ -120,13 +165,7 @@ public class ContactsFragment extends Fragment implements ContactsView,
     }
 
     @Override
-    public void onContactClick(Contact contact) {
-        presenter.onContactClick(contact);
-    }
-
-    @Override
     public void onRefresh() {
-        presenter.loadContacts();
     }
 
     @Override
@@ -134,29 +173,10 @@ public class ContactsFragment extends Fragment implements ContactsView,
         swipeRefreshLayout.setRefreshing(active);
     }
 
-    @Override
-    public void showContacts() {
-        recyclerView.setVisibility(View.VISIBLE);
-    }
-
-    @Override
-    public void hideContacts() {
-        recyclerView.setVisibility(View.GONE);
-    }
-
-    @Override
-    public void clearContacts() {
-        contactsAdapter.clearData();
-    }
 
     @Override
     public void showErrorMessageToast() {
         Toast.makeText(getContext(), R.string.error_loading_contacts, Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void addContact(Contact contact) {
-        contactsAdapter.addContact(contact);
     }
 
     @Override
