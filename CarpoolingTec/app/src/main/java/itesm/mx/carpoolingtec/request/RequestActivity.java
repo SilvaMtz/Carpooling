@@ -40,6 +40,13 @@ public class RequestActivity extends AppCompatActivity implements RequestListene
 
         setSupportActionBar(toolbar);
 
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
+
         setTitle("Solicitudes");
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
