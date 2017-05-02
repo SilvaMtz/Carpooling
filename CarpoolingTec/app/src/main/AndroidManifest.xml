@@ -41,7 +41,9 @@
             android:name=".post.PostActivity"
             android:theme="@style/AppTheme.NoActionBar" />
 
-        <activity android:name=".request.RequestActivity" />
+        <activity
+            android:name=".request.RequestActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
 
         <activity android:name=".userinfo.PedirInfoActivity"/>
     </application>

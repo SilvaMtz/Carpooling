@@ -2,6 +2,7 @@ package itesm.mx.carpoolingtec.rides;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -14,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 
 import java.util.ArrayList;
@@ -25,6 +27,7 @@ import butterknife.Unbinder;
 import itesm.mx.carpoolingtec.R;
 import itesm.mx.carpoolingtec.data.AppRepository;
 import itesm.mx.carpoolingtec.data.MySharedPreferences;
+import itesm.mx.carpoolingtec.data.Repository;
 import itesm.mx.carpoolingtec.model.firebase.Ride;
 import itesm.mx.carpoolingtec.model.firebase.User;
 import itesm.mx.carpoolingtec.model.firebase.UserRide;
@@ -49,6 +52,7 @@ public class RidesFragment extends Fragment implements RidesView,
     private Unbinder unbinder;
 
     private RidesPresenter presenter;
+    private Repository repository;
 
     private int rideType;
 
@@ -95,8 +99,9 @@ public class RidesFragment extends Fragment implements RidesView,
         SharedPreferences sharedPreferences = getActivity()
                 .getSharedPreferences(MySharedPreferences.MY_PREFERENCES, MODE_PRIVATE);
 
-        presenter = new RidesPresenter(this, AppRepository.getInstance(sharedPreferences),
-                SchedulerProvider.getInstance(), rideType);
+        repository = AppRepository.getInstance(sharedPreferences);
+
+        presenter = new RidesPresenter(this, repository, SchedulerProvider.getInstance(), rideType);
         presenter.start();
         presenter.loadRides();
 
@@ -142,7 +147,7 @@ public class RidesFragment extends Fragment implements RidesView,
     }
 
     @Override
-    public void openUserRideDetails(User user,
+    public void openUserRideDetails(final User user,
                                     List<String> ridesMonday,
                                     List<String> ridesTuesday,
                                     List<String> ridesWednesday,
@@ -154,6 +159,12 @@ public class RidesFragment extends Fragment implements RidesView,
         MaterialDialog dialog = new MaterialDialog.Builder(getContext())
                 .customView(R.layout.user_preview_card, true)
                 .positiveText("Solicitar Contacto")
+                .onPositive(new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                        repository.addRequest(user);
+                    }
+                })
                 .build();
 
         View view = dialog.getCustomView();

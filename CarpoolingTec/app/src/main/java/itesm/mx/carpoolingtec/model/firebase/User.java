@@ -160,6 +160,15 @@ public class User {
         return map;
     }
 
+    public Map<String, Object> toMapForContact() {
+        Map<String, Object> map = new HashMap<>();
+        map.put("id", id);
+        map.put("name", name);
+        map.put("photo", photo);
+        map.put("phone", phone);
+        return map;
+    }
+
     @Override
     public String toString() {
         return "id: " + id + " - name: " + name + " - photo: " + photo;
