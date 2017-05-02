@@ -17,8 +17,9 @@ import android.widget.Toast;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.google.firebase.database.DatabaseReference;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -28,7 +29,6 @@ import itesm.mx.carpoolingtec.R;
 import itesm.mx.carpoolingtec.data.AppRepository;
 import itesm.mx.carpoolingtec.data.MySharedPreferences;
 import itesm.mx.carpoolingtec.data.Repository;
-import itesm.mx.carpoolingtec.model.firebase.Ride;
 import itesm.mx.carpoolingtec.model.firebase.User;
 import itesm.mx.carpoolingtec.model.firebase.UserRide;
 import itesm.mx.carpoolingtec.util.Utilities;
@@ -36,8 +36,7 @@ import itesm.mx.carpoolingtec.util.schedulers.SchedulerProvider;
 
 import static android.content.Context.MODE_PRIVATE;
 
-public class RidesFragment extends Fragment implements RidesView,
-        SwipeRefreshLayout.OnRefreshListener, RideItemListener {
+public class RidesFragment extends Fragment implements RidesView, RideItemListener {
 
     private static final String TAG = "RidesFragment";
 
@@ -45,13 +44,12 @@ public class RidesFragment extends Fragment implements RidesView,
     public static final int TO_TEC = 0;
     public static final int FROM_TEC = 1;
 
-    @BindView(R.id.swipeRefreshLayout) SwipeRefreshLayout swipeRefreshLayout;
     @BindView(R.id.rv_rides) RecyclerView recyclerView;
 
-    private RidesAdapter ridesAdapter;
     private Unbinder unbinder;
 
     private RidesPresenter presenter;
+    private FirebaseRecyclerAdapter<UserRide, UserRideHolder> ridesAdapter;
     private Repository repository;
 
     private int rideType;
@@ -88,22 +86,46 @@ public class RidesFragment extends Fragment implements RidesView,
         View view = inflater.inflate(R.layout.fragment_rides, container, false);
         unbinder = ButterKnife.bind(this, view);
 
-        swipeRefreshLayout.setOnRefreshListener(this);
-        swipeRefreshLayout.setRefreshing(false);
-        swipeRefreshLayout.setEnabled(false);
-
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        ridesAdapter = new RidesAdapter(getActivity(), new ArrayList<UserRide>(), this, rideType);
-        recyclerView.setAdapter(ridesAdapter);
-
         SharedPreferences sharedPreferences = getActivity()
                 .getSharedPreferences(MySharedPreferences.MY_PREFERENCES, MODE_PRIVATE);
-
         repository = AppRepository.getInstance(sharedPreferences);
 
         presenter = new RidesPresenter(this, repository, SchedulerProvider.getInstance(), rideType);
         presenter.start();
-        presenter.loadRides();
+
+        String childKey;
+        if (rideType == TO_TEC) {
+            childKey = "rides_to_tec";
+        } else {
+            childKey = "rides_from_tec";
+        }
+        DatabaseReference databaseRef = repository.getDatabase().child(childKey);
+
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+
+        ridesAdapter = new FirebaseRecyclerAdapter<UserRide, UserRideHolder>(UserRide.class,
+                R.layout.ride_item_2, UserRideHolder.class, databaseRef) {
+            @Override
+            protected void populateViewHolder(UserRideHolder holder, final UserRide ride, int position) {
+                Utilities.setRoundedPhoto(getActivity(), ride.getUser().getPhoto(), holder.ivPicture);
+                holder.tvName.setText(ride.getUser().getName());
+
+                if (rideType == RidesFragment.TO_TEC) {
+                    holder.tvDescription.setText("Salida 3 km de tu ubicación");
+                } else {
+                    holder.tvDescription.setText("Destino 3 km de tu ubicación");
+                }
+
+                holder.rlContainer.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        onRideClick(ride);
+                    }
+                });
+            }
+        };
+
+        recyclerView.setAdapter(ridesAdapter);
 
         return view;
     }
@@ -113,37 +135,6 @@ public class RidesFragment extends Fragment implements RidesView,
         super.onDestroyView();
         unbinder.unbind();
         presenter.stop();
-    }
-
-    @Override
-    public void setLoadingIndicator(boolean active) {
-        swipeRefreshLayout.setRefreshing(active);
-    }
-
-    @Override
-    public void showUserRides() {
-        recyclerView.setVisibility(View.VISIBLE);
-    }
-
-    @Override
-    public void hideUserRides() {
-        recyclerView.setVisibility(View.GONE);
-    }
-
-    @Override
-    public void addUserRide(UserRide userRide) {
-        ridesAdapter.addUserRide(userRide);
-    }
-
-    @Override
-    public void clearUserRides() {
-        ridesAdapter.clearUserRides();
-    }
-
-
-    @Override
-    public void showErrorLoadingRidesToast() {
-        Toast.makeText(getContext(), R.string.error_loading_rides, Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -218,11 +209,6 @@ public class RidesFragment extends Fragment implements RidesView,
         rvSunday.setAdapter(adapterSunday);
 
         dialog.show();
-    }
-
-    @Override
-    public void onRefresh() {
-        presenter.loadRides();
     }
 
     @Override

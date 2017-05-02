@@ -35,33 +35,6 @@ public class RidesPresenter {
         disposables = new CompositeDisposable();
     }
 
-    public void loadRides() {
-        disposables.add(repository.getUserRides(rideType)
-                .subscribeOn(schedulerProvider.io())
-                .observeOn(schedulerProvider.ui())
-                .subscribeWith(new DisposableObserver<UserRide>() {
-                    @Override
-                    public void onNext(UserRide userRide) {
-                        if (isViewAttached()) {
-                            view.addUserRide(userRide);
-                        }
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        if (isViewAttached()) {
-                            view.showErrorLoadingRidesToast();
-                        }
-                    }
-
-                    @Override
-                    public void onComplete() {
-
-                    }
-                })
-        );
-    }
-
     public void onRideClick(UserRide userRide) {
         final String MONDAY = "Lunes";
         final String TUESDAY = "Martes";
@@ -134,9 +107,5 @@ public class RidesPresenter {
         if (disposables != null) {
             disposables.clear();
         }
-    }
-
-    private boolean isViewAttached() {
-        return view != null;
     }
 }
