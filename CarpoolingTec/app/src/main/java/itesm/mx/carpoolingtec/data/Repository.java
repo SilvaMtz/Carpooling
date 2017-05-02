@@ -29,4 +29,10 @@ public interface Repository {
     void saveMyId(String id);
 
     String getMyId();
+
+    void addContact(User contact);
+
+    void addRequest(User receptor);
+
+    void removeRequest(String requestKey);
 }

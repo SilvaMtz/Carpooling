@@ -23,6 +23,7 @@ import io.reactivex.Single;
 import io.reactivex.SingleEmitter;
 import io.reactivex.SingleOnSubscribe;
 import itesm.mx.carpoolingtec.model.firebase.Contact;
+import itesm.mx.carpoolingtec.model.firebase.Request;
 import itesm.mx.carpoolingtec.model.firebase.Ride;
 import itesm.mx.carpoolingtec.model.firebase.User;
 import itesm.mx.carpoolingtec.model.firebase.UserRide;
@@ -314,6 +315,99 @@ public class AppRepository implements Repository {
     @Override
     public String getMyId() {
         return sharedPreferences.getString("Matricula" ,null);
+    }
+
+    @Override
+    public void addContact(final User contact) {
+        // Add contact in this users contacts.
+        database.child("users").child(contact.getId()).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                User user = dataSnapshot.getValue(User.class);
+                user.setId(dataSnapshot.getKey());
+
+                String key = database.child("users").child(getMyId()).child("contacts").push().getKey();
+                Map<String, Object> values = user.toMapForContact();
+
+                Map<String, Object> childUpdates = new HashMap<>();
+                childUpdates.put("/users/" + getMyId() + "/contacts/" + key, values);
+
+                database.updateChildren(childUpdates, new DatabaseReference.CompletionListener() {
+                    @Override
+                    public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
+                        // TODO: do something
+                    }
+                });
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                // TODO: do something
+            }
+        });
+
+        // Add this user in contact's contacts
+        database.child("users").child(getMyId()).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                User user = dataSnapshot.getValue(User.class);
+                user.setId(dataSnapshot.getKey());
+
+                String key = database.child("users").child(contact.getId()).child("contacts").push().getKey();
+                Map<String, Object> values = user.toMapForContact();
+
+                Map<String, Object> childUpdates = new HashMap<>();
+                childUpdates.put("/users/" + contact.getId() + "/contacts/" + key, values);
+
+                database.updateChildren(childUpdates, new DatabaseReference.CompletionListener() {
+                    @Override
+                    public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
+                        // TODO: do something
+                    }
+                });
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                // TODO: do something
+            }
+        });
+    }
+
+    @Override
+    public void addRequest(final User receptor) {
+        // Me
+        database.child("users").child(getMyId()).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                User me = dataSnapshot.getValue(User.class);
+                me.setId(dataSnapshot.getKey());
+
+                Request request = new Request(me, false, false);
+                String key = database.child("solicitudes").child(receptor.getId()).push().getKey();
+                Map<String, Object> values = request.toMap();
+
+                Map<String, Object> childUpdates = new HashMap<>();
+                childUpdates.put("/solicitudes/" + receptor.getId() + "/" + key, values);
+
+                database.updateChildren(childUpdates, new DatabaseReference.CompletionListener() {
+                    @Override
+                    public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
+                        // TODO: do something
+                    }
+                });
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                // TODO: do something
+            }
+        });
+    }
+
+    @Override
+    public void removeRequest(String requestKey) {
+        database.child("solicitudes").child(getMyId()).child(requestKey).removeValue();
     }
 
 
