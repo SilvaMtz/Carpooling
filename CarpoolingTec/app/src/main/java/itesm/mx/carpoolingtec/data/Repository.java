@@ -30,6 +30,14 @@ public interface Repository {
 
     String getMyId();
 
+    void setMyLatitude(Float latitude);
+
+    Float getMyLatitude();
+
+    void setMyLongitude(Float longitude);
+
+    Float getMyLongitude();
+
     void addContact(User contact);
 
     void addRequest(User receptor);

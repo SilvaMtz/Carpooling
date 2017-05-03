@@ -309,12 +309,35 @@ public class AppRepository implements Repository {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString("Matricula", id);
         editor.commit();
-
     }
 
     @Override
     public String getMyId() {
-        return sharedPreferences.getString("Matricula" ,null);
+        return sharedPreferences.getString("Matricula", null);
+    }
+
+    @Override
+    public void setMyLatitude(Float latitude) {
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putFloat("Latitude", latitude);
+        editor.apply();
+    }
+
+    @Override
+    public Float getMyLatitude() {
+        return sharedPreferences.getFloat("Latitude", 0f);
+    }
+
+    @Override
+    public void setMyLongitude(Float longitude) {
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putFloat("Longitude", longitude);
+        editor.apply();
+    }
+
+    @Override
+    public Float getMyLongitude() {
+        return sharedPreferences.getFloat("Longitude", 0f);
     }
 
     @Override
