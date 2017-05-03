@@ -1,6 +1,7 @@
 package itesm.mx.carpoolingtec.rides;
 
 import android.content.SharedPreferences;
+import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -20,6 +21,7 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.database.DatabaseReference;
 
+import java.text.DecimalFormat;
 import java.util.List;
 
 import butterknife.BindView;
@@ -110,10 +112,21 @@ public class RidesFragment extends Fragment implements RidesView, RideItemListen
                 Utilities.setRoundedPhoto(getActivity(), ride.getUser().getPhoto(), holder.ivPicture);
                 holder.tvName.setText(ride.getUser().getName());
 
+                Location userLocation = new Location("");
+                userLocation.setLatitude(repository.getMyLatitude());
+                userLocation.setLongitude(repository.getMyLongitude());
+
+                Location tecLocation = new Location("");
+                tecLocation.setLatitude(25.650699);
+                tecLocation.setLongitude(-100.289432);
+
+                float distanceInKm = userLocation.distanceTo(tecLocation) / 1000;
+                DecimalFormat decimalFormat = new DecimalFormat("#.#");
+
                 if (rideType == RidesFragment.TO_TEC) {
-                    holder.tvDescription.setText("Salida 3 km de tu ubicación");
+                    holder.tvDescription.setText("Salida " + decimalFormat.format(distanceInKm) + " km de tu ubicación");
                 } else {
-                    holder.tvDescription.setText("Destino 3 km de tu ubicación");
+                    holder.tvDescription.setText("Destino " + decimalFormat.format(distanceInKm) + " km de tu ubicación");
                 }
 
                 holder.rlContainer.setOnClickListener(new View.OnClickListener() {
