@@ -80,7 +80,6 @@ public class RidesPresenter {
             }
         }
 
-        //TODO: sort lists by time of day.
 
         // User available on UserRide only has an id, name and photo, so a request for a complete
         // User object must me made.

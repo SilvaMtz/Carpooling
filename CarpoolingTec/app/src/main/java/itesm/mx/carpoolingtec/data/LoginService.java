@@ -135,12 +135,11 @@ public class LoginService {
 
                         case XmlPullParser.END_TAG:
                             if (tagname.equalsIgnoreCase("nombre") && persona) {
-                                nombre = text;
+                                alumno.setNombre(text);
                             } else if (tagname.equalsIgnoreCase("apellidoPaterno") && persona) {
-                                nombre = nombre + text;
+                                alumno.setApellidoPaterno(text);
                             } else if (tagname.equalsIgnoreCase("apellidoMaterno") && persona) {
-                                nombre = nombre + text;
-                                alumno.setNombre(nombre);
+                                alumno.setApellidoMaterno(text);
                             } else if (tagname.equalsIgnoreCase("matricula")) {
                                 alumno.setMatricula(text);
                             }

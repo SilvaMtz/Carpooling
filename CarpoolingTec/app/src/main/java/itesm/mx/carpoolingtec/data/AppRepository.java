@@ -28,6 +28,7 @@ import itesm.mx.carpoolingtec.model.firebase.Ride;
 import itesm.mx.carpoolingtec.model.firebase.User;
 import itesm.mx.carpoolingtec.model.firebase.UserRide;
 import itesm.mx.carpoolingtec.rides.RidesFragment;
+import itesm.mx.carpoolingtec.util.NotRegisteredException;
 
 
 public class AppRepository implements Repository {
@@ -287,7 +288,7 @@ public class AppRepository implements Repository {
                             user.setId(dataSnapshot.getKey());
                             e.onSuccess(user);
                         } else {
-                            e.onError(new Exception());
+                            e.onError(new NotRegisteredException());
                         }
                     }
 
@@ -296,12 +297,8 @@ public class AppRepository implements Repository {
                         e.onError(new Exception());
                     }
                 });
-
-
             }
         });
-
-
     }
 
     @Override

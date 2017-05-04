@@ -2,6 +2,10 @@ package itesm.mx.carpoolingtec.login;
 
 import android.util.Log;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.ValueEventListener;
+
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.functions.Consumer;
 import io.reactivex.observers.DisposableSingleObserver;
@@ -9,6 +13,8 @@ import itesm.mx.carpoolingtec.base.BasePresenter;
 import itesm.mx.carpoolingtec.data.LoginService;
 import itesm.mx.carpoolingtec.data.Repository;
 import itesm.mx.carpoolingtec.model.Alumno;
+import itesm.mx.carpoolingtec.model.firebase.User;
+import itesm.mx.carpoolingtec.util.NotRegisteredException;
 import itesm.mx.carpoolingtec.util.UnauthorizedException;
 import itesm.mx.carpoolingtec.util.schedulers.BaseSchedulerProvider;
 
@@ -50,19 +56,34 @@ public class LoginPresenter extends BasePresenter<LoginView> {
                 })
                 .subscribeWith(new DisposableSingleObserver<Alumno>() {
                     @Override
-                    public void onSuccess(Alumno alumno) {
-                        repository.saveMyId(alumno.getMatricula());
-                        view.showToast("Hola " + alumno.getNombre());
+                    public void onSuccess(final Alumno alumno) {
+                        repository.getDatabase().child("users").child(alumno.getMatricula().toUpperCase())
+                                .addListenerForSingleValueEvent(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(DataSnapshot dataSnapshot) {
+                                        User user = dataSnapshot.getValue(User.class);
+                                        if (user != null) {
+                                            user.setId(dataSnapshot.getKey());
+                                            repository.saveMyId(user.getId());
 
-                        boolean registered = true;
-                        if (registered) { // TODO: check if user exists in firebase
-                            view.startMainActivity();
-                        } else {
-                            view.startPedirInfoActivity(alumno.getMatricula(),
-                                    alumno.getMatricula() + alumno.getApellidoPaterno());
-                        }
+                                            Log.d(TAG, "starting MainActivity");
+                                            view.startMainActivity();
+                                        } else {
+                                            Log.d(TAG, "starting PedirInfoActivity");
+                                            view.startPedirInfoActivity(alumno.getMatricula().toUpperCase(),
+                                                    alumno.getNombre() + " " + alumno.getApellidoPaterno());
+                                        }
 
-                        view.setLoadingIndicator(false);
+                                        view.setLoadingIndicator(false);
+                                    }
+
+                                    @Override
+                                    public void onCancelled(DatabaseError databaseError) {
+                                        view.setLoadingIndicator(false);
+                                        view.showLoginErrorMessage();
+                                    }
+                                });
+
                     }
 
                     @Override
