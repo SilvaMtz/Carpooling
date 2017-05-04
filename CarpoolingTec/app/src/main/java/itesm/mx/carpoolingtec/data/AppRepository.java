@@ -258,7 +258,7 @@ public class AppRepository implements Repository {
     }
 
     @Override
-    public void removeRide(final Ride ride, final String userId, String key) {
+    public void removeRide(final Ride ride, String key) {
         String rideTypeKey;
         if (ride.getRide_type().equals("FROM_TEC")) {
             rideTypeKey = "rides_from_tec";
@@ -266,7 +266,7 @@ public class AppRepository implements Repository {
             rideTypeKey = "rides_to_tec";
         }
 
-        database.child(rideTypeKey).child(userId).child("rides").child(key)
+        database.child(rideTypeKey).child(getMyId()).child("rides").child(key)
                 .removeValue();
     }
 
