@@ -98,7 +98,8 @@
                             android:layout_height="25dp"
                             android:layout_gravity="center_vertical"
                             android:background="?android:selectableItemBackground"
-                            android:text="L" />
+                            android:text="L"
+                            android:textColor="@color/colorAccent"/>
 
                         <Button
                             android:id="@+id/Post_Tuesday"
