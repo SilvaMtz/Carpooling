@@ -71,7 +71,7 @@ public class PostActivity extends AppCompatActivity implements PostView, PlaceSe
     private boolean dir = false;
     private double lat = -1;
     private double longi = -1;
-    private int pos = -1;
+    private int pos = 0;
     private String sOrigen = "TO_TEC";
     private String[] dias = new String[] {"Lunes","Martes","Miercoles","Jueves","Viernes","Sabado","Domingo"};
     @Override
