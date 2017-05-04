@@ -161,7 +161,6 @@ public class PostActivity extends AppCompatActivity implements PostView, PlaceSe
 
     @Override
     public void onPlaceSelected(Place place) {
-        // TODO: Get info about the selected place.
         lat = place.getLatLng().latitude;
         longi = place.getLatLng().longitude;
         dir = true;
@@ -170,7 +169,6 @@ public class PostActivity extends AppCompatActivity implements PostView, PlaceSe
 
     @Override
     public void onError(Status status) {
-        // TODO: Handle the error.
         Log.i(TAG, "An error occurred: " + status);
     }
 

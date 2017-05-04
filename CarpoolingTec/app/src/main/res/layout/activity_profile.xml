@@ -78,7 +78,6 @@
         android:layout_width="96dp"
         android:layout_height="96dp"
         android:layout_gravity="center_horizontal"
-        android:src="@drawable/gates"
         app:layout_anchor="@id/materialup.title_container"
         android:elevation="8dp"
         app:layout_scrollFlags="scroll"

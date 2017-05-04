@@ -14,6 +14,7 @@ public class User {
     private double latitude;
     private double longitude;
     private boolean smoking;
+    private boolean price;
     private int gender;
     private int passenger_gender;
     private String notes;
@@ -30,9 +31,7 @@ public class User {
         this.photo = photo;
     }
 
-    public User(String id, String name, String phone, String photo, int seats, double latitude,
-                double longitude, boolean smoking, int gender, int passenger_gender, String notes,
-                Map<String, User> contacts, Map<String, Boolean> rides) {
+    public User(String id, String name, String phone, String photo, int seats, double latitude, double longitude, boolean smoking, boolean price, int gender, int passenger_gender, String notes, Map<String, User> contacts, Map<String, Boolean> rides) {
         this.id = id;
         this.name = name;
         this.phone = phone;
@@ -41,6 +40,7 @@ public class User {
         this.latitude = latitude;
         this.longitude = longitude;
         this.smoking = smoking;
+        this.price = price;
         this.gender = gender;
         this.passenger_gender = passenger_gender;
         this.notes = notes;
@@ -112,6 +112,14 @@ public class User {
         this.smoking = smoking;
     }
 
+    public boolean isPrice() {
+        return price;
+    }
+
+    public void setPrice(boolean price) {
+        this.price = price;
+    }
+
     public int getGender() {
         return gender;
     }
@@ -166,6 +174,19 @@ public class User {
         map.put("name", name);
         map.put("photo", photo);
         map.put("phone", phone);
+        return map;
+    }
+
+    public Map<String, Object> toFullMap() {
+        Map<String, Object> map = new HashMap<>();
+        map.put("id", id);
+        map.put("name", name);
+        map.put("phone", phone);
+        map.put("passenger_gender", passenger_gender);
+        map.put("smoking", smoking);
+        map.put("price", price);
+        map.put("gender", gender);
+        map.put("notes", notes);
         return map;
     }
 

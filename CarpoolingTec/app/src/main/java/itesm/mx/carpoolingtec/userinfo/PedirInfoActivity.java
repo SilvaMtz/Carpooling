@@ -1,7 +1,7 @@
 package itesm.mx.carpoolingtec.userinfo;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
+import android.support.annotation.IdRes;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -9,28 +9,27 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.Status;
-import com.google.android.gms.location.places.Place;
-import com.google.android.gms.location.places.Places;
-import com.google.android.gms.location.places.ui.PlaceAutocompleteFragment;
-import com.google.android.gms.location.places.ui.PlaceSelectionListener;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.LatLngBounds;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import itesm.mx.carpoolingtec.R;
+import itesm.mx.carpoolingtec.data.AppRepository;
+import itesm.mx.carpoolingtec.data.MySharedPreferences;
+import itesm.mx.carpoolingtec.data.Repository;
 import itesm.mx.carpoolingtec.main.MainActivity;
+import itesm.mx.carpoolingtec.model.firebase.User;
 
-public class PedirInfoActivity extends AppCompatActivity
-        implements GoogleApiClient.OnConnectionFailedListener, PlaceSelectionListener,
-        View.OnClickListener {
+public class PedirInfoActivity extends AppCompatActivity implements View.OnClickListener {
 
     public static final String MATRICULA = "matricula";
     public static final String NOMBRE = "nombre";
@@ -43,76 +42,118 @@ public class PedirInfoActivity extends AppCompatActivity
     @BindView(R.id.NomPedirInfo) TextView tvNom;
     @BindView(R.id.NotaTextoPedirInfo) EditText etNota;
     @BindView(R.id.BottonPedirInfo) Button btGuardar;
+    @BindView(R.id.radioGender) RadioGroup radioGroup;
+    @BindView(R.id.edit_phone) EditText editPhone;
 
-    private String Matricula;
+    private Repository repository;
+
+    private String matricula;
     private String nombre;
-    private boolean dir = false;
-    private double lat = -1;
-    private double longi = -1;
-    private GoogleApiClient googleApiClient;
-    private PlaceAutocompleteFragment autocompleteFragment;
 
     private static final String ORIGEN = "Tu Casa";
     private static final String TAG = "PedirInfoActivity";
+
+    private boolean fumar = false;
+    private boolean hombres = true;
+    private boolean mujeres = true;
+    private boolean precio = false;
+    int gender = 0; // Mujer
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pedir_info);
         ButterKnife.bind(this);
-        Matricula = getIntent().getStringExtra(MATRICULA);
+
+        repository = AppRepository.getInstance(getSharedPreferences(
+                MySharedPreferences.MY_PREFERENCES, MODE_PRIVATE));
+
+        setTitle("Registro");
+
+        cFumar.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                fumar = isChecked;
+            }
+        });
+
+        cHombre.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                hombres = isChecked;
+            }
+        });
+
+        cMujer.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                mujeres = isChecked;
+            }
+        });
+
+        cPrecio.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                precio = isChecked;
+            }
+        });
+
+        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, @IdRes int checkedId) {
+                if (checkedId == R.id.radioMale) {
+                    gender = 1;
+                } else {
+                    gender = 0;
+                }
+            }
+        });
+
+        matricula = getIntent().getStringExtra(MATRICULA);
         nombre = getIntent().getStringExtra(NOMBRE);
 
-        googleApiClient = new GoogleApiClient
-                .Builder(this)
-                .addApi(Places.GEO_DATA_API)
-                .addApi(Places.PLACE_DETECTION_API)
-                .enableAutoManage(this, this)
-                .build();
-
-        autocompleteFragment = (PlaceAutocompleteFragment)
-                getFragmentManager().findFragmentById(R.id.place_autocomplete_fragment);
-        autocompleteFragment.setBoundsBias(new LatLngBounds(
-                new LatLng(25.596967, 100.488252),
-                new LatLng(25.816600, 100.098237)
-        ));
-        autocompleteFragment.setOnPlaceSelectedListener(this);
-        // Set default hint to ORIGEN
-        autocompleteFragment.setHint(ORIGEN);
-        tvMat.setText(tvMat.getText().toString()+" "+Matricula);
-        tvNom.setText(tvNom.getText().toString()+" "+nombre);
+        tvMat.setText(tvMat.getText().toString() + " " + matricula);
+        tvNom.setText(tvNom.getText().toString() + " " + nombre);
         btGuardar.setOnClickListener(this);
     }
 
     @Override
-    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-
-    }
-
-    @Override
-    public void onPlaceSelected(Place place) {
-        // TODO: Get info about the selected place.
-        lat = place.getLatLng().latitude;
-        longi = place.getLatLng().longitude;
-        dir = true;
-        Log.i(TAG, "Place: " + place.getName());
-    }
-
-    @Override
-    public void onError(Status status) {
-        // TODO: Handle the error.
-        Log.i(TAG, "An error occurred: " + status);
-    }
-
-    @Override
     public void onClick(View v) {
-        if(dir){
-            String note = etNota.getText().toString();
-            //Todo guadar datos en firbase
-            Intent intent = new Intent(this, MainActivity.class);
-            startActivity(intent);
-        }else{
-            Toast.makeText(v.getContext(),getResources().getString(R.string.ErrorMessage2),Toast.LENGTH_LONG).show();
+        String note = etNota.getText().toString();
+
+        if (editPhone.getText().toString().isEmpty()) {
+            Toast.makeText(this, "Introduce tu número de teléfono", Toast.LENGTH_SHORT).show();
+            return;
         }
+
+        if (!hombres && !mujeres) {
+            Toast.makeText(this, "Elige el tipo de pasajero", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        User user = new User();
+        user.setId(matricula);
+        user.setName(nombre);
+        user.setGender(gender);
+        user.setPhone(editPhone.getText().toString());
+        user.setPrice(precio);
+        user.setNotes(note);
+        user.setSmoking(fumar);
+        if (hombres && mujeres) {
+            user.setPassenger_gender(2);
+        } else if (hombres) {
+            user.setPassenger_gender(0);
+        } else {
+            user.setPassenger_gender(1);
+        }
+
+        repository.getDatabase().child("users").child(matricula.toUpperCase()).setValue(user.toFullMap()).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                repository.saveMyId(matricula.toUpperCase());
+                Intent intent = new Intent(PedirInfoActivity.this, MainActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 }

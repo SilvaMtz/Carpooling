@@ -84,7 +84,7 @@ public class ProfileActivity extends AppCompatActivity
         // TODO get ALL rides
         Repository repository = AppRepository.getInstance(sharedPreferences);
         DatabaseReference ridesRef = repository.getDatabase().child("rides_to_tec")
-                .child("A00513173").child("rides");
+                .child(repository.getMyId()).child("rides");
 
         rvProfileRides.setLayoutManager(new LinearLayoutManager(this));
 

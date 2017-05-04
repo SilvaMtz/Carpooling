@@ -31,7 +31,6 @@
 
     <string name="arrival_tec">Llegada al Tec %1$s</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
     <string name="title_activity_profile" translatable="false">ProfileActivity</string>
 
@@ -44,19 +43,19 @@
     <!-- Strings related to login -->
     <string name="ErrorMessage">Favor de Insertar tu Matricula y Contreseña</string>
     <string name="ErrorMessage2">Favor de Poner direccion</string>
-    <string name="prompt_student_id">Matricula</string>
+    <string name="prompt_student_id">Matricula:</string>
     <string name="prompt_student_name">Nombre:</string>
     <string name="prompt_password">Contraseña</string>
-    <string name="prompt_smoke">Fumar:</string>
+    <string name="prompt_smoke">Fumar</string>
     <string name="prompt_smoke2">Compartir carro con fumadores</string>
-    <string name="prompt_gender">Pasajeros:</string>
+    <string name="prompt_gender">Pasajeros</string>
     <string name="prompt_gender2">Con que pasajeros te gustaria compartir el carro</string>
-    <string name="prompt_genderH">Hombre:</string>
-    <string name="prompt_genderM">Mujer:</string>
-    <string name="prompt_cost">Cobro:</string>
+    <string name="prompt_genderH">Hombre</string>
+    <string name="prompt_genderM">Mujer</string>
+    <string name="prompt_cost">Cobro</string>
     <string name="prompt_cost2">Al ofrecer ride pagarian tu servicio</string>
-    <string name="prompt_note">Nota:</string>
-    <string name="prompt_note2">Pon una descripcion tuya que la gente leera</string>
+    <string name="prompt_note">Nota</string>
+    <string name="prompt_note2">Escribe algo sobre tí</string>
     <string name="prompt_save">Guardar Informacion</string>
     <string name="action_sign_in_short">Iniciar sesión</string>
 

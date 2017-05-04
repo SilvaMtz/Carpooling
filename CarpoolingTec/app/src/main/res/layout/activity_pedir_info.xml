@@ -17,6 +17,7 @@
             android:layout_margin="10dp"
             android:textSize="15sp"
             android:text="@string/prompt_student_id"
+            android:textColor="@color/textPrimary"
             />
 
         <View
@@ -30,6 +31,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:textSize="15sp"
+            android:textColor="@color/textPrimary"
             android:text="@string/prompt_student_name"/>
 
         <View
@@ -37,12 +39,47 @@
             android:layout_height="2dp"
             android:background="@drawable/border" />
 
-        <fragment
-            android:id="@+id/place_autocomplete_fragment"
+        <EditText
+            android:id="@+id/edit_phone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:name="com.google.android.gms.location.places.ui.PlaceAutocompleteFragment"
-            />
+            android:hint="Telefono"
+            android:inputType="phone"
+            android:layout_margin="10dp"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="@drawable/border" />
+
+        <RadioGroup
+            android:id="@+id/radioGender"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/radioMale"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Hombre"/>
+
+            <RadioButton
+                android:id="@+id/radioFemale"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:checked="true"
+                android:text="Mujer"/>
+
+            </LinearLayout>
+        </RadioGroup>
+
         <View
             android:layout_width="match_parent"
             android:layout_height="2dp"
@@ -58,6 +95,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textStyle="bold"
+                android:textColor="@color/textPrimary"
                 android:text="@string/prompt_smoke"
                 />
             <TextView
@@ -90,6 +128,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textStyle="bold"
+                android:textColor="@color/textPrimary"
                 android:text="@string/prompt_gender"
                 />
             <TextView
@@ -111,12 +150,14 @@
                     android:layout_height="wrap_content"
                     android:textSize="15sp"
                     android:text="@string/prompt_genderH"
+                    android:textColor="@color/textPrimary"
                     android:layout_centerVertical="true"
                     android:layout_marginStart="10dp"/>
                 <CheckBox
                     android:id="@+id/HombreCheckPedirInfo"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:checked="true"
                     android:layout_centerVertical="true"
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentTop="true"/>
@@ -132,6 +173,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="15sp"
+                    android:textColor="@color/textPrimary"
                     android:text="@string/prompt_genderM"
                     android:layout_centerVertical="true"
                     android:layout_marginStart="10dp"/>
@@ -139,6 +181,7 @@
                     android:id="@+id/MujerCheckPedirInfo"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:checked="true"
                     android:layout_centerVertical="true"
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentTop="true"/>
@@ -164,6 +207,7 @@
                 android:layout_height="wrap_content"
                 android:textStyle="bold"
                 android:text="@string/prompt_cost"
+                android:textColor="@color/textPrimary"
                 />
             <TextView
                 android:id="@+id/CobrarDescripcionPedirInfo"
@@ -194,6 +238,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textStyle="bold"
+            android:textColor="@color/textPrimary"
             android:text="@string/prompt_note"
             />
         <TextView
@@ -213,12 +258,16 @@
     </RelativeLayout>
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp">
         <Button
             android:id="@+id/BottonPedirInfo"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
+            android:background="@color/colorAccent"
+            android:textColor="@color/white"
+            android:padding="10dp"
             android:text="@string/prompt_save"/>
     </RelativeLayout>
 
