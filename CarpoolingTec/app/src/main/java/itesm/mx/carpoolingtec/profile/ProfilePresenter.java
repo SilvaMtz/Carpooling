@@ -46,7 +46,7 @@ public class ProfilePresenter extends BasePresenter<ProfileView> {
     }
 
     public void onDeleteRide(Ride ride, String key) {
-        repository.removeRide(ride, "A00513173", key);
+        repository.removeRide(ride, key);
         view.showRemovedRideToast();
     }
 

@@ -22,7 +22,7 @@ public interface Repository {
 
     Completable saveRide(User user, Ride ride);
 
-    void removeRide(Ride ride, String userId, String key);
+    void removeRide(Ride ride, String key);
 
     Single<User> getUser(String id);
 
