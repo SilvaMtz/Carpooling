@@ -78,7 +78,7 @@ public class ContactsFragment extends Fragment implements ContactsView,
 
     @Override
     public void onPrepareOptionsMenu(Menu menu){
-        menu.findItem(R.id.action_sort).setVisible(true);
+        //menu.findItem(R.id.action_sort).setVisible(true);
         super.onPrepareOptionsMenu(menu);
     }
 

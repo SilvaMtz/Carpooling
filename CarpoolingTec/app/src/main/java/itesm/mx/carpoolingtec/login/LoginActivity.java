@@ -21,6 +21,8 @@ import itesm.mx.carpoolingtec.main.MainActivity;
 import itesm.mx.carpoolingtec.userinfo.PedirInfoActivity;
 import itesm.mx.carpoolingtec.util.schedulers.SchedulerProvider;
 
+import static android.R.attr.name;
+
 public class LoginActivity extends AppCompatActivity implements LoginView{
 
     @BindView(R.id.edit_student_id) EditText etStudentId;
@@ -81,6 +83,7 @@ public class LoginActivity extends AppCompatActivity implements LoginView{
     @Override
     public void startPedirInfoActivity(String userId, String name) {
         Intent intent = new Intent(this, PedirInfoActivity.class);
+        intent.putExtra("id",0);
         intent.putExtra(PedirInfoActivity.MATRICULA, userId);
         intent.putExtra(PedirInfoActivity.NOMBRE, name);
         startActivity(intent);

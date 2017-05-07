@@ -78,7 +78,7 @@ public class RidesFragment extends Fragment implements RidesView, RideItemListen
 
     @Override
     public void onPrepareOptionsMenu(Menu menu) {
-        menu.findItem(R.id.action_sort).setVisible(true);
+        //menu.findItem(R.id.action_sort).setVisible(true);
         super.onPrepareOptionsMenu(menu);
     }
 
