@@ -58,6 +58,8 @@ public class PedirInfoActivity extends AppCompatActivity implements View.OnClick
     private boolean mujeres = true;
     private boolean precio = false;
     int gender = 0; // Mujer
+    private int id; // 0 Login activity, 1 Perfil activity
+    private User userPerfil;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -111,10 +113,51 @@ public class PedirInfoActivity extends AppCompatActivity implements View.OnClick
 
         matricula = getIntent().getStringExtra(MATRICULA);
         nombre = getIntent().getStringExtra(NOMBRE);
-
+        id = getIntent().getIntExtra("id",0);
         tvMat.setText(tvMat.getText().toString() + " " + matricula);
         tvNom.setText(tvNom.getText().toString() + " " + nombre);
         btGuardar.setOnClickListener(this);
+
+        if(id == 1){
+            userPerfil = (User) getIntent().getSerializableExtra("user");
+
+            editPhone.setText(userPerfil.getPhone());
+            etNota.setText(userPerfil.getNotes());
+            if(userPerfil.getPassenger_gender() == 0){
+                hombres = true;
+                cHombre.setChecked(true);
+            }else if (userPerfil.getPassenger_gender() == 1){
+                mujeres = true;
+                cMujer.setChecked(true);
+            }else{
+                hombres=true;
+                mujeres=true;
+                cHombre.setChecked(true);
+                cMujer.setChecked(true);
+            }
+
+            if(userPerfil.isSmoking()){
+                fumar = true;
+                cFumar.setChecked(true);
+            }else{
+                cFumar.setChecked(false);
+            }
+
+            if(userPerfil.isPrice()){
+                precio = true;
+                cPrecio.setChecked(true);
+            }else{
+                cPrecio.setChecked(false);
+            }
+
+            if(userPerfil.getGender() == 0){
+                gender = 1;
+                radioGroup.check(R.id.radioMale);
+            }else{
+                gender = 0;
+                radioGroup.check(R.id.radioFemale);
+            }
+        }
     }
 
     @Override

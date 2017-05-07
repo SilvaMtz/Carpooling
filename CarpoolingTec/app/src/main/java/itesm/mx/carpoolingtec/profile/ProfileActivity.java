@@ -1,5 +1,6 @@
 package itesm.mx.carpoolingtec.profile;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
@@ -11,16 +12,22 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.squareup.picasso.Picasso;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import butterknife.BindView;
@@ -31,6 +38,8 @@ import itesm.mx.carpoolingtec.data.MySharedPreferences;
 import itesm.mx.carpoolingtec.data.Repository;
 import itesm.mx.carpoolingtec.model.firebase.Ride;
 import itesm.mx.carpoolingtec.model.firebase.User;
+import itesm.mx.carpoolingtec.post.PostActivity;
+import itesm.mx.carpoolingtec.userinfo.PedirInfoActivity;
 import itesm.mx.carpoolingtec.util.schedulers.SchedulerProvider;
 
 public class ProfileActivity extends AppCompatActivity
@@ -45,6 +54,7 @@ public class ProfileActivity extends AppCompatActivity
     @BindView(R.id.rv_profile_rides) RecyclerView rvProfileRides;
     @BindView(R.id.text_name) TextView tvName;
     @BindView(R.id.text_phone) TextView tvPhone;
+    //@BindView(R.id.image_edit) ImageButton ibLapiz;
 
     private int maxScrollSize;
     private boolean isAvatorShown;
@@ -105,13 +115,12 @@ public class ProfileActivity extends AppCompatActivity
                 } else {
                     viewHolder.tvRideType.setText("Hacia el Tec");
                 }
+                viewHolder.ibLapiz.setOnClickListener(new View.OnClickListener(){
 
-                viewHolder.view.setOnLongClickListener(new View.OnLongClickListener() {
                     @Override
-                    public boolean onLongClick(View v) {
+                    public void onClick(View v) {
                         String key = getRef(position).getKey();
                         openEditRideOptions(ride, key);
-                        return false;
                     }
                 });
             }
@@ -139,6 +148,49 @@ public class ProfileActivity extends AppCompatActivity
                     PorterDuff.Mode.SRC_ATOP);
         }
         return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+        switch (item.getItemId()) {
+            case R.id.action_edit:
+                SharedPreferences sharedPreferences = getSharedPreferences(MySharedPreferences.MY_PREFERENCES, MODE_PRIVATE);
+                Repository repository = AppRepository.getInstance(sharedPreferences);
+                ChildEventListener ridesRef = repository.getDatabase().child("users").child(repository.getMyId()).addChildEventListener(new ChildEventListener() {
+                    @Override
+                    public void onChildAdded(DataSnapshot snapshot, String s) {
+                        User useraux = snapshot.getValue(User.class);
+                        openPedirInfo(useraux);
+
+                    }
+
+                    @Override
+                    public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+                    }
+
+                    @Override
+                    public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+                    }
+
+                    @Override
+                    public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+
+                });
+
+                return true;
+            default:
+                return true;
+        }
     }
 
     @Override
@@ -197,6 +249,24 @@ public class ProfileActivity extends AppCompatActivity
         });
 
         dialog.show();
+    }
+
+    @Override
+    public void openPostActivity(final Ride ride){
+        Intent intent = new Intent(this,PostActivity.class);
+        intent.putExtra("id",1); // 1 representa Perfil
+        intent.putExtra("ride",ride);
+        startActivity(intent);
+
+    }
+
+    @Override
+    public void openPedirInfo(User user){
+        Intent intent = new Intent(this, PedirInfoActivity.class);
+        intent.putExtra("ïd",1);
+        intent.putExtra("user",user);
+        startActivity(intent);
+
     }
 
     @Override

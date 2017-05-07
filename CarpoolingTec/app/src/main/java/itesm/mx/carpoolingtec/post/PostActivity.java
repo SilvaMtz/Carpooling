@@ -69,11 +69,14 @@ public class PostActivity extends AppCompatActivity implements PostView, PlaceSe
     private GoogleApiClient googleApiClient;
     private PostPresenter presenter;
     private boolean dir = false;
+    private String dirName;
     private double lat = -1;
     private double longi = -1;
-    private int pos = 0;
+    private int pos;
     private String sOrigen = "TO_TEC";
     private String[] dias = new String[] {"Lunes","Martes","Miercoles","Jueves","Viernes","Sabado","Domingo"};
+    private int id; //Represante de donde viene la actividad
+    private Ride ride;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -104,7 +107,7 @@ public class PostActivity extends AppCompatActivity implements PostView, PlaceSe
         // Set default hint to ORIGEN
         autocompleteFragment.setHint(ORIGEN);
 
-        spinner.setOnItemSelectedListener(this);
+            spinner.setOnItemSelectedListener(this);
 
         SharedPreferences sharedPreferences = getSharedPreferences(MySharedPreferences.MY_PREFERENCES, MODE_PRIVATE);
 
@@ -118,9 +121,31 @@ public class PostActivity extends AppCompatActivity implements PostView, PlaceSe
         BF.setOnClickListener(this);
         BS.setOnClickListener(this);
         BSU.setOnClickListener(this);
+        pos = -1;
+        clean(0);
+        id = getIntent().getIntExtra("id",0);
+        if(id == 1){
+            ride = (Ride) getIntent().getSerializableExtra("ride");
+            sOrigen = ride.getRide_type();
+            longi = ride.getLongitude();
+            lat = ride.getLatitude();
+            dirName = ride.getDirName();
+            dir = true;
 
-
+            pos = GivePosAndMakeGreen(ride.getWeekday());
+            tvClock.setText(ride.getTime());
+            if(sOrigen.equals("TO_TEC")){
+                spinner.setSelection(0);
+                autocompleteFragment.setHint(ORIGEN);
+            }else{
+                spinner.setSelection(1);
+                autocompleteFragment.setHint(DESTINO);
+            }
+            autocompleteFragment.setText(dirName);
+        }
     }
+
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -133,13 +158,19 @@ public class PostActivity extends AppCompatActivity implements PostView, PlaceSe
         switch (item.getItemId()) {
             case R.id.action_post:
                 //Dummy
-                if(lat<0 || !dir){
+                if(lat<0 || !dir || pos == -1){
                     //Toast.makeText(getApplicationContext(),"Datos Incompletos " + Integer.toString(pos) +" " + Double.toString(longi) +" " + Double.toString(lat),Toast.LENGTH_LONG).show();
                     return true;
                 }
-                Ride ride = new Ride(sOrigen, tvClock.getText().toString(), dias[pos], longi, lat);
-                presenter.saveRide(ride);
-                finish();
+                if(id==0){ // Si es post ride
+                    Ride ride = new Ride(sOrigen, tvClock.getText().toString(), dias[pos], longi, lat,dirName);
+                    presenter.saveRide(ride);
+                    finish();
+                } else{ // si es update ride
+                    Ride ride = new Ride(sOrigen, tvClock.getText().toString(), dias[pos], longi, lat,dirName);
+                    presenter.saveRide(ride); // Todo updateride en vez de saveride
+                    finish();
+                }
                 return true;
             case android.R.id.home:
                 finish();
@@ -164,6 +195,7 @@ public class PostActivity extends AppCompatActivity implements PostView, PlaceSe
         lat = place.getLatLng().latitude;
         longi = place.getLatLng().longitude;
         dir = true;
+        dirName = place.getName().toString();
         Log.i(TAG, "Place: " + place.getName());
     }
 
@@ -288,6 +320,33 @@ public class PostActivity extends AppCompatActivity implements PostView, PlaceSe
                 }
                 break;
         }
+    }
+
+    private int GivePosAndMakeGreen(String weekday) {
+        switch (weekday){
+            case "Lunes":
+                    BM.setTextColor(getResources().getColor(R.color.colorAccent));
+                    return  0;
+            case "Martes":
+                    BT.setTextColor(getResources().getColor(R.color.colorAccent));
+                    return 1;
+            case "Miercoles":
+                    BW.setTextColor(getResources().getColor(R.color.colorAccent));
+                    return 2;
+            case "Jueves":
+                    BTT.setTextColor(getResources().getColor(R.color.colorAccent));
+                    return 3;
+            case "Viernes":
+                    BF.setTextColor(getResources().getColor(R.color.colorAccent));
+                    return  4;
+            case "Sabado":
+                    BS.setTextColor(getResources().getColor(R.color.colorAccent));
+                    return  5;
+            case "Domingo":
+                    BSU.setTextColor(getResources().getColor(R.color.colorAccent));
+                    return  6;
+        }
+        return -1;
     }
 
     @OnClick(R.id.text_clock)

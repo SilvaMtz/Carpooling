@@ -7,6 +7,10 @@ public interface ProfileView {
 
     void openEditRideOptions(Ride ride, String key);
 
+    void openPostActivity(Ride ride);
+
+    void openPedirInfo(User user);
+
     void showRemovedRideToast();
 
     void showUserData(User user);

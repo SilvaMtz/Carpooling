@@ -81,6 +81,7 @@ public class LoginActivity extends AppCompatActivity implements LoginView{
     @Override
     public void startPedirInfoActivity(String userId, String name) {
         Intent intent = new Intent(this, PedirInfoActivity.class);
+        intent.putExtra("ïd",0);
         intent.putExtra(PedirInfoActivity.MATRICULA, userId);
         intent.putExtra(PedirInfoActivity.NOMBRE, name);
         startActivity(intent);

@@ -60,12 +60,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         getMenuInflater().inflate(R.menu.menu_main, menu);
 
         // Set refresh icon color to white.
-        Drawable refreshIcon = menu.findItem(R.id.action_sort).getIcon();
+       /* Drawable refreshIcon = menu.findItem(R.id.action_sort).getIcon();
         if (refreshIcon != null) {
             refreshIcon.mutate();
             refreshIcon.setColorFilter(ContextCompat.getColor(this, R.color.white),
                     PorterDuff.Mode.SRC_ATOP);
-        }
+        }*/
         return true;
     }
 
@@ -87,8 +87,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 Intent intent2 = new Intent(this, RequestActivity.class);
                 startActivity(intent2);
                 return true;
-            case R.id.action_sort:
-                return true;
+            /*case R.id.action_sort:
+                return true;*/
         }
         return super.onOptionsItemSelected(item);
     }
@@ -96,6 +96,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View v) {
         Intent intent = new Intent(this, PostActivity.class);
+        intent.putExtra("id",0); // 0 representa main activity
         startActivity(intent);
     }
 
