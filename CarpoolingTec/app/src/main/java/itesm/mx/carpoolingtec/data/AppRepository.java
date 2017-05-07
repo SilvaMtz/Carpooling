@@ -310,6 +310,7 @@ public class AppRepository implements Repository {
 
     @Override
     public String getMyId() {
+<<<<<<< HEAD
         return sharedPreferences.getString("Matricula", null);
     }
 
@@ -428,6 +429,9 @@ public class AppRepository implements Repository {
     @Override
     public void removeRequest(String requestKey) {
         database.child("solicitudes").child(getMyId()).child(requestKey).removeValue();
+=======
+        return sharedPreferences.getString("Matricula" ,null);
+>>>>>>> 52902fa30f200a3d988e6b75f8509590f5da5314
     }
 
 
