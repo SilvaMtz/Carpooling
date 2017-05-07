@@ -46,7 +46,6 @@
     <string name="prompt_student_id">Matricula:</string>
     <string name="prompt_student_name">Nombre:</string>
     <string name="prompt_password">Contraseña</string>
-<<<<<<< HEAD
     <string name="prompt_smoke">Fumar</string>
     <string name="prompt_smoke2">Compartir carro con fumadores</string>
     <string name="prompt_gender">Pasajeros</string>
@@ -57,18 +56,6 @@
     <string name="prompt_cost2">Al ofrecer ride pagarian tu servicio</string>
     <string name="prompt_note">Nota</string>
     <string name="prompt_note2">Escribe algo sobre tí</string>
-=======
-    <string name="prompt_smoke">Fumar:</string>
-    <string name="prompt_smoke2">Compartir carro con fumadores</string>
-    <string name="prompt_gender">Pasajeros:</string>
-    <string name="prompt_gender2">Con que pasajeros te gustaria compartir el carro</string>
-    <string name="prompt_genderH">Hombre:</string>
-    <string name="prompt_genderM">Mujer:</string>
-    <string name="prompt_cost">Cobro:</string>
-    <string name="prompt_cost2">Al ofrecer ride pagarian tu servicio</string>
-    <string name="prompt_note">Nota:</string>
-    <string name="prompt_note2">Pon una descripcion tuya que la gente leera</string>
->>>>>>> 52902fa30f200a3d988e6b75f8509590f5da5314
     <string name="prompt_save">Guardar Informacion</string>
     <string name="action_sign_in_short">Iniciar sesión</string>
 

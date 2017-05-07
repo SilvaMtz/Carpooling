@@ -40,17 +40,11 @@
         <activity
             android:name=".post.PostActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-<<<<<<< HEAD
-
         <activity
             android:name=".request.RequestActivity"
             android:theme="@style/AppTheme.NoActionBar"/>
 
         <activity android:name=".userinfo.PedirInfoActivity"/>
-=======
-        <activity android:name=".request.RequestActivity" />
-        <activity android:name=".login.PedirInfo"></activity>
->>>>>>> 52902fa30f200a3d988e6b75f8509590f5da5314
     </application>
 
 </manifest>

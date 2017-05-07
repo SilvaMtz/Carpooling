@@ -5,11 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-<<<<<<< HEAD
     tools:context="itesm.mx.carpoolingtec.userinfo.PedirInfoActivity">
-=======
-    tools:context="itesm.mx.carpoolingtec.login.PedirInfo">
->>>>>>> 52902fa30f200a3d988e6b75f8509590f5da5314
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -21,10 +18,7 @@
             android:layout_margin="10dp"
             android:textSize="15sp"
             android:text="@string/prompt_student_id"
-<<<<<<< HEAD
             android:textColor="@color/textPrimary"
-=======
->>>>>>> 52902fa30f200a3d988e6b75f8509590f5da5314
             />
 
         <View
@@ -38,18 +32,13 @@
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:textSize="15sp"
-<<<<<<< HEAD
             android:textColor="@color/textPrimary"
-=======
->>>>>>> 52902fa30f200a3d988e6b75f8509590f5da5314
             android:text="@string/prompt_student_name"/>
 
         <View
             android:layout_width="match_parent"
             android:layout_height="2dp"
             android:background="@drawable/border" />
-
-<<<<<<< HEAD
         <EditText
             android:id="@+id/edit_phone"
             android:layout_width="match_parent"
@@ -90,15 +79,6 @@
 
             </LinearLayout>
         </RadioGroup>
-
-=======
-        <fragment
-            android:id="@+id/place_autocomplete_fragment"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:name="com.google.android.gms.location.places.ui.PlaceAutocompleteFragment"
-            />
->>>>>>> 52902fa30f200a3d988e6b75f8509590f5da5314
         <View
             android:layout_width="match_parent"
             android:layout_height="2dp"
@@ -114,10 +94,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textStyle="bold"
-<<<<<<< HEAD
                 android:textColor="@color/textPrimary"
-=======
->>>>>>> 52902fa30f200a3d988e6b75f8509590f5da5314
                 android:text="@string/prompt_smoke"
                 />
             <TextView
@@ -150,10 +127,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textStyle="bold"
-<<<<<<< HEAD
                 android:textColor="@color/textPrimary"
-=======
->>>>>>> 52902fa30f200a3d988e6b75f8509590f5da5314
                 android:text="@string/prompt_gender"
                 />
             <TextView
@@ -175,20 +149,14 @@
                     android:layout_height="wrap_content"
                     android:textSize="15sp"
                     android:text="@string/prompt_genderH"
-<<<<<<< HEAD
                     android:textColor="@color/textPrimary"
-=======
->>>>>>> 52902fa30f200a3d988e6b75f8509590f5da5314
                     android:layout_centerVertical="true"
                     android:layout_marginStart="10dp"/>
                 <CheckBox
                     android:id="@+id/HombreCheckPedirInfo"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-<<<<<<< HEAD
                     android:checked="true"
-=======
->>>>>>> 52902fa30f200a3d988e6b75f8509590f5da5314
                     android:layout_centerVertical="true"
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentTop="true"/>
@@ -204,10 +172,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="15sp"
-<<<<<<< HEAD
                     android:textColor="@color/textPrimary"
-=======
->>>>>>> 52902fa30f200a3d988e6b75f8509590f5da5314
                     android:text="@string/prompt_genderM"
                     android:layout_centerVertical="true"
                     android:layout_marginStart="10dp"/>
@@ -215,10 +180,7 @@
                     android:id="@+id/MujerCheckPedirInfo"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-<<<<<<< HEAD
                     android:checked="true"
-=======
->>>>>>> 52902fa30f200a3d988e6b75f8509590f5da5314
                     android:layout_centerVertical="true"
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentTop="true"/>
@@ -244,10 +206,7 @@
                 android:layout_height="wrap_content"
                 android:textStyle="bold"
                 android:text="@string/prompt_cost"
-<<<<<<< HEAD
                 android:textColor="@color/textPrimary"
-=======
->>>>>>> 52902fa30f200a3d988e6b75f8509590f5da5314
                 />
             <TextView
                 android:id="@+id/CobrarDescripcionPedirInfo"
@@ -278,10 +237,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textStyle="bold"
-<<<<<<< HEAD
             android:textColor="@color/textPrimary"
-=======
->>>>>>> 52902fa30f200a3d988e6b75f8509590f5da5314
             android:text="@string/prompt_note"
             />
         <TextView
@@ -301,7 +257,6 @@
     </RelativeLayout>
     <RelativeLayout
         android:layout_width="match_parent"
-<<<<<<< HEAD
         android:layout_height="wrap_content"
         android:layout_margin="10dp">
         <Button
@@ -312,19 +267,9 @@
             android:background="@color/colorAccent"
             android:textColor="@color/white"
             android:padding="10dp"
-=======
-        android:layout_height="wrap_content">
-        <Button
-            android:id="@+id/BottonPedirInfo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
->>>>>>> 52902fa30f200a3d988e6b75f8509590f5da5314
             android:text="@string/prompt_save"/>
     </RelativeLayout>
 
     </LinearLayout>
-
-
 
 </ScrollView>

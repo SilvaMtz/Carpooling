@@ -15,14 +15,13 @@ import butterknife.ButterKnife;
 import io.reactivex.disposables.CompositeDisposable;
 import itesm.mx.carpoolingtec.R;
 import itesm.mx.carpoolingtec.data.AppRepository;
-<<<<<<< HEAD
 import itesm.mx.carpoolingtec.data.LoginService;
-=======
->>>>>>> 52902fa30f200a3d988e6b75f8509590f5da5314
 import itesm.mx.carpoolingtec.data.MySharedPreferences;
 import itesm.mx.carpoolingtec.main.MainActivity;
 import itesm.mx.carpoolingtec.userinfo.PedirInfoActivity;
 import itesm.mx.carpoolingtec.util.schedulers.SchedulerProvider;
+
+import static android.R.attr.name;
 
 public class LoginActivity extends AppCompatActivity implements LoginView{
 
@@ -60,27 +59,11 @@ public class LoginActivity extends AppCompatActivity implements LoginView{
     }
 
     @Override
-<<<<<<< HEAD
     protected void onDestroy() {
         super.onDestroy();
         presenter.detachView();
         presenter.stop();
     }
-=======
-    public void onClick(View v) {
-        if(!etStudentId.getText().toString().isEmpty() && !etPassword.getText().toString().isEmpty()){
-            AppRepository app = AppRepository.getInstance(getSharedPreferences(MySharedPreferences.MY_PREFERENCES, MODE_PRIVATE));
-            app.saveMyId(etStudentId.getText().toString());
-            if(false){ //TODO buscar en firebase que exista cuenta
-                Intent intent = new Intent(this, MainActivity.class);
-                startActivity(intent);
-            }else{
-                Intent intent = new Intent(this, PedirInfo.class);
-                intent.putExtra("Mat",etStudentId.getText().toString());
-                intent.putExtra("Nom","Andres" + " "+ "Sosa"); //TODO conseguir el nombre y el apellido del parse del xml
-                startActivity(intent);
-            }
->>>>>>> 52902fa30f200a3d988e6b75f8509590f5da5314
 
     @Override
     public void setLoadingIndicator(boolean active) {
@@ -100,7 +83,7 @@ public class LoginActivity extends AppCompatActivity implements LoginView{
     @Override
     public void startPedirInfoActivity(String userId, String name) {
         Intent intent = new Intent(this, PedirInfoActivity.class);
-        intent.putExtra("ïd",0);
+        intent.putExtra("id",0);
         intent.putExtra(PedirInfoActivity.MATRICULA, userId);
         intent.putExtra(PedirInfoActivity.NOMBRE, name);
         startActivity(intent);
