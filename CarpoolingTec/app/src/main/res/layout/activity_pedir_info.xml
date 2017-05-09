@@ -57,10 +57,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="10dp">
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
 
             <RadioButton
                 android:id="@+id/radioMale"
@@ -76,8 +72,6 @@
                 android:layout_weight="1"
                 android:checked="true"
                 android:text="Mujer"/>
-
-            </LinearLayout>
         </RadioGroup>
         <View
             android:layout_width="match_parent"

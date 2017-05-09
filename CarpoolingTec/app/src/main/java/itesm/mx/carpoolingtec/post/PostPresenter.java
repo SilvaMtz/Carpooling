@@ -52,6 +52,10 @@ public class PostPresenter {
         );
     }
 
+    public void onDeleteRide(Ride ride, String key) {
+        repository.removeRide(ride, key);
+    }
+
     public void stop() {
         view = null;
         if (disposables != null) {

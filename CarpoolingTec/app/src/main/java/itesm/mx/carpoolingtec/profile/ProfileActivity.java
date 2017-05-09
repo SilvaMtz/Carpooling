@@ -25,6 +25,7 @@ import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
 import java.io.Serializable;
@@ -157,36 +158,19 @@ public class ProfileActivity extends AppCompatActivity
             case R.id.action_edit:
                 SharedPreferences sharedPreferences = getSharedPreferences(MySharedPreferences.MY_PREFERENCES, MODE_PRIVATE);
                 Repository repository = AppRepository.getInstance(sharedPreferences);
-                ChildEventListener ridesRef = repository.getDatabase().child("users").child(repository.getMyId()).addChildEventListener(new ChildEventListener() {
+                repository.getDatabase().child("users").child(repository.getMyId()).addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
-                    public void onChildAdded(DataSnapshot snapshot, String s) {
-                        User useraux = snapshot.getValue(User.class);
-                        openPedirInfo(useraux);
-
-                    }
-
-                    @Override
-                    public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
-                    }
-
-                    @Override
-                    public void onChildRemoved(DataSnapshot dataSnapshot) {
-
-                    }
-
-                    @Override
-                    public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        User user = dataSnapshot.getValue(User.class);
+                        user.setId(dataSnapshot.getKey());
+                        openPedirInfo(user);
                     }
 
                     @Override
                     public void onCancelled(DatabaseError databaseError) {
 
                     }
-
                 });
-
                 return true;
             default:
                 return true;
@@ -235,6 +219,7 @@ public class ProfileActivity extends AppCompatActivity
         tvModificar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                presenter.onDeleteRide(ride, key);
                 presenter.onEditRide(ride);
                 dialog.dismiss();
             }
@@ -263,8 +248,8 @@ public class ProfileActivity extends AppCompatActivity
     @Override
     public void openPedirInfo(User user){
         Intent intent = new Intent(this, PedirInfoActivity.class);
-        intent.putExtra("ïd",1);
-        intent.putExtra("user",user);
+        intent.putExtra("id",1);
+        intent.putExtra("user", user);
         startActivity(intent);
 
     }
