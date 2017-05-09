@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -43,6 +44,8 @@ public class PedirInfoActivity extends AppCompatActivity implements View.OnClick
     @BindView(R.id.NotaTextoPedirInfo) EditText etNota;
     @BindView(R.id.BottonPedirInfo) Button btGuardar;
     @BindView(R.id.radioGender) RadioGroup radioGroup;
+    @BindView(R.id.radioFemale) RadioButton radioFemale;
+    @BindView(R.id.radioMale) RadioButton radioMale;
     @BindView(R.id.edit_phone) EditText editPhone;
 
     private Repository repository;
@@ -57,7 +60,7 @@ public class PedirInfoActivity extends AppCompatActivity implements View.OnClick
     private boolean hombres = true;
     private boolean mujeres = true;
     private boolean precio = false;
-    int gender = 0; // Mujer
+    int gender = 0; // Hombre
     private int id; // 0 Login activity, 1 Perfil activity
     private User userPerfil;
 
@@ -104,34 +107,35 @@ public class PedirInfoActivity extends AppCompatActivity implements View.OnClick
             @Override
             public void onCheckedChanged(RadioGroup group, @IdRes int checkedId) {
                 if (checkedId == R.id.radioMale) {
-                    gender = 1;
-                } else {
                     gender = 0;
+                } else {
+                    gender = 1;
                 }
             }
         });
 
-        matricula = getIntent().getStringExtra(MATRICULA);
-        nombre = getIntent().getStringExtra(NOMBRE);
         id = getIntent().getIntExtra("id",0);
-        tvMat.setText(tvMat.getText().toString() + " " + matricula);
-        tvNom.setText(tvNom.getText().toString() + " " + nombre);
+
         btGuardar.setOnClickListener(this);
 
         if(id == 1){
             userPerfil = (User) getIntent().getSerializableExtra("user");
 
+            tvMat.setText(userPerfil.getId());
+            tvNom.setText(userPerfil.getName());
             editPhone.setText(userPerfil.getPhone());
             etNota.setText(userPerfil.getNotes());
             if(userPerfil.getPassenger_gender() == 0){
                 hombres = true;
+                mujeres = false;
                 cHombre.setChecked(true);
             }else if (userPerfil.getPassenger_gender() == 1){
                 mujeres = true;
+                hombres = false;
                 cMujer.setChecked(true);
             }else{
-                hombres=true;
-                mujeres=true;
+                hombres = true;
+                mujeres = true;
                 cHombre.setChecked(true);
                 cMujer.setChecked(true);
             }
@@ -151,12 +155,21 @@ public class PedirInfoActivity extends AppCompatActivity implements View.OnClick
             }
 
             if(userPerfil.getGender() == 0){
-                gender = 1;
-                radioGroup.check(R.id.radioMale);
-            }else{
                 gender = 0;
+                radioMale.setChecked(true);
+                radioFemale.setChecked(false);
+            }else{
+                gender = 1;
                 radioGroup.check(R.id.radioFemale);
+                radioFemale.setChecked(true);
+                radioMale.setChecked(false);
             }
+        } else {
+            matricula = getIntent().getStringExtra(MATRICULA);
+            nombre = getIntent().getStringExtra(NOMBRE);
+
+            tvMat.setText(tvMat.getText().toString() + " " + matricula);
+            tvNom.setText(tvNom.getText().toString() + " " + nombre);
         }
     }
 
@@ -188,6 +201,25 @@ public class PedirInfoActivity extends AppCompatActivity implements View.OnClick
             user.setPassenger_gender(0);
         } else {
             user.setPassenger_gender(1);
+        }
+
+        if (id == 1) {
+            matricula = userPerfil.getId();
+
+            userPerfil.setNotes(note);
+            userPerfil.setGender(gender);
+            userPerfil.setPhone(editPhone.getText().toString());
+            userPerfil.setPrice(precio);
+            userPerfil.setSmoking(fumar);
+            if (hombres && mujeres) {
+                userPerfil.setPassenger_gender(2);
+            } else if (hombres) {
+                userPerfil.setPassenger_gender(0);
+            } else {
+                userPerfil.setPassenger_gender(1);
+            }
+
+            user = userPerfil;
         }
 
         repository.getDatabase().child("users").child(matricula.toUpperCase()).setValue(user.toFullMap()).addOnCompleteListener(new OnCompleteListener<Void>() {

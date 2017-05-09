@@ -188,6 +188,7 @@ public class User implements Serializable{
         map.put("price", price);
         map.put("gender", gender);
         map.put("notes", notes);
+        map.put("contacts", contacts);
         return map;
     }
 
