@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#0EB5FF</color>
+    <color name="colorPrimary">#13167E</color>
     <color name="colorPrimaryDark">#142254</color>
     <color name="colorAccent">#0288d1</color>
 
@@ -19,5 +19,7 @@
     <color name="textGrey">#616161</color>
     
     <color name="icon_active">#26000000</color>
+
+    <color name="logoColor">#0EB5FF</color>
 
 </resources>
