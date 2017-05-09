@@ -5,6 +5,7 @@ import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -184,6 +185,31 @@ public class RidesFragment extends Fragment implements RidesView, RideItemListen
         tvName.setText(user.getName());
         tvNotes.setText(user.getNotes());
 
+        // Set Driver preferences
+        ImageView ivFumar = (ImageView) view.findViewById(R.id.iv_fumar);
+        ImageView ivPrecio = (ImageView) view.findViewById(R.id.iv_precio);
+        ImageView ivGender = (ImageView) view.findViewById(R.id.iv_gender);
+
+
+        if (user.isSmoking()) {
+            ivFumar.setImageDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.ic_smoking_rooms_black_24dp));
+        } else {
+            ivFumar.setImageDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.ic_smoke_free_black_24dp));
+        }
+
+        if (user.isPrice()) {
+            ivPrecio.setImageDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.ic_attach_money_black_24dp));
+        } else {
+            ivPrecio.setImageDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.ic_money_off_black_24dp));
+        }
+
+        if (user.getGender() == 0) {
+            ivGender.setImageDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.man));
+        } else if (user.getGender() == 1) {
+            ivGender.setImageDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.woman));
+        } else {
+            ivGender.setImageDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.ic_wc_black_24dp));
+        }
 
         // Populate lists with rides for each day.
         RecyclerView rvMonday = (RecyclerView) view.findViewById(R.id.rv_lunes);
