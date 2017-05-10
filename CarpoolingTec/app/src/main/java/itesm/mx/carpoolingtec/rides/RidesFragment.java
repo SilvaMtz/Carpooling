@@ -14,6 +14,7 @@ import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -111,6 +112,14 @@ public class RidesFragment extends Fragment implements RidesView, RideItemListen
                 R.layout.ride_item_2, UserRideHolder.class, databaseRef) {
             @Override
             protected void populateViewHolder(UserRideHolder holder, final UserRide ride, int position) {
+                if (ride.getRides() == null) {
+                    ViewGroup.LayoutParams params = holder.rlContainer.getLayoutParams();
+                    params.width = 0;
+                    params.height = 0;
+                    holder.rlContainer.setLayoutParams(params);
+                    return;
+                }
+
                 Utilities.setRoundedPhoto(getActivity(), ride.getUser().getPhoto(), holder.ivPicture);
                 holder.tvName.setText(ride.getUser().getName());
 
