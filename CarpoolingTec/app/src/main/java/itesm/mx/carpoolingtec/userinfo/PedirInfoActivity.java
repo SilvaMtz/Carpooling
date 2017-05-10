@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -73,7 +74,9 @@ public class PedirInfoActivity extends AppCompatActivity implements View.OnClick
         repository = AppRepository.getInstance(getSharedPreferences(
                 MySharedPreferences.MY_PREFERENCES, MODE_PRIVATE));
 
-        setTitle("Registro");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        setTitle("Tus datos");
 
         cFumar.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -171,6 +174,17 @@ public class PedirInfoActivity extends AppCompatActivity implements View.OnClick
             tvMat.setText(tvMat.getText().toString() + " " + matricula);
             tvNom.setText(tvNom.getText().toString() + " " + nombre);
         }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                break;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
