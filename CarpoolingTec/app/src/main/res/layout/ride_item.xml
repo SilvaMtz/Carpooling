@@ -49,12 +49,12 @@
 
         <ImageButton
             android:id="@+id/image_edit"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_gravity="end"
-            android:layout_margin="2dp"
             android:src="@drawable/ic_create_black_24dp"
-            android:background="@null"/>
+            android:tint="@color/colorAccent"
+            android:background="?android:selectableItemBackground"/>
 
     </LinearLayout>
 
@@ -65,7 +65,8 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentBottom="true"
         android:layout_toLeftOf="@id/fotoLapiz"
-        android:gravity="center_vertical">
+        android:gravity="center_vertical"
+        android:layout_marginEnd="10dp">
 
         <TextView
             android:id="@+id/text_ride_type"
@@ -73,7 +74,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="end"
             android:textAppearance="@style/Base.TextAppearance.AppCompat.Body1"
-            android:textSize="18sp"
+            android:textSize="16sp"
             android:text="Hacia el Tec"
             android:textColor="@color/colorAccent"
             android:layout_margin="2dp"/>
