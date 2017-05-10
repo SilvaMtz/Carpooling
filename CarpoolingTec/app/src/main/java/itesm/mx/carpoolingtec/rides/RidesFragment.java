@@ -32,6 +32,7 @@ import itesm.mx.carpoolingtec.R;
 import itesm.mx.carpoolingtec.data.AppRepository;
 import itesm.mx.carpoolingtec.data.MySharedPreferences;
 import itesm.mx.carpoolingtec.data.Repository;
+import itesm.mx.carpoolingtec.model.firebase.Ride;
 import itesm.mx.carpoolingtec.model.firebase.User;
 import itesm.mx.carpoolingtec.model.firebase.UserRide;
 import itesm.mx.carpoolingtec.util.Utilities;
@@ -152,14 +153,7 @@ public class RidesFragment extends Fragment implements RidesView, RideItemListen
     }
 
     @Override
-    public void openUserRideDetails(final User user,
-                                    List<String> ridesMonday,
-                                    List<String> ridesTuesday,
-                                    List<String> ridesWednesday,
-                                    List<String> ridesThursday,
-                                    List<String> ridesFriday,
-                                    List<String> ridesSaturday,
-                                    List<String> ridesSunday) {
+    public void openUserRideDetails(final User user) {
 
         MaterialDialog dialog = new MaterialDialog.Builder(getContext())
                 .customView(R.layout.user_preview_card, true)
@@ -211,41 +205,37 @@ public class RidesFragment extends Fragment implements RidesView, RideItemListen
             ivGender.setImageDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.ic_wc_black_24dp));
         }
 
-        // Populate lists with rides for each day.
-        RecyclerView rvMonday = (RecyclerView) view.findViewById(R.id.rv_lunes);
-        rvMonday.setLayoutManager(new LinearLayoutManager(getActivity()));
-        RidesTimeAdapter adapterMonday = new RidesTimeAdapter(ridesMonday);
-        rvMonday.setAdapter(adapterMonday);
+        RecyclerView rvViajes = (RecyclerView) view.findViewById(R.id.recycler_viajes);
+        rvViajes.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        RecyclerView rvTuesday = (RecyclerView) view.findViewById(R.id.rv_martes);
-        rvTuesday.setLayoutManager(new LinearLayoutManager(getActivity()));
-        RidesTimeAdapter adapterTuesday = new RidesTimeAdapter(ridesTuesday);
-        rvTuesday.setAdapter(adapterTuesday);
+        DatabaseReference ref;
+        if (rideType == TO_TEC) {
+            ref = repository.getDatabase().child("rides_to_tec").child(user.getId()).child("rides");
+        } else {
+            ref = repository.getDatabase().child("rides_from_tec").child(user.getId()).child("rides");
+        }
 
-        RecyclerView rvWednesday = (RecyclerView) view.findViewById(R.id.rv_miercoles);
-        rvWednesday.setLayoutManager(new LinearLayoutManager(getActivity()));
-        RidesTimeAdapter adapterWednesday = new RidesTimeAdapter(ridesWednesday);
-        rvWednesday.setAdapter(adapterWednesday);
+        FirebaseRecyclerAdapter<Ride, RideUserDetailHolder> adapter = new FirebaseRecyclerAdapter<Ride, RideUserDetailHolder>(Ride.class, R.layout.row_ride_preview_card, RideUserDetailHolder.class, ref) {
+            @Override
+            protected void populateViewHolder(RideUserDetailHolder viewHolder, Ride ride, int position) {
+                viewHolder.tvDay.setText(ride.getWeekday());
+                viewHolder.tvTime.setText(ride.getTime());
 
-        RecyclerView rvThursday = (RecyclerView) view.findViewById(R.id.rv_jueves);
-        rvThursday.setLayoutManager(new LinearLayoutManager(getActivity()));
-        RidesTimeAdapter adapterThursday = new RidesTimeAdapter(ridesThursday);
-        rvThursday.setAdapter(adapterThursday);
+                Location userLocation = new Location("");
+                userLocation.setLatitude(repository.getMyLatitude());
+                userLocation.setLongitude(repository.getMyLongitude());
 
-        RecyclerView rvFriday = (RecyclerView) view.findViewById(R.id.rv_viernes);
-        rvFriday.setLayoutManager(new LinearLayoutManager(getActivity()));
-        RidesTimeAdapter adapterFriday = new RidesTimeAdapter(ridesFriday);
-        rvFriday.setAdapter(adapterFriday);
+                Location tecLocation = new Location("");
+                tecLocation.setLatitude(ride.getLatitude());
+                tecLocation.setLongitude(ride.getLongitude());
 
-        RecyclerView rvSaturday = (RecyclerView) view.findViewById(R.id.rv_sabado);
-        rvSaturday.setLayoutManager(new LinearLayoutManager(getActivity()));
-        RidesTimeAdapter adapterSaturday = new RidesTimeAdapter(ridesSaturday);
-        rvSaturday.setAdapter(adapterSaturday);
+                float distanceInKm = userLocation.distanceTo(tecLocation) / 1000;
+                DecimalFormat decimalFormat = new DecimalFormat("#.#");
 
-        RecyclerView rvSunday = (RecyclerView) view.findViewById(R.id.rv_domingo);
-        rvSunday.setLayoutManager(new LinearLayoutManager(getActivity()));
-        RidesTimeAdapter adapterSunday = new RidesTimeAdapter(ridesSunday);
-        rvSunday.setAdapter(adapterSunday);
+                viewHolder.tvKm.setText(distanceInKm + " km de casa");
+            }
+        };
+        rvViajes.setAdapter(adapter);
 
         dialog.show();
     }

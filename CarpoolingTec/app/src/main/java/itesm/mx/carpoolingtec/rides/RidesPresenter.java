@@ -36,51 +36,6 @@ public class RidesPresenter {
     }
 
     public void onRideClick(UserRide userRide) {
-        final String MONDAY = "Lunes";
-        final String TUESDAY = "Martes";
-        final String WEDNESDAY = "Miercoles";
-        final String THURSDAY = "Jueves";
-        final String FRIDAY = "Viernes";
-        final String SATURDAY = "Sabado";
-        final String SUNDAY = "Domingo";
-
-        Map<String, Ride> rideMap = userRide.getRides();
-
-        final List<String> ridesMonday = new ArrayList<>();
-        final List<String> ridesTuesday = new ArrayList<>();
-        final List<String> ridesWednesday = new ArrayList<>();
-        final List<String> ridesThursday = new ArrayList<>();
-        final List<String> ridesFriday = new ArrayList<>();
-        final List<String> ridesSaturday = new ArrayList<>();
-        final List<String> ridesSunday = new ArrayList<>();
-
-        for (Map.Entry<String, Ride> entry : rideMap.entrySet()) {
-            switch (entry.getValue().getWeekday()) {
-                case MONDAY:
-                    ridesMonday.add(entry.getValue().getTime());
-                    break;
-                case TUESDAY:
-                    ridesTuesday.add(entry.getValue().getTime());
-                    break;
-                case WEDNESDAY:
-                    ridesWednesday.add(entry.getValue().getTime());
-                    break;
-                case THURSDAY:
-                    ridesThursday.add(entry.getValue().getTime());
-                    break;
-                case FRIDAY:
-                    ridesFriday.add(entry.getValue().getTime());
-                    break;
-                case SATURDAY:
-                    ridesSaturday.add(entry.getValue().getTime());
-                    break;
-                case SUNDAY:
-                    ridesSunday.add(entry.getValue().getTime());
-                    break;
-            }
-        }
-
-
         // User available on UserRide only has an id, name and photo, so a request for a complete
         // User object must me made.
         disposables.add(repository.getUser(userRide.getUser().getId())
@@ -89,8 +44,7 @@ public class RidesPresenter {
                 .subscribeWith(new DisposableSingleObserver<User>() {
                     @Override
                     public void onSuccess(User user) {
-                        view.openUserRideDetails(user, ridesMonday, ridesTuesday, ridesWednesday, ridesThursday,
-                                ridesFriday, ridesSaturday, ridesSunday);
+                        view.openUserRideDetails(user);
                     }
 
                     @Override

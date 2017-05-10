@@ -53,13 +53,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/layout_user_info"
-            android:padding="10dp"
-            android:weightSum="12">
+            android:padding="5dp">
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Preferencias del conductor"/>
+                android:text="Preferencias del conductor"
+                android:textAlignment="center"/>
 
             <LinearLayout
                 android:id="@+id/inner_layout"
@@ -67,28 +67,27 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/layout_user_info"
-                android:padding="10dp"
-                android:weightSum="12">
+                android:padding="5dp">
 
                 <ImageView
                     android:id="@+id/iv_precio"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="2"
+                    android:layout_weight="1"
                     android:src="@drawable/ic_attach_money_black_24dp" />
 
                 <ImageView
                     android:id="@+id/iv_fumar"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="3"
+                    android:layout_weight="1"
                     android:src="@drawable/ic_smoke_free_black_24dp" />
 
                 <ImageView
                     android:id="@+id/iv_gender"
-                    android:layout_width="1dp"
+                    android:layout_width="0dp"
                     android:layout_height="25dp"
-                    android:layout_weight="3"
+                    android:layout_weight="1"
                     android:src="@drawable/man" />
 
 
@@ -106,157 +105,12 @@
             android:padding="10dp"
             android:layout_below="@id/layout_icons"/>
 
-        <HorizontalScrollView
-            android:id="@+id/scrollView"
-            android:layout_width="wrap_content"
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycler_viajes"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:scrollbars="none"
-            android:layout_marginStart="5dp"
-            android:layout_marginEnd="5dp"
-            android:layout_below="@id/text_salidas">
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_margin="5dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Lunes"
-                        android:textStyle="bold"
-                        android:textSize="16sp"/>
-
-                    <android.support.v7.widget.RecyclerView
-                        android:id="@+id/rv_lunes"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_margin="5dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Martes"
-                        android:textStyle="bold"
-                        android:textSize="16sp"/>
-
-                    <android.support.v7.widget.RecyclerView
-                        android:id="@+id/rv_martes"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_margin="5dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Miercoles"
-                        android:textStyle="bold"
-                        android:textSize="16sp"/>
-
-                    <android.support.v7.widget.RecyclerView
-                        android:id="@+id/rv_miercoles"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_margin="5dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Jueves"
-                        android:textStyle="bold"
-                        android:textSize="16sp"/>
-
-                    <android.support.v7.widget.RecyclerView
-                        android:id="@+id/rv_jueves"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_margin="5dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Viernes"
-                        android:textStyle="bold"
-                        android:textSize="16sp"/>
-
-                    <android.support.v7.widget.RecyclerView
-                        android:id="@+id/rv_viernes"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_margin="5dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Sábado"
-                        android:textStyle="bold"
-                        android:textSize="16sp"
-                        android:paddingStart="10dp"/>
-
-                    <android.support.v7.widget.RecyclerView
-                        android:id="@+id/rv_sabado"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_margin="5dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Domingo"
-                        android:textStyle="bold"
-                        android:textSize="16sp"/>
-
-                    <android.support.v7.widget.RecyclerView
-                        android:id="@+id/rv_domingo"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
-                </LinearLayout>
-
-            </LinearLayout>
-
-        </HorizontalScrollView>
+            android:layout_below="@id/text_salidas"
+            tools:listitem="@layout/row_ride_preview_card"/>
 
         <TextView
             android:id="@+id/text_notes"
@@ -267,7 +121,7 @@
             android:layout_marginStart="10dp"
             android:layout_marginEnd="10dp"
             android:textColor="@color/textPrimary"
-            android:layout_below="@id/scrollView"/>
+            android:layout_below="@id/recycler_viajes"/>
 
     </RelativeLayout>
 
