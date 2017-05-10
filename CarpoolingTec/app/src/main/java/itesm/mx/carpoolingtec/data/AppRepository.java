@@ -53,6 +53,7 @@ public class AppRepository implements Repository {
     }
 
     private AppRepository(SharedPreferences sharedPreferences) {
+        FirebaseDatabase.getInstance().setPersistenceEnabled(true);
         database = FirebaseDatabase.getInstance().getReference();
         this.sharedPreferences = sharedPreferences;
     }

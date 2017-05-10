@@ -103,25 +103,7 @@ public class ContactsFragment extends Fragment implements ContactsView,
         contactsAdapter = new FirebaseRecyclerAdapter<Contact, ContactHolder>(Contact.class, R.layout.contact_item, ContactHolder.class, contactsRef) {
             @Override
             protected void populateViewHolder(final ContactHolder holder, final Contact contact, int position) {
-                Picasso.with(getActivity())
-                        .load(contact.getPhoto())
-                        .into(holder.ivPicture, new Callback() {
-                            @Override
-                            public void onSuccess() {
-                                Bitmap imageBitmap = ((BitmapDrawable) holder.ivPicture.getDrawable())
-                                        .getBitmap();
-                                RoundedBitmapDrawable drawable = RoundedBitmapDrawableFactory
-                                        .create(getActivity().getResources(), imageBitmap);
-                                drawable.setCircular(true);
-                                drawable.setCornerRadius(Math.max(imageBitmap.getWidth(),
-                                        imageBitmap.getHeight()) / 2.0f);
-                                holder.ivPicture.setImageDrawable(drawable);
-                            }
-
-                            @Override
-                            public void onError() {
-                            }
-                        });
+                Utilities.setRoundedPhoto(getActivity(), contact.getPhoto(), holder.ivPicture);
 
                 holder.tvName.setText(contact.getName());
                 holder.rlContainer.setOnClickListener(new View.OnClickListener() {
