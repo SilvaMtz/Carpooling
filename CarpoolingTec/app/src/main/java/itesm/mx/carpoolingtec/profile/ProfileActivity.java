@@ -166,21 +166,9 @@ public class ProfileActivity extends AppCompatActivity
         // Handle item selection
         switch (item.getItemId()) {
             case R.id.action_edit:
-                SharedPreferences sharedPreferences = getSharedPreferences(MySharedPreferences.MY_PREFERENCES, MODE_PRIVATE);
-                Repository repository = AppRepository.getInstance(sharedPreferences);
-                repository.getDatabase().child("users").child(repository.getMyId()).addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        User user = dataSnapshot.getValue(User.class);
-                        user.setId(dataSnapshot.getKey());
-                        openPedirInfo(user);
-                    }
-
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-
-                    }
-                });
+                Intent intent = new Intent(this, PedirInfoActivity.class);
+                intent.putExtra("id", 1);
+                startActivity(intent);
                 return true;
             default:
                 return true;
@@ -249,23 +237,10 @@ public class ProfileActivity extends AppCompatActivity
     @Override
     public void openPostActivity(final Ride ride){
         Intent intent = new Intent(this,PostActivity.class);
-        intent.putExtra("id",1); // 1 representa Perfil
-        intent.putExtra("ride",ride);
+        intent.putExtra("id", 1); // 1 representa Perfil
+        intent.putExtra("ride", ride);
         startActivity(intent);
 
-    }
-
-    @Override
-    public void openPedirInfo(User user){
-        Intent intent = new Intent(this, PedirInfoActivity.class);
-        intent.putExtra("id",1);
-        intent.putExtra("user", user);
-        startActivity(intent);
-
-    }
-
-    @Override
-    public void showRemovedRideToast() {
     }
 
     @Override

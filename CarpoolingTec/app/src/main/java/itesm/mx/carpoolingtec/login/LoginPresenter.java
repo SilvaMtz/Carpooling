@@ -65,6 +65,7 @@ public class LoginPresenter extends BasePresenter<LoginView> {
                                         if (user != null) {
                                             user.setId(dataSnapshot.getKey());
                                             repository.saveMyId(user.getId());
+                                            repository.saveMyName(user.getName());
 
                                             Log.d(TAG, "starting MainActivity");
                                             view.startMainActivity();

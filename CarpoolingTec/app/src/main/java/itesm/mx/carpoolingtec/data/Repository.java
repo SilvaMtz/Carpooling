@@ -30,6 +30,10 @@ public interface Repository {
 
     String getMyId();
 
+    void saveMyName(String name);
+
+    String getMyName();
+
     void setMyLatitude(Float latitude);
 
     Float getMyLatitude();
@@ -43,4 +47,8 @@ public interface Repository {
     void addRequest(User receptor);
 
     void removeRequest(String requestKey);
+
+    void saveUserPrefs(User user);
+
+    User getUserPrefs();
 }

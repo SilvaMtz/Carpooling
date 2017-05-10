@@ -9,6 +9,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.gson.Gson;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -315,6 +316,18 @@ public class AppRepository implements Repository {
     }
 
     @Override
+    public void saveMyName(String name) {
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("Nombre", name);
+        editor.commit();
+    }
+
+    @Override
+    public String getMyName() {
+        return sharedPreferences.getString("Nombre", null);
+    }
+
+    @Override
     public void setMyLatitude(Float latitude) {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putFloat("Latitude", latitude);
@@ -429,6 +442,23 @@ public class AppRepository implements Repository {
     @Override
     public void removeRequest(String requestKey) {
         database.child("solicitudes").child(getMyId()).child(requestKey).removeValue();
+    }
+
+    @Override
+    public void saveUserPrefs(User user) {
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("UserPrefs", new Gson().toJson(user));
+        editor.apply();
+    }
+
+    @Override
+    public User getUserPrefs() {
+        String  userJson = sharedPreferences.getString("UserPrefs", null);
+        if (userJson != null) {
+            return new Gson().fromJson(userJson, User.class);
+        } else {
+            return null;
+        }
     }
 
 

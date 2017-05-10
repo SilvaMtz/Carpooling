@@ -21,6 +21,7 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.Status;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.gson.Gson;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -117,63 +118,22 @@ public class PedirInfoActivity extends AppCompatActivity implements View.OnClick
             }
         });
 
-        id = getIntent().getIntExtra("id",0);
-
         btGuardar.setOnClickListener(this);
 
-        if(id == 1){
-            userPerfil = (User) getIntent().getSerializableExtra("user");
+        // 0 first time setup
+        // 1 editing
+        id = getIntent().getIntExtra("id", -1);
 
-            tvMat.setText(userPerfil.getId());
-            tvNom.setText(userPerfil.getName());
-            editPhone.setText(userPerfil.getPhone());
-            etNota.setText(userPerfil.getNotes());
-            if(userPerfil.getPassenger_gender() == 0){
-                hombres = true;
-                mujeres = false;
-                cHombre.setChecked(true);
-            }else if (userPerfil.getPassenger_gender() == 1){
-                mujeres = true;
-                hombres = false;
-                cMujer.setChecked(true);
-            }else{
-                hombres = true;
-                mujeres = true;
-                cHombre.setChecked(true);
-                cMujer.setChecked(true);
-            }
-
-            if(userPerfil.isSmoking()){
-                fumar = true;
-                cFumar.setChecked(true);
-            }else{
-                cFumar.setChecked(false);
-            }
-
-            if(userPerfil.isPrice()){
-                precio = true;
-                cPrecio.setChecked(true);
-            }else{
-                cPrecio.setChecked(false);
-            }
-
-            if(userPerfil.getGender() == 0){
-                gender = 0;
-                radioMale.setChecked(true);
-                radioFemale.setChecked(false);
-            }else{
-                gender = 1;
-                radioGroup.check(R.id.radioFemale);
-                radioFemale.setChecked(true);
-                radioMale.setChecked(false);
-            }
-        } else {
+        if (id == 0) {
             matricula = getIntent().getStringExtra(MATRICULA);
             nombre = getIntent().getStringExtra(NOMBRE);
-
-            tvMat.setText(tvMat.getText().toString() + " " + matricula);
-            tvNom.setText(tvNom.getText().toString() + " " + nombre);
+        } else {
+            matricula = repository.getMyId();
+            nombre = repository.getMyName();
         }
+
+        tvMat.setText(tvMat.getText().toString() + " " + matricula);
+        tvNom.setText(tvNom.getText().toString() + " " + nombre);
     }
 
     @Override
@@ -189,6 +149,7 @@ public class PedirInfoActivity extends AppCompatActivity implements View.OnClick
 
     @Override
     public void onClick(View v) {
+        int passengerGender;
         String note = etNota.getText().toString();
 
         if (editPhone.getText().toString().isEmpty()) {
@@ -201,48 +162,19 @@ public class PedirInfoActivity extends AppCompatActivity implements View.OnClick
             return;
         }
 
-        User user = new User();
-        user.setId(matricula);
-        user.setName(nombre);
-        user.setGender(gender);
-        user.setPhone(editPhone.getText().toString());
-        user.setPrice(precio);
-        user.setNotes(note);
-        user.setSmoking(fumar);
         if (hombres && mujeres) {
-            user.setPassenger_gender(2);
+            passengerGender = 2;
         } else if (hombres) {
-            user.setPassenger_gender(0);
+            passengerGender = 0;
         } else {
-            user.setPassenger_gender(1);
+            passengerGender = 1;
         }
 
-        if (id == 1) {
-            matricula = userPerfil.getId();
-
-            userPerfil.setNotes(note);
-            userPerfil.setGender(gender);
-            userPerfil.setPhone(editPhone.getText().toString());
-            userPerfil.setPrice(precio);
-            userPerfil.setSmoking(fumar);
-            if (hombres && mujeres) {
-                userPerfil.setPassenger_gender(2);
-            } else if (hombres) {
-                userPerfil.setPassenger_gender(0);
-            } else {
-                userPerfil.setPassenger_gender(1);
-            }
-
-            user = userPerfil;
-        }
-
-        repository.getDatabase().child("users").child(matricula.toUpperCase()).setValue(user.toFullMap()).addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                repository.saveMyId(matricula.toUpperCase());
-                Intent intent = new Intent(PedirInfoActivity.this, MainActivity.class);
-                startActivity(intent);
-            }
-        });
+        repository.getDatabase().child("users").child(matricula.toUpperCase()).child("notes").setValue(note);
+        repository.getDatabase().child("users").child(matricula.toUpperCase()).child("gender").setValue(gender);
+        repository.getDatabase().child("users").child(matricula.toUpperCase()).child("passenger_gender").setValue(passengerGender);
+        repository.getDatabase().child("users").child(matricula.toUpperCase()).child("phone").setValue(editPhone.getText().toString());
+        repository.getDatabase().child("users").child(matricula.toUpperCase()).child("price").setValue(precio);
+        repository.getDatabase().child("users").child(matricula.toUpperCase()).child("smoking").setValue(fumar);
     }
 }

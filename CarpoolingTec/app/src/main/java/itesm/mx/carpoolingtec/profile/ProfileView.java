@@ -9,9 +9,5 @@ public interface ProfileView {
 
     void openPostActivity(Ride ride);
 
-    void openPedirInfo(User user);
-
-    void showRemovedRideToast();
-
     void showUserData(User user);
 }
