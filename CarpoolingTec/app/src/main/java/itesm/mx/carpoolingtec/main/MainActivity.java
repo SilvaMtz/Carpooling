@@ -1,23 +1,22 @@
 package itesm.mx.carpoolingtec.main;
 
 import android.content.Intent;
-import android.graphics.PorterDuff;
-import android.graphics.drawable.Drawable;
+import android.graphics.Typeface;
 import android.os.Bundle;
-import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
+import android.view.View;
+
+import com.getkeepsafe.taptargetview.TapTarget;
+import com.getkeepsafe.taptargetview.TapTargetSequence;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -30,9 +29,8 @@ import itesm.mx.carpoolingtec.post.PostActivity;
 import itesm.mx.carpoolingtec.profile.ProfileActivity;
 import itesm.mx.carpoolingtec.request.RequestActivity;
 import itesm.mx.carpoolingtec.rides.RidesFragment;
-import itesm.mx.carpoolingtec.schedule.ScheduleFragment;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener, TabLayout.OnTabSelectedListener{
+public class MainActivity extends AppCompatActivity implements View.OnClickListener, TabLayout.OnTabSelectedListener, Toolbar.OnMenuItemClickListener{
 
     @BindView(R.id.toolbar) Toolbar toolbar;
     @BindView(R.id.tab_layout) TabLayout tabLayout;
@@ -45,52 +43,70 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
-        setSupportActionBar(toolbar);
+        toolbar.inflateMenu(R.menu.menu_main);
+        toolbar.setTitle("Carpooling Tec");
+        toolbar.setOnMenuItemClickListener(this);
 
         fab.setOnClickListener(this);
+
+        TapTargetSequence sequence = new TapTargetSequence(this)
+                .targets(
+                        TapTarget.forView(findViewById(R.id.fab), "Publica un ride", "Haz click para ofrecer un ride a alumnos del Tec")
+                                .outerCircleColor(R.color.colorPrimary)
+                                .outerCircleAlpha(0.96f)
+                                .targetCircleColor(R.color.white)
+                                .titleTextSize(20)
+                                .descriptionTextSize(14)
+                                .textColor(R.color.white)
+                                .textTypeface(Typeface.SANS_SERIF)
+                                .drawShadow(true)
+                                .cancelable(false)
+                                .tintTarget(false)
+                                .transparentTarget(false),
+                        TapTarget.forToolbarOverflow(toolbar, "Menu de opciones", "Aqui puedes ver tu perfil y cerrar sesión")
+                                .outerCircleColor(R.color.colorPrimary)
+                                .outerCircleAlpha(0.96f)
+                                .targetCircleColor(R.color.white)
+                                .titleTextSize(20)
+                                .descriptionTextSize(14)
+                                .textColor(R.color.white)
+                                .textTypeface(Typeface.SANS_SERIF)
+                                .cancelable(false),
+                        TapTarget.forToolbarMenuItem(toolbar, R.id.action_solicitudes, "Solicitudes", "Aquí verás las solicitudes de información de contacto cuando alguien esté interesado en un ride que estes ofreciendo")
+                                .outerCircleColor(R.color.colorPrimary)
+                                .outerCircleAlpha(0.96f)
+                                .targetCircleColor(R.color.white)
+                                .titleTextSize(20)
+                                .descriptionTextSize(14)
+                                .textColor(R.color.white)
+                                .textTypeface(Typeface.SANS_SERIF)
+                                .cancelable(false)
+                        )
+                .listener(new TapTargetSequence.Listener() {
+                    // This listener will tell us when interesting(tm) events happen in regards
+                    // to the sequence
+                    @Override
+                    public void onSequenceFinish() {
+                        // Yay
+                    }
+
+                    @Override
+                    public void onSequenceStep(TapTarget lastTarget, boolean targetClicked) {
+
+                    }
+
+                    @Override
+                    public void onSequenceCanceled(TapTarget lastTarget) {
+                        // Boo
+                    }
+                });
+
+        sequence.start();
 
         viewPager.setAdapter(new MyAdapter(getSupportFragmentManager()));
         tabLayout.setupWithViewPager(viewPager);
         tabLayout.addOnTabSelectedListener(this);
         viewPager.setCurrentItem(1);
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-
-        // Set refresh icon color to white.
-       /* Drawable refreshIcon = menu.findItem(R.id.action_sort).getIcon();
-        if (refreshIcon != null) {
-            refreshIcon.mutate();
-            refreshIcon.setColorFilter(ContextCompat.getColor(this, R.color.white),
-                    PorterDuff.Mode.SRC_ATOP);
-        }*/
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.action_settings:
-                AppRepository app = AppRepository.getInstance(getSharedPreferences(MySharedPreferences.MY_PREFERENCES, MODE_PRIVATE));
-                app.saveMyId(null);
-                Intent intent3 = new Intent(this, LoginActivity.class);
-                finish();
-                startActivity(intent3);
-                return true;
-            case R.id.action_profile:
-                Intent intent = new Intent(this, ProfileActivity.class);
-                startActivity(intent);
-                return true;
-            case R.id.action_solicitudes:
-                Intent intent2 = new Intent(this, RequestActivity.class);
-                startActivity(intent2);
-                return true;
-            /*case R.id.action_sort:
-                return true;*/
-        }
-        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -123,6 +139,28 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onTabReselected(TabLayout.Tab tab) {
 
+    }
+
+    @Override
+    public boolean onMenuItemClick(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_settings:
+                AppRepository app = AppRepository.getInstance(getSharedPreferences(MySharedPreferences.MY_PREFERENCES, MODE_PRIVATE));
+                app.saveMyId(null);
+                Intent intent3 = new Intent(this, LoginActivity.class);
+                finish();
+                startActivity(intent3);
+                return true;
+            case R.id.action_profile:
+                Intent intent = new Intent(this, ProfileActivity.class);
+                startActivity(intent);
+                return true;
+            case R.id.action_solicitudes:
+                Intent intent2 = new Intent(this, RequestActivity.class);
+                startActivity(intent2);
+                return true;
+        }
+        return false;
     }
 
     class MyAdapter extends FragmentPagerAdapter {

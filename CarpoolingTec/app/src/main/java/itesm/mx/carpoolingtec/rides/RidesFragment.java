@@ -1,6 +1,7 @@
 package itesm.mx.carpoolingtec.rides;
 
 import android.content.SharedPreferences;
+import android.graphics.Typeface;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -20,9 +21,13 @@ import android.widget.Toast;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.afollestad.materialdialogs.internal.MDButton;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.getkeepsafe.taptargetview.TapTarget;
+import com.getkeepsafe.taptargetview.TapTargetSequence;
 import com.google.firebase.database.DatabaseReference;
 
+import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.util.List;
 
@@ -266,8 +271,10 @@ public class RidesFragment extends Fragment implements RidesView, RideItemListen
 
                 float distanceInKm = userLocation.distanceTo(tecLocation) / 1000;
                 DecimalFormat decimalFormat = new DecimalFormat("#.#");
+                decimalFormat.setRoundingMode(RoundingMode.HALF_UP);
 
-                viewHolder.tvKm.setText(distanceInKm + " km de casa");
+
+                viewHolder.tvKm.setText(decimalFormat.format(distanceInKm) + " km de casa");
             }
         };
         rvViajes.setAdapter(adapter);
