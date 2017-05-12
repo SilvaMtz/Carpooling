@@ -18,7 +18,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.Status;
+import com.google.android.gms.location.places.Place;
+import com.google.android.gms.location.places.Places;
+import com.google.android.gms.location.places.ui.PlaceAutocompleteFragment;
+import com.google.android.gms.location.places.ui.PlaceSelectionListener;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.gson.Gson;
@@ -32,7 +39,7 @@ import itesm.mx.carpoolingtec.data.Repository;
 import itesm.mx.carpoolingtec.main.MainActivity;
 import itesm.mx.carpoolingtec.model.firebase.User;
 
-public class PedirInfoActivity extends AppCompatActivity implements View.OnClickListener {
+public class PedirInfoActivity extends AppCompatActivity implements View.OnClickListener, GoogleApiClient.OnConnectionFailedListener, PlaceSelectionListener {
 
     public static final String MATRICULA = "matricula";
     public static final String NOMBRE = "nombre";
@@ -55,7 +62,7 @@ public class PedirInfoActivity extends AppCompatActivity implements View.OnClick
     private String matricula;
     private String nombre;
 
-    private static final String ORIGEN = "Tu Casa";
+    private static final String ORIGEN = "Ubicacion de tu Casa";
     private static final String TAG = "PedirInfoActivity";
 
     private boolean fumar = false;
@@ -65,12 +72,35 @@ public class PedirInfoActivity extends AppCompatActivity implements View.OnClick
     int gender = 0; // Hombre
     private int id; // 0 Login activity, 1 Perfil activity
     private User userPerfil;
+    private double lat = -1;
+    private double longi = -1;
+    private boolean dir = false;
+
+    private GoogleApiClient googleApiClient;
+    private PlaceAutocompleteFragment autocompleteFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pedir_info);
         ButterKnife.bind(this);
+
+        googleApiClient = new GoogleApiClient
+                .Builder(this)
+                .addApi(Places.GEO_DATA_API)
+                .addApi(Places.PLACE_DETECTION_API)
+                .enableAutoManage(this, this)
+                .build();
+
+        autocompleteFragment = (PlaceAutocompleteFragment)
+                                getFragmentManager().findFragmentById(R.id.place_autocomplete_fragment);
+        autocompleteFragment.setBoundsBias(new LatLngBounds(
+                new LatLng(25.596967, 100.488252),
+                new LatLng(25.816600, 100.098237)
+        ));
+        autocompleteFragment.setOnPlaceSelectedListener(this);
+        // Set default hint to ORIGEN
+        autocompleteFragment.setHint(ORIGEN);
 
         repository = AppRepository.getInstance(getSharedPreferences(
                 MySharedPreferences.MY_PREFERENCES, MODE_PRIVATE));
@@ -148,6 +178,20 @@ public class PedirInfoActivity extends AppCompatActivity implements View.OnClick
     }
 
     @Override
+     public void onPlaceSelected(Place place) {
+        // TODO: Get info about the selected place.
+                lat = place.getLatLng().latitude;
+                longi = place.getLatLng().longitude;
+                dir = true;
+                Log.i(TAG, "Place: " + place.getName());
+    }
+
+    @Override
+    public void onError(Status status) {
+
+    }
+
+    @Override
     public void onClick(View v) {
         int passengerGender;
         String note = etNota.getText().toString();
@@ -170,11 +214,25 @@ public class PedirInfoActivity extends AppCompatActivity implements View.OnClick
             passengerGender = 1;
         }
 
+        if(!dir){
+            Toast.makeText(this, "Introduce tu ubicacion de casa", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         repository.getDatabase().child("users").child(matricula.toUpperCase()).child("notes").setValue(note);
         repository.getDatabase().child("users").child(matricula.toUpperCase()).child("gender").setValue(gender);
         repository.getDatabase().child("users").child(matricula.toUpperCase()).child("passenger_gender").setValue(passengerGender);
         repository.getDatabase().child("users").child(matricula.toUpperCase()).child("phone").setValue(editPhone.getText().toString());
         repository.getDatabase().child("users").child(matricula.toUpperCase()).child("price").setValue(precio);
         repository.getDatabase().child("users").child(matricula.toUpperCase()).child("smoking").setValue(fumar);
+        repository.getDatabase().child("users").child(matricula.toUpperCase()).child("latitude").setValue(lat);
+        repository.getDatabase().child("users").child(matricula.toUpperCase()).child("longitude").setValue(longi);
+        Toast.makeText(this, "Informacion Actualizada", Toast.LENGTH_SHORT).show();
+        finish();
+    }
+
+    @Override
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+
     }
 }
