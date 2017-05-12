@@ -9,6 +9,7 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import itesm.mx.carpoolingtec.R;
+import itesm.mx.carpoolingtec.model.firebase.User;
 
 public class UserRideHolder extends RecyclerView.ViewHolder {
 
