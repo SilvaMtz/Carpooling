@@ -90,7 +90,7 @@ public class ProfileActivity extends AppCompatActivity
         Repository repository = AppRepository.getInstance(sharedPreferences);
         DatabaseReference ridesRefTo = repository.getDatabase().child("rides_to_tec")
                 .child(repository.getMyId()).child("rides");
-        DatabaseReference ridesRefFrom = repository.getDatabase().child("rides_to_tec")
+        DatabaseReference ridesRefFrom = repository.getDatabase().child("rides_from_tec")
                 .child(repository.getMyId()).child("rides");
 
         rvProfileRidesTo.setLayoutManager(new LinearLayoutManager(this));
