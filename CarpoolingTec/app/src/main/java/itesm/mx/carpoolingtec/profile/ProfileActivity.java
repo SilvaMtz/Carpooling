@@ -3,6 +3,7 @@ package itesm.mx.carpoolingtec.profile;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.PorterDuff;
+import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
@@ -20,6 +21,8 @@ import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.getkeepsafe.taptargetview.TapTarget;
+import com.getkeepsafe.taptargetview.TapTargetSequence;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -39,7 +42,7 @@ import itesm.mx.carpoolingtec.userinfo.PedirInfoActivity;
 import itesm.mx.carpoolingtec.util.schedulers.SchedulerProvider;
 
 public class ProfileActivity extends AppCompatActivity
-        implements AppBarLayout.OnOffsetChangedListener, ProfileView {
+        implements AppBarLayout.OnOffsetChangedListener, ProfileView, Toolbar.OnMenuItemClickListener {
 
     private static final int PERCENTAGE_TO_ANIMATE_AVATAR = 20;
 
@@ -64,13 +67,10 @@ public class ProfileActivity extends AppCompatActivity
         setContentView(R.layout.activity_profile);
         ButterKnife.bind(this);
 
-        setSupportActionBar(toolbar);
-
-        setTitle("");
-        if (getSupportActionBar() != null) {
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_arrow_back_white_24dp);
-        }
+        toolbar.setTitle("");
+        toolbar.setOnMenuItemClickListener(this);
+        toolbar.inflateMenu(R.menu.menu_profile);
+        toolbar.setNavigationIcon(ContextCompat.getDrawable(this, R.drawable.ic_arrow_back_white_24dp));
 
         toolbarTitle.setTitle("Tus rides");
 
@@ -138,6 +138,39 @@ public class ProfileActivity extends AppCompatActivity
             }
         };
         rvProfileRidesFrom.setAdapter(ridesAdapterFrom);
+
+        TapTargetSequence sequence = new TapTargetSequence(this)
+                .targets(
+                        TapTarget.forToolbarMenuItem(toolbar, R.id.action_edit, "Editar Perfil", "Aquí puedes editar tu información de contacto y tus preferencias")
+                                .outerCircleColor(R.color.colorPrimary)
+                                .outerCircleAlpha(0.96f)
+                                .targetCircleColor(R.color.white)
+                                .titleTextSize(20)
+                                .descriptionTextSize(14)
+                                .textColor(R.color.white)
+                                .textTypeface(Typeface.SANS_SERIF)
+                                .cancelable(false)
+                )
+                .listener(new TapTargetSequence.Listener() {
+                    // This listener will tell us when interesting(tm) events happen in regards
+                    // to the sequence
+                    @Override
+                    public void onSequenceFinish() {
+                        // Yay
+                    }
+
+                    @Override
+                    public void onSequenceStep(TapTarget lastTarget, boolean targetClicked) {
+
+                    }
+
+                    @Override
+                    public void onSequenceCanceled(TapTarget lastTarget) {
+                        // Boo
+                    }
+                });
+
+        sequence.start();
     }
 
     @Override
@@ -159,20 +192,6 @@ public class ProfileActivity extends AppCompatActivity
                     PorterDuff.Mode.SRC_ATOP);
         }
         return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle item selection
-        switch (item.getItemId()) {
-            case R.id.action_edit:
-                Intent intent = new Intent(this, PedirInfoActivity.class);
-                intent.putExtra("id", 1);
-                startActivity(intent);
-                return true;
-            default:
-                return true;
-        }
     }
 
     @Override
@@ -248,6 +267,18 @@ public class ProfileActivity extends AppCompatActivity
         tvName.setText(user.getName());
         tvPhone.setText(user.getPhone());
         Picasso.with(this).load(user.getPhoto()).into(ivProfile);
+    }
+
+    @Override
+    public boolean onMenuItemClick(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_edit:
+                Intent intent = new Intent(this, PedirInfoActivity.class);
+                intent.putExtra("id", 1);
+                startActivity(intent);
+                return true;
+        }
+        return false;
     }
 }
 
