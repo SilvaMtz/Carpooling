@@ -40,9 +40,12 @@ import itesm.mx.carpoolingtec.model.firebase.User;
 import itesm.mx.carpoolingtec.post.PostActivity;
 import itesm.mx.carpoolingtec.userinfo.PedirInfoActivity;
 import itesm.mx.carpoolingtec.util.schedulers.SchedulerProvider;
+import jonathanfinerty.once.Once;
 
 public class ProfileActivity extends AppCompatActivity
         implements AppBarLayout.OnOffsetChangedListener, ProfileView, Toolbar.OnMenuItemClickListener {
+
+    private static final String showProfileTutorial = "profileTutorial";
 
     private static final int PERCENTAGE_TO_ANIMATE_AVATAR = 20;
 
@@ -139,38 +142,11 @@ public class ProfileActivity extends AppCompatActivity
         };
         rvProfileRidesFrom.setAdapter(ridesAdapterFrom);
 
-        TapTargetSequence sequence = new TapTargetSequence(this)
-                .targets(
-                        TapTarget.forToolbarMenuItem(toolbar, R.id.action_edit, "Editar Perfil", "Aquí puedes editar tu información de contacto y tus preferencias")
-                                .outerCircleColor(R.color.colorPrimary)
-                                .outerCircleAlpha(0.96f)
-                                .targetCircleColor(R.color.white)
-                                .titleTextSize(20)
-                                .descriptionTextSize(14)
-                                .textColor(R.color.white)
-                                .textTypeface(Typeface.SANS_SERIF)
-                                .cancelable(false)
-                )
-                .listener(new TapTargetSequence.Listener() {
-                    // This listener will tell us when interesting(tm) events happen in regards
-                    // to the sequence
-                    @Override
-                    public void onSequenceFinish() {
-                        // Yay
-                    }
 
-                    @Override
-                    public void onSequenceStep(TapTarget lastTarget, boolean targetClicked) {
-
-                    }
-
-                    @Override
-                    public void onSequenceCanceled(TapTarget lastTarget) {
-                        // Boo
-                    }
-                });
-
-        sequence.start();
+        if (!Once.beenDone(Once.THIS_APP_VERSION, showProfileTutorial)) {
+            showTutorial();
+            Once.markDone(showProfileTutorial);
+        }
     }
 
     @Override
@@ -279,6 +255,41 @@ public class ProfileActivity extends AppCompatActivity
                 return true;
         }
         return false;
+    }
+
+    private void showTutorial() {
+        TapTargetSequence sequence = new TapTargetSequence(this)
+                .targets(
+                        TapTarget.forToolbarMenuItem(toolbar, R.id.action_edit, "Editar Perfil", "Aquí puedes editar tu información de contacto y tus preferencias")
+                                .outerCircleColor(R.color.colorPrimary)
+                                .outerCircleAlpha(0.96f)
+                                .targetCircleColor(R.color.white)
+                                .titleTextSize(20)
+                                .descriptionTextSize(14)
+                                .textColor(R.color.white)
+                                .textTypeface(Typeface.SANS_SERIF)
+                                .cancelable(false)
+                )
+                .listener(new TapTargetSequence.Listener() {
+                    // This listener will tell us when interesting(tm) events happen in regards
+                    // to the sequence
+                    @Override
+                    public void onSequenceFinish() {
+                        // Yay
+                    }
+
+                    @Override
+                    public void onSequenceStep(TapTarget lastTarget, boolean targetClicked) {
+
+                    }
+
+                    @Override
+                    public void onSequenceCanceled(TapTarget lastTarget) {
+                        // Boo
+                    }
+                });
+
+        sequence.start();
     }
 }
 

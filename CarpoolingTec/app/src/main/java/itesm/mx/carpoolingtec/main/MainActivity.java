@@ -11,7 +11,6 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
@@ -29,8 +28,12 @@ import itesm.mx.carpoolingtec.post.PostActivity;
 import itesm.mx.carpoolingtec.profile.ProfileActivity;
 import itesm.mx.carpoolingtec.request.RequestActivity;
 import itesm.mx.carpoolingtec.rides.RidesFragment;
+import jonathanfinerty.once.Once;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener, TabLayout.OnTabSelectedListener, Toolbar.OnMenuItemClickListener{
+public class MainActivity extends AppCompatActivity implements View.OnClickListener,
+        TabLayout.OnTabSelectedListener, Toolbar.OnMenuItemClickListener{
+
+    private static final String showMainTutorial = "mainTutorial";
 
     @BindView(R.id.toolbar) Toolbar toolbar;
     @BindView(R.id.tab_layout) TabLayout tabLayout;
@@ -49,59 +52,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         fab.setOnClickListener(this);
 
-        TapTargetSequence sequence = new TapTargetSequence(this)
-                .targets(
-                        TapTarget.forView(findViewById(R.id.fab), "Publica un ride", "Haz click para ofrecer un ride a alumnos del Tec")
-                                .outerCircleColor(R.color.colorPrimary)
-                                .outerCircleAlpha(0.96f)
-                                .targetCircleColor(R.color.white)
-                                .titleTextSize(20)
-                                .descriptionTextSize(14)
-                                .textColor(R.color.white)
-                                .textTypeface(Typeface.SANS_SERIF)
-                                .drawShadow(true)
-                                .cancelable(false)
-                                .tintTarget(false)
-                                .transparentTarget(false),
-                        TapTarget.forToolbarOverflow(toolbar, "Menu de opciones", "Aqui puedes ver tu perfil y cerrar sesión")
-                                .outerCircleColor(R.color.colorPrimary)
-                                .outerCircleAlpha(0.96f)
-                                .targetCircleColor(R.color.white)
-                                .titleTextSize(20)
-                                .descriptionTextSize(14)
-                                .textColor(R.color.white)
-                                .textTypeface(Typeface.SANS_SERIF)
-                                .cancelable(false),
-                        TapTarget.forToolbarMenuItem(toolbar, R.id.action_solicitudes, "Solicitudes", "Aquí verás las solicitudes de información de contacto cuando alguien esté interesado en un ride que estes ofreciendo")
-                                .outerCircleColor(R.color.colorPrimary)
-                                .outerCircleAlpha(0.96f)
-                                .targetCircleColor(R.color.white)
-                                .titleTextSize(20)
-                                .descriptionTextSize(14)
-                                .textColor(R.color.white)
-                                .textTypeface(Typeface.SANS_SERIF)
-                                .cancelable(false)
-                        )
-                .listener(new TapTargetSequence.Listener() {
-                    // This listener will tell us when interesting(tm) events happen in regards
-                    // to the sequence
-                    @Override
-                    public void onSequenceFinish() {
-                        // Yay
-                    }
-
-                    @Override
-                    public void onSequenceStep(TapTarget lastTarget, boolean targetClicked) {
-
-                    }
-
-                    @Override
-                    public void onSequenceCanceled(TapTarget lastTarget) {
-                        // Boo
-                    }
-                });
-
-        sequence.start();
+        if (!Once.beenDone(Once.THIS_APP_VERSION, showMainTutorial)) {
+            showTutorial();
+            Once.markDone(showMainTutorial);
+        }
 
         viewPager.setAdapter(new MyAdapter(getSupportFragmentManager()));
         tabLayout.setupWithViewPager(viewPager);
@@ -161,6 +115,62 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 return true;
         }
         return false;
+    }
+
+    private void showTutorial() {
+        TapTargetSequence sequence = new TapTargetSequence(this)
+                .targets(
+                        TapTarget.forView(findViewById(R.id.fab), "Publica un ride", "Haz click para ofrecer un ride a alumnos del Tec")
+                                .outerCircleColor(R.color.colorPrimary)
+                                .outerCircleAlpha(0.96f)
+                                .targetCircleColor(R.color.white)
+                                .titleTextSize(20)
+                                .descriptionTextSize(14)
+                                .textColor(R.color.white)
+                                .textTypeface(Typeface.SANS_SERIF)
+                                .drawShadow(true)
+                                .cancelable(false)
+                                .tintTarget(false)
+                                .transparentTarget(false),
+                        TapTarget.forToolbarOverflow(toolbar, "Menu de opciones", "Aqui puedes ver tu perfil y cerrar sesión")
+                                .outerCircleColor(R.color.colorPrimary)
+                                .outerCircleAlpha(0.96f)
+                                .targetCircleColor(R.color.white)
+                                .titleTextSize(20)
+                                .descriptionTextSize(14)
+                                .textColor(R.color.white)
+                                .textTypeface(Typeface.SANS_SERIF)
+                                .cancelable(false),
+                        TapTarget.forToolbarMenuItem(toolbar, R.id.action_solicitudes, "Solicitudes", "Aquí verás las solicitudes de información de contacto cuando alguien esté interesado en un ride que estes ofreciendo")
+                                .outerCircleColor(R.color.colorPrimary)
+                                .outerCircleAlpha(0.96f)
+                                .targetCircleColor(R.color.white)
+                                .titleTextSize(20)
+                                .descriptionTextSize(14)
+                                .textColor(R.color.white)
+                                .textTypeface(Typeface.SANS_SERIF)
+                                .cancelable(false)
+                )
+                .listener(new TapTargetSequence.Listener() {
+                    // This listener will tell us when interesting(tm) events happen in regards
+                    // to the sequence
+                    @Override
+                    public void onSequenceFinish() {
+                        // Yay
+                    }
+
+                    @Override
+                    public void onSequenceStep(TapTarget lastTarget, boolean targetClicked) {
+
+                    }
+
+                    @Override
+                    public void onSequenceCanceled(TapTarget lastTarget) {
+                        // Boo
+                    }
+                });
+
+        sequence.start();
     }
 
     class MyAdapter extends FragmentPagerAdapter {
