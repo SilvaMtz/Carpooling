@@ -164,6 +164,30 @@ public class PedirInfoActivity extends AppCompatActivity implements View.OnClick
 
         tvMat.setText(tvMat.getText().toString() + " " + matricula);
         tvNom.setText(tvNom.getText().toString() + " " + nombre);
+
+        User userprefs = repository.getUserPrefs();
+
+        editPhone.setText(userprefs.getPhone());
+        if (userprefs.getGender() == 0) {
+            radioMale.setChecked(true);
+            radioFemale.setChecked(false);
+        } else {
+            radioMale.setChecked(false);
+            radioFemale.setChecked(true);
+        }
+        cFumar.setChecked(userprefs.isSmoking());
+        if (userprefs.getPassenger_gender() == 0) {
+            cHombre.setChecked(true);
+            cMujer.setChecked(false);
+        } else if (userprefs.getPassenger_gender() == 1) {
+            cHombre.setChecked(false);
+            cMujer.setChecked(true);
+        } else {
+            cHombre.setChecked(true);
+            cMujer.setChecked(true);
+        }
+        cPrecio.setChecked(userprefs.isPrice());
+        etNota.setText(userprefs.getNotes());
     }
 
     @Override
@@ -230,6 +254,17 @@ public class PedirInfoActivity extends AppCompatActivity implements View.OnClick
 
         repository.setMyLatitude((float) lat);
         repository.setMyLongitude((float) longi);
+
+        User user = new User();
+        user.setPhone(editPhone.getText().toString());
+        user.setGender(gender);
+        user.setSmoking(fumar);
+        user.setPassenger_gender(passengerGender);
+        user.setPrice(precio);
+        user.setNotes(note);
+
+        repository.saveUserPrefs(user);
+
         Toast.makeText(this, "Informacion Actualizada", Toast.LENGTH_SHORT).show();
         finish();
     }
