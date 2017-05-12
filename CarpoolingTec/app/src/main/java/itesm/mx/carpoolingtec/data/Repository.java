@@ -14,12 +14,6 @@ public interface Repository {
 
     DatabaseReference getDatabase();
 
-    Observable<Contact> getContacts(String userId);
-
-    Observable<UserRide> getUserRides(int rideType);
-
-    Observable<Ride> getRidesFromUser(String userId);
-
     Completable saveRide(User user, Ride ride);
 
     void removeRide(Ride ride, String key);
