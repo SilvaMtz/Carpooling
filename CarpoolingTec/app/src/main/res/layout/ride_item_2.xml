@@ -4,8 +4,6 @@
     android:layout_width="match_parent"
     android:layout_height="80dp"
     android:padding="10dp"
-    android:layout_marginTop="5dp"
-    android:layout_marginBottom="5dp"
     android:clickable="true"
     android:background="?android:attr/selectableItemBackground">
 
@@ -39,7 +37,8 @@
             android:id="@+id/text_description"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Salida 3 km de tu ubicación"/>
+            android:text="Salida 3 km de tu ubicación"
+            android:visibility="gone"/>
 
     </LinearLayout>
 

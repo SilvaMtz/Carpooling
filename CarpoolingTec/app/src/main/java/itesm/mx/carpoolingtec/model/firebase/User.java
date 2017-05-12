@@ -166,6 +166,7 @@ public class User implements Serializable{
         map.put("id", id);
         map.put("name", name);
         map.put("photo", photo);
+        map.put("gender", gender);
         return map;
     }
 

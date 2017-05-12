@@ -120,7 +120,7 @@ public class RidesFragment extends Fragment implements RidesView, RideItemListen
                 R.layout.ride_item_2, UserRideHolder.class, databaseRef) {
             @Override
             protected void populateViewHolder(UserRideHolder holder, final UserRide ride, int position) {
-                if (ride.getRides() == null) {
+                if (ride.getRides() == null || ride.getUser().getId().equals(repository.getMyId())) {
                     ViewGroup.LayoutParams params = holder.rlContainer.getLayoutParams();
                     params.width = 0;
                     params.height = 0;
@@ -131,15 +131,14 @@ public class RidesFragment extends Fragment implements RidesView, RideItemListen
                 String sName = ride.getUser().getName();
                 User user = ride.getUser();
 
-
-                if (user.getGender() == 0)
-                {
+                if (user.getGender() == 0) {
                     holder.ivPicture.setImageDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.male));
-                } else if (user.getGender() == 1){
+                } else {
                     holder.ivPicture.setImageDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.female));
                 }
 
                 holder.tvName.setText(sName.substring(0, sName.indexOf(" ")));
+
                 Location userLocation = new Location("");
                 userLocation.setLatitude(repository.getMyLatitude());
                 userLocation.setLongitude(repository.getMyLongitude());
@@ -201,7 +200,7 @@ public class RidesFragment extends Fragment implements RidesView, RideItemListen
         ImageView ivPhoto = (ImageView) view.findViewById(R.id.image_user);
         TextView tvName = (TextView) view.findViewById(R.id.text_name);
         TextView tvNotes = (TextView) view.findViewById(R.id.text_notes);
-        Utilities.setRoundedPhoto(getActivity(), user.getPhoto(), ivPhoto);
+        //Utilities.setRoundedPhoto(getActivity(), user.getPhoto(), ivPhoto);
         tvNotes.setText(user.getNotes());
 
         String sName = user.getName();
@@ -209,15 +208,11 @@ public class RidesFragment extends Fragment implements RidesView, RideItemListen
 
         tvName.setText(sName);
 
-        if (user.getGender() == 0)
-        {
+        if (user.getGender() == 0) {
             ivPhoto.setImageDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.male));
         } else {
             ivPhoto.setImageDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.female));
         }
-
-
-
 
         // Set Driver preferences
         ImageView ivFumar = (ImageView) view.findViewById(R.id.iv_fumar);
