@@ -4,7 +4,7 @@
     android:id="@+id/activity_login"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/logoColor"
+    android:background="@color/tec"
     tools:context="itesm.mx.carpoolingtec.login.LoginActivity">
 
     <ScrollView
@@ -37,7 +37,7 @@
                     android:layout_marginRight="50dp"
                     android:adjustViewBounds="true"
                     android:scaleType="fitCenter"
-                    android:src="@drawable/logo" />
+                    android:src="@drawable/logo2" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
