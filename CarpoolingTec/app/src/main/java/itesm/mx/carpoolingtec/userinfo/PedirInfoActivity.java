@@ -227,6 +227,9 @@ public class PedirInfoActivity extends AppCompatActivity implements View.OnClick
         repository.getDatabase().child("users").child(matricula.toUpperCase()).child("smoking").setValue(fumar);
         repository.getDatabase().child("users").child(matricula.toUpperCase()).child("latitude").setValue(lat);
         repository.getDatabase().child("users").child(matricula.toUpperCase()).child("longitude").setValue(longi);
+
+        repository.setMyLatitude((float) lat);
+        repository.setMyLongitude((float) longi);
         Toast.makeText(this, "Informacion Actualizada", Toast.LENGTH_SHORT).show();
         finish();
     }
