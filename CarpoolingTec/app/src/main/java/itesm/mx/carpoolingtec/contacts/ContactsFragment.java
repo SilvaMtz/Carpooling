@@ -29,7 +29,10 @@ import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
@@ -43,6 +46,7 @@ import itesm.mx.carpoolingtec.data.AppRepository;
 import itesm.mx.carpoolingtec.data.MySharedPreferences;
 import itesm.mx.carpoolingtec.data.Repository;
 import itesm.mx.carpoolingtec.model.firebase.Contact;
+import itesm.mx.carpoolingtec.model.firebase.User;
 import itesm.mx.carpoolingtec.util.Utilities;
 import itesm.mx.carpoolingtec.util.schedulers.SchedulerProvider;
 
@@ -61,6 +65,7 @@ public class ContactsFragment extends Fragment implements ContactsView,
     private FirebaseRecyclerAdapter<Contact, ContactHolder> contactsAdapter;
     private ContactsPresenter presenter;
     private String phoneNumber;
+    private Repository repository;
 
     public ContactsFragment() {
         // Required empty public constructor
@@ -95,7 +100,7 @@ public class ContactsFragment extends Fragment implements ContactsView,
         SharedPreferences sharedPreferences = getActivity()
                 .getSharedPreferences(MySharedPreferences.MY_PREFERENCES, MODE_PRIVATE);
 
-        Repository repository = AppRepository.getInstance(sharedPreferences);
+        repository = AppRepository.getInstance(sharedPreferences);
         DatabaseReference contactsRef = repository.getDatabase().child("users").child(repository.getMyId()).child("contacts");
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -174,49 +179,62 @@ public class ContactsFragment extends Fragment implements ContactsView,
 
         ImageView ivPhoto = (ImageView) view.findViewById(R.id.image_user);
         TextView tvName = (TextView) view.findViewById(R.id.text_name);
-        TextView tvPhone = (TextView) view.findViewById(R.id.text_phone);
-        LinearLayout layoutCall = (LinearLayout) view.findViewById(R.id.layout_call);
-        LinearLayout layoutMessage = (LinearLayout) view.findViewById(R.id.layout_message);
-        LinearLayout layoutAdd = (LinearLayout) view.findViewById(R.id.layout_add);
+        final TextView tvPhone = (TextView) view.findViewById(R.id.text_phone);
+        final LinearLayout layoutCall = (LinearLayout) view.findViewById(R.id.layout_call);
+        final LinearLayout layoutMessage = (LinearLayout) view.findViewById(R.id.layout_message);
+        final LinearLayout layoutAdd = (LinearLayout) view.findViewById(R.id.layout_add);
 
         Utilities.setRoundedPhoto(getActivity(), contact.getPhoto(), ivPhoto);
         tvName.setText(contact.getName());
-        tvPhone.setText(contact.getPhone());
 
-        layoutCall.setOnClickListener(new View.OnClickListener() {
+
+        repository.getDatabase().child("users").child(contact.getId()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onClick(View v) {
-                int permissionCheck = ContextCompat.checkSelfPermission(getActivity(),
-                        android.Manifest.permission.CALL_PHONE);
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                User user = dataSnapshot.getValue(User.class);
+                tvPhone.setText(user.getPhone());
 
-                if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
-                    phoneNumber = contact.getPhone();
-                    requestPermissions(new String[]{android.Manifest.permission.CALL_PHONE},
-                            CALL_PHONE_PERMISSION_REQUEST);
+                layoutCall.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        int permissionCheck = ContextCompat.checkSelfPermission(getActivity(),
+                                android.Manifest.permission.CALL_PHONE);
 
-                } else {
-                    makePhoneCall(contact.getPhone());
-                }
+                        if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
+                            phoneNumber = contact.getPhone();
+                            requestPermissions(new String[]{android.Manifest.permission.CALL_PHONE},
+                                    CALL_PHONE_PERMISSION_REQUEST);
+
+                        } else {
+                            makePhoneCall(contact.getPhone());
+                        }
+                    }
+                });
+
+                layoutMessage.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(Intent.ACTION_SENDTO, Uri.parse("smsto:" + contact.getPhone()));
+                        startActivity(intent);
+                    }
+                });
+
+                layoutAdd.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(ContactsContract.Intents.Insert.ACTION);
+                        intent.setType(ContactsContract.RawContacts.CONTENT_TYPE);
+                        intent.putExtra(ContactsContract.Intents.Insert.PHONE, contact.getPhone())
+                                .putExtra(ContactsContract.Intents.Insert.NAME, contact.getName());
+
+                        startActivity(intent);
+                    }
+                });
             }
-        });
 
-        layoutMessage.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(Intent.ACTION_SENDTO, Uri.parse("smsto:" + contact.getPhone()));
-                startActivity(intent);
-            }
-        });
+            public void onCancelled(DatabaseError databaseError) {
 
-        layoutAdd.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(ContactsContract.Intents.Insert.ACTION);
-                intent.setType(ContactsContract.RawContacts.CONTENT_TYPE);
-                intent.putExtra(ContactsContract.Intents.Insert.PHONE, contact.getPhone())
-                        .putExtra(ContactsContract.Intents.Insert.NAME, contact.getName());
-
-                startActivity(intent);
             }
         });
 
