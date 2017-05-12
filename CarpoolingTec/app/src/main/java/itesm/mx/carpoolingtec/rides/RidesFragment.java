@@ -108,6 +108,9 @@ public class RidesFragment extends Fragment implements RidesView, RideItemListen
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
+
+
+
         ridesAdapter = new FirebaseRecyclerAdapter<UserRide, UserRideHolder>(UserRide.class,
                 R.layout.ride_item_2, UserRideHolder.class, databaseRef) {
             @Override
@@ -120,9 +123,18 @@ public class RidesFragment extends Fragment implements RidesView, RideItemListen
                     return;
                 }
 
-                Utilities.setRoundedPhoto(getActivity(), ride.getUser().getPhoto(), holder.ivPicture);
-                holder.tvName.setText(ride.getUser().getName());
+                String sName = ride.getUser().getName();
+                User user = ride.getUser();
 
+
+                if (user.getGender() == 0)
+                {
+                    holder.ivPicture.setImageDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.male));
+                } else if (user.getGender() == 1){
+                    holder.ivPicture.setImageDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.female));
+                }
+
+                holder.tvName.setText(sName.substring(0, sName.indexOf(" ")));
                 Location userLocation = new Location("");
                 userLocation.setLatitude(repository.getMyLatitude());
                 userLocation.setLongitude(repository.getMyLongitude());
@@ -185,8 +197,22 @@ public class RidesFragment extends Fragment implements RidesView, RideItemListen
         TextView tvName = (TextView) view.findViewById(R.id.text_name);
         TextView tvNotes = (TextView) view.findViewById(R.id.text_notes);
         Utilities.setRoundedPhoto(getActivity(), user.getPhoto(), ivPhoto);
-        tvName.setText(user.getName());
         tvNotes.setText(user.getNotes());
+
+        String sName = user.getName();
+        sName = sName.substring(0, sName.indexOf(" "));
+
+        tvName.setText(sName);
+
+        if (user.getGender() == 0)
+        {
+            ivPhoto.setImageDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.male));
+        } else {
+            ivPhoto.setImageDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.female));
+        }
+
+
+
 
         // Set Driver preferences
         ImageView ivFumar = (ImageView) view.findViewById(R.id.iv_fumar);
@@ -206,9 +232,9 @@ public class RidesFragment extends Fragment implements RidesView, RideItemListen
             ivPrecio.setImageDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.ic_money_off_black_24dp));
         }
 
-        if (user.getGender() == 0) {
+        if (user.getPassenger_gender() == 0) {
             ivGender.setImageDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.man));
-        } else if (user.getGender() == 1) {
+        } else if (user.getPassenger_gender() == 1) {
             ivGender.setImageDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.woman));
         } else {
             ivGender.setImageDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.ic_wc_black_24dp));
