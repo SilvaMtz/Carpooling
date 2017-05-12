@@ -305,5 +305,17 @@ public class AppRepository implements Repository {
         }
     }
 
+    @Override
+    public void removeRide(String type, String key) {
+        String rideTypeKey;
+        if (type.equals("FROM_TEC")) {
+            rideTypeKey = "rides_from_tec";
+        } else {
+            rideTypeKey = "rides_to_tec";
+        }
+
+        database.child(rideTypeKey).child(getMyId()).child("rides").child(key).removeValue();
+    }
+
 
 }

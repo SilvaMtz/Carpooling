@@ -236,8 +236,7 @@ public class ProfileActivity extends AppCompatActivity
         tvModificar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                presenter.onDeleteRide(ride, key);
-                presenter.onEditRide(ride);
+                presenter.onEditRide(ride, key);
                 dialog.dismiss();
             }
         });
@@ -254,10 +253,11 @@ public class ProfileActivity extends AppCompatActivity
     }
 
     @Override
-    public void openPostActivity(final Ride ride){
-        Intent intent = new Intent(this,PostActivity.class);
+    public void openPostActivity(final Ride ride, String key){
+        Intent intent = new Intent(this, PostActivity.class);
         intent.putExtra("id", 1); // 1 representa Perfil
         intent.putExtra("ride", ride);
+        intent.putExtra("key", key);
         startActivity(intent);
 
     }

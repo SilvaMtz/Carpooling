@@ -77,6 +77,7 @@ public class PostActivity extends AppCompatActivity implements PostView, PlaceSe
     private String[] dias = new String[] {"Lunes","Martes","Miercoles","Jueves","Viernes","Sabado","Domingo"};
     private int id; //Represante de donde viene la actividad
     private Ride ride;
+    private String key = null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -123,9 +124,12 @@ public class PostActivity extends AppCompatActivity implements PostView, PlaceSe
         BSU.setOnClickListener(this);
         pos = -1;
         clean(0);
+
         id = getIntent().getIntExtra("id",0);
         if(id == 1){
             ride = (Ride) getIntent().getSerializableExtra("ride");
+            key = getIntent().getStringExtra("key");
+
             sOrigen = ride.getRide_type();
             longi = ride.getLongitude();
             lat = ride.getLatitude();
@@ -168,7 +172,7 @@ public class PostActivity extends AppCompatActivity implements PostView, PlaceSe
                     finish();
                 } else{ // si es update ride
                     Ride ride = new Ride(sOrigen, tvClock.getText().toString(), dias[pos], longi, lat,dirName);
-                    presenter.saveRide(ride); // Todo updateride en vez de saveride
+                    presenter.updateRide(ride, key, this.ride.getRide_type());
                     finish();
                 }
                 return true;

@@ -41,8 +41,8 @@ public class ProfilePresenter extends BasePresenter<ProfileView> {
         );
     }
 
-    public void onEditRide(Ride ride) {
-        view.openPostActivity(ride);
+    public void onEditRide(Ride ride, String key) {
+        view.openPostActivity(ride, key);
     }
 
     public void onDeleteRide(Ride ride, String key) {

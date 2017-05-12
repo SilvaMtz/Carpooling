@@ -45,4 +45,6 @@ public interface Repository {
     void saveUserPrefs(User user);
 
     User getUserPrefs();
+
+    void removeRide(String type, String key);
 }
