@@ -39,6 +39,18 @@
             android:layout_width="match_parent"
             android:layout_height="2dp"
             android:background="@drawable/border" />
+
+        <fragment
+            android:id="@+id/place_autocomplete_fragment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:name="com.google.android.gms.location.places.ui.PlaceAutocompleteFragment"
+            />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="@drawable/border" />
         <EditText
             android:id="@+id/edit_phone"
             android:layout_width="match_parent"

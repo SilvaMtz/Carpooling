@@ -80,6 +80,10 @@
     <string name="send_message">Enviar Mensaje</string>
     <string name="add_contact">Agregar Contacto</string>
     <string name="aqui">Aqui</string>
+    <string name="title">Desplegar Informacion?</string>
+    <string name="content">Al presionar aceptar tu informacion se va desplegar al usuario (foto, nombre completo, telefono)</string>
+    <string name="longer_positive">Acepto</string>
+    <string name="negative">Cancelar</string>
 
     <string-array name="viaje_spinner">
         <item>Hacia el Tec</item>

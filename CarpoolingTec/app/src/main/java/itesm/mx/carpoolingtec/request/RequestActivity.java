@@ -3,6 +3,7 @@ package itesm.mx.carpoolingtec.request;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -10,6 +11,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Toast;
 
+import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.database.DatabaseReference;
 
@@ -72,7 +75,18 @@ public class RequestActivity extends AppCompatActivity implements RequestListene
                 holder.btnAceptar.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        onAcceptClick(request, key);
+                        new MaterialDialog.Builder(v.getContext())
+                                .title(R.string.title)
+                                .content(R.string.content)
+                                .negativeText(R.string.negative)
+                                .positiveText(R.string.longer_positive)
+                                .onPositive(new MaterialDialog.SingleButtonCallback(){
+                                    @Override
+                                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                        onAcceptClick(request, key);
+                                    }
+                                })
+                                .show();
                     }
                 });
 
@@ -90,6 +104,7 @@ public class RequestActivity extends AppCompatActivity implements RequestListene
 
     @Override
     public void onAcceptClick(Request request, String requestKey) {
+
         repository.addContact(request.getSolicitante());
         repository.removeRequest(requestKey);
         Toast.makeText(this, "Solicitud aceptada", Toast.LENGTH_SHORT).show();
