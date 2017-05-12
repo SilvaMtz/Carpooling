@@ -203,9 +203,7 @@ public class ContactsFragment extends Fragment implements ContactsView,
         layoutMessage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent();
-                intent.setAction(Intent.ACTION_SEND);
-                intent.setType("text/plain");
+                Intent intent = new Intent(Intent.ACTION_SENDTO, Uri.parse("smsto:" + contact.getPhone()));
                 startActivity(intent);
             }
         });
