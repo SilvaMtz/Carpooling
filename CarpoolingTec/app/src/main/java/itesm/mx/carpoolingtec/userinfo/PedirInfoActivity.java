@@ -154,40 +154,45 @@ public class PedirInfoActivity extends AppCompatActivity implements View.OnClick
         // 1 editing
         id = getIntent().getIntExtra("id", -1);
 
+
+        User userprefs = repository.getUserPrefs();
+
         if (id == 0) {
             matricula = getIntent().getStringExtra(MATRICULA);
             nombre = getIntent().getStringExtra(NOMBRE);
+            //matricula = "A01176075";
+            //nombre = "Andres Sosa";
         } else {
             matricula = repository.getMyId();
             nombre = repository.getMyName();
+            editPhone.setText(userprefs.getPhone());
         }
 
         tvMat.setText(tvMat.getText().toString() + " " + matricula);
         tvNom.setText(tvNom.getText().toString() + " " + nombre);
 
-        User userprefs = repository.getUserPrefs();
-
-        editPhone.setText(userprefs.getPhone());
-        if (userprefs.getGender() == 0) {
-            radioMale.setChecked(true);
-            radioFemale.setChecked(false);
-        } else {
-            radioMale.setChecked(false);
-            radioFemale.setChecked(true);
+        if(id == 1){
+            if (userprefs.getGender() == 0) {
+                radioMale.setChecked(true);
+                radioFemale.setChecked(false);
+            } else {
+                radioMale.setChecked(false);
+                radioFemale.setChecked(true);
+            }
+            cFumar.setChecked(userprefs.isSmoking());
+            if (userprefs.getPassenger_gender() == 0) {
+                cHombre.setChecked(true);
+                cMujer.setChecked(false);
+            } else if (userprefs.getPassenger_gender() == 1) {
+                cHombre.setChecked(false);
+                cMujer.setChecked(true);
+            } else {
+                cHombre.setChecked(true);
+                cMujer.setChecked(true);
+            }
+            cPrecio.setChecked(userprefs.isPrice());
+            etNota.setText(userprefs.getNotes());
         }
-        cFumar.setChecked(userprefs.isSmoking());
-        if (userprefs.getPassenger_gender() == 0) {
-            cHombre.setChecked(true);
-            cMujer.setChecked(false);
-        } else if (userprefs.getPassenger_gender() == 1) {
-            cHombre.setChecked(false);
-            cMujer.setChecked(true);
-        } else {
-            cHombre.setChecked(true);
-            cMujer.setChecked(true);
-        }
-        cPrecio.setChecked(userprefs.isPrice());
-        etNota.setText(userprefs.getNotes());
     }
 
     @Override

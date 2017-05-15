@@ -101,6 +101,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.action_settings:
                 AppRepository app = AppRepository.getInstance(getSharedPreferences(MySharedPreferences.MY_PREFERENCES, MODE_PRIVATE));
                 app.saveMyId(null);
+                app.saveUserPrefs(null);
                 Intent intent3 = new Intent(this, LoginActivity.class);
                 finish();
                 startActivity(intent3);
